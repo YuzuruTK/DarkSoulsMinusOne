@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwnkfc5qg0u23"]
+
+[ext_resource type="PackedScene" uid="uid://pw15721q6p0j" path="res://Battle/Enemy Group.tscn" id="1_kdm5a"]
+[ext_resource type="Texture2D" uid="uid://cysa08m8o5dud" path="res://Sprites/battle_background.png" id="1_klhq7"]
+[ext_resource type="Script" path="res://Battle/battle_scene.gd" id="1_vut7b"]
+[ext_resource type="PackedScene" uid="uid://dsbhedwbw7n8t" path="res://Battle/Player Group.tscn" id="2_lpmbt"]
+
+[node name="Battle Scene" type="Node2D"]
+script = ExtResource("1_vut7b")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.8, 16.16)
+texture = ExtResource("1_klhq7")
+expand_mode = 1
+
+[node name="EnemyGroup" parent="." instance=ExtResource("1_kdm5a")]
+position = Vector2(216, 214)
+
+[node name="PlayerGroup" parent="." instance=ExtResource("2_lpmbt")]
+position = Vector2(942, 507)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="choice" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -98.0
+offset_right = 400.0
+offset_bottom = 152.0
+grow_vertical = 0
+scale = Vector2(1, 0.405186)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Attack" type="Button" parent="CanvasLayer/choice"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 50
+text = "Attack"
+
+[node name="Defend" type="Button" parent="CanvasLayer/choice"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 50
+text = "Defend"
+
+[node name="Run" type="Button" parent="CanvasLayer/choice"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 50
+text = "Run
+"
