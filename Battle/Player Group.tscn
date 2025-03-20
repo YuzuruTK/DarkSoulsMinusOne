@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsbhedwbw7n8t"]
 
-[ext_resource type="Script" path="res://Battle/enemy_group.gd" id="1_q3b4v"]
+[ext_resource type="Script" path="res://Battle/player_group.gd" id="1_bhhxy"]
 [ext_resource type="PackedScene" uid="uid://dbp44x68dahr4" path="res://Battle/Character.tscn" id="2_y5hcy"]
 
 [node name="PlayerGroup" type="Node2D"]
-script = ExtResource("1_q3b4v")
+position = Vector2(550, 300)
+script = ExtResource("1_bhhxy")
 
 [node name="Player" parent="." instance=ExtResource("2_y5hcy")]
-position = Vector2(0, 2)
+position = Vector2(4, -2)

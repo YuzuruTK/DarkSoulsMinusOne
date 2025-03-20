@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://r4hkcnruwksd"]
+
+[ext_resource type="Texture2D" uid="uid://qbdyro8ldygf" path="res://icon.svg" id="1_3o25m"]
+[ext_resource type="Script" path="res://Battle/ui_battle.gd" id="1_duq75"]
+
+[node name="BattleUI" type="Node2D"]
+script = ExtResource("1_duq75")
+
+[node name="UiContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Act" type="Button" parent="UiContainer"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 136.0
+text = "ACTION"
+icon = ExtResource("1_3o25m")
+text_direction = 1
