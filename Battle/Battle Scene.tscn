@@ -1,23 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwnkfc5qg0u23"]
+[gd_scene load_steps=2 format=3 uid="uid://bwnkfc5qg0u23"]
 
-[ext_resource type="PackedScene" uid="uid://pw15721q6p0j" path="res://Battle/Enemy Group.tscn" id="1_kdm5a"]
-[ext_resource type="Texture2D" uid="uid://cysa08m8o5dud" path="res://Sprites/battle_background.png" id="1_klhq7"]
-[ext_resource type="Script" path="res://Battle/battle_scene.gd" id="1_vut7b"]
-[ext_resource type="PackedScene" uid="uid://dsbhedwbw7n8t" path="res://Battle/Player Group.tscn" id="2_lpmbt"]
+[ext_resource type="Script" uid="uid://b5qr2r47ure0d" path="res://Battle/battle_scene.gd" id="1_vut7b"]
 
 [node name="Battle Scene" type="Node2D"]
 script = ExtResource("1_vut7b")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Label" type="Label" parent="Camera2D"]
 offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(28.8, 16.16)
-texture = ExtResource("1_klhq7")
-expand_mode = 1
+offset_bottom = 23.0
 
-[node name="EnemyGroup" parent="." instance=ExtResource("1_kdm5a")]
-position = Vector2(216, 214)
+[node name="PlayerGroup" type="Node2D" parent="."]
+position = Vector2(500, -250)
 
-[node name="PlayerGroup" parent="." instance=ExtResource("2_lpmbt")]
-position = Vector2(942, 507)
+[node name="EnemyGroup" type="Node2D" parent="."]
+position = Vector2(-500, -250)

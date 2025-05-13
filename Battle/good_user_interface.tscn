@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sr2hldvtjowa"]
+
+[ext_resource type="Script" uid="uid://bxradmmsgw053" path="res://Battle/good_user_interface.gd" id="1_wks5g"]
+
+[node name="GoodUserInterface" type="Node2D"]
+script = ExtResource("1_wks5g")

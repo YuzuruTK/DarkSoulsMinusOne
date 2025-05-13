@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbp44x68dahr4"]
+[gd_scene load_steps=7 format=3 uid="uid://pw15721q6p0j"]
 
-[ext_resource type="Texture2D" uid="uid://4l8wykps5hns" path="res://Sprites/placeholder.png" id="1_x0jlh"]
+[ext_resource type="Script" uid="uid://dsbj2eq3rk3la" path="res://Battle/Enemy/enemy.gd" id="1_fcoyb"]
+[ext_resource type="Texture2D" uid="uid://4l8wykps5hns" path="res://Sprites/placeholder.png" id="1_yesd8"]
 
 [sub_resource type="Animation" id="Animation_y1io6"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/path = NodePath("Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,7 +23,7 @@ resource_name = "Stand"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/path = NodePath("Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -37,7 +38,7 @@ resource_name = "hurt"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/path = NodePath("Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -49,21 +50,31 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d1r5a"]
 _data = {
-"RESET": SubResource("Animation_y1io6"),
-"Stand": SubResource("Animation_1x0wm"),
-"hurt": SubResource("Animation_sw34n")
+&"RESET": SubResource("Animation_y1io6"),
+&"Stand": SubResource("Animation_1x0wm"),
+&"hurt": SubResource("Animation_sw34n")
 }
 
-[node name="Character" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_fcoyb")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Name" type="RichTextLabel" parent="."]
+offset_left = -200.0
+offset_top = -200.0
+offset_right = -160.0
+offset_bottom = -160.0
+bbcode_enabled = true
+text = "TESTE"
+
+[node name="Sprite" type="Sprite2D" parent="."]
 self_modulate = Color(30, 30, 30, 1)
 scale = Vector2(4, 4)
-texture = ExtResource("1_x0jlh")
+texture = ExtResource("1_yesd8")
 
 [node name="Focus" type="Sprite2D" parent="."]
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -79,5 +90,5 @@ pivot_offset = Vector2(200, 25)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_d1r5a")
+&"": SubResource("AnimationLibrary_d1r5a")
 }
