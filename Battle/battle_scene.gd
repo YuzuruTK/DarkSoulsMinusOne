@@ -36,12 +36,10 @@ func _ready() -> void:
 	$Camera2D.position = Vector2(0,0)
 	# Zoom out Camera
 	_camera_zoom($Camera2D, 0.5)
-	while len(enemies) != 0 or len(party) != 0:
-		await _turn_things(turn)
+	while len(enemies) != 0 and len(party) != 0:
+		await _turn_things()
 		turn += 1	
 		pass
-	$Label.text = "BATALHA GANHA EEEEE"
-	$Label.size = Vector2(100,100)
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -71,7 +69,7 @@ func _enemy_action(enemy: Enemy, target: Player):
 		pass
 	pass
 
-func _turn_things(turn: int) -> void:
+func _turn_things() -> void:
 	$Camera2D/Label.text = ""
 	# for in each of characters to decide their actions
 	# Camera position calculus
