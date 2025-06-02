@@ -3,7 +3,7 @@ class_name  BattleUi
 
 enum GameStates {NONE, MENU_MAIN, END_TURN, SELECT_SKILL, MENU_ITEM, SELECT_ENEMY}
 var state = GameStates.MENU_MAIN
-var attack_id: String = ""
+var attack_id: int
 var enemy_selected: Array[String] = []
 var buttons: Array[Button] = []
 @onready var player: Player = $".."
@@ -56,6 +56,11 @@ func delete_all_buttons() -> void:
 # Single Selection
 func create_enemy_selection_buttons() -> Array[Button]:
 	var buttons: Array[Button] = []
+	var back_button = Button.new()
+	back_button.text = "voltar"
+	back_button.connect("pressed", func(): state = GameStates.MENU_MAIN)
+	$".".add_child(back_button)
+	buttons.append(back_button)
 	for enemy in enemies_available:
 		var button = Button.new()
 		button.text = enemy.name
@@ -69,7 +74,7 @@ func create_main_buttons() -> Array[Button]:
 	# Preset of buttons 
 	var preset_buttons = [{
 		"name" : "Atacar",
-		"action" : func(): state = GameStates.SELECT_ENEMY; attack_id = "1"
+		"action" : func(): state = GameStates.SELECT_ENEMY; attack_id = 0
 	},
 	{
 		"name" : "Habilidades",
@@ -97,18 +102,18 @@ func create_attack_buttons() -> Array[Button]:
 	var buttons: Array[Button] = []
 	# Generate the button using the buttons name
 	var skills: Array[Dictionary] = []
-	skills.append_array(player.skills)
 	skills.insert(0, {"name": "voltar", "action": func(): state = GameStates.MENU_MAIN})
-	print(skills)
+	skills.append_array(player.get_skills())
+	skills.remove_at(1)
 	for skill in skills:
 		var button = Button.new()
 		button.text = skill["name"]
 		$".".add_child(button)
 		button.connect(
-			"pressed", skill["action"] 
-			if skill.has("action") 
-			else func(): attack_id = skill["id"]; state = GameStates.END_TURN
-			)
+			"pressed", skill["action"]
+			if skill.has("action")
+			else func(): emit_signal("action_chosen", {"enemies" : enemies_available.map(func(enemy): return enemy.id), "attack_id" : skill.id}); state = GameStates.END_TURN if skill["is_multi_target"] else func(): state = GameStates.SELECT_ENEMY; attack_id = skill.id
+		)
 		buttons.append(button)
 	return buttons
 

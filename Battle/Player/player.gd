@@ -6,7 +6,7 @@ class_name Player
 @onready var nametag = $"Name"
 
 var state = ""
-@export var skills: Array[Dictionary] = [{"name" : "FOGOO", "id" : "1"}, {"name" : "GELOOO", "id" : "2"}]
+@export var skills: Dictionary[int, Dictionary] = {}
 var buttons: Array[Button]
 var player_name: String = ""
 
@@ -20,13 +20,28 @@ var actual_mana: float = 20
 var attack_damage: float = 0
 var initiative: int = 0
 
-func initialize(player_params: Dictionary):
+func initialize(player_params: Dictionary, skill_table: Dictionary):
 	player_name = player_params.name
-	max_health = player_params.max_h
-	actual_health = player_params.actual_h
-	attack_damage = player_params.atk_dam
+	max_health = int(player_params.max_h)
+	actual_health = int(player_params.actual_h)
+	attack_damage = int(player_params.atk_dam)
 	initiative = player_params.initiative
+	
+	for skill_id: int in player_params.skills_id if player_params.skills_id else [0,1]:
+		skills[skill_id] = skill_table[skill_id]
+		pass
 	pass
+	
+func export() -> Dictionary:
+	var player = {}
+	player["name"] = player_name
+	player["max_h"] = max_health
+	player["actual_h"] = actual_health
+	player["atk_dam"] = attack_damage
+	player["initiative"] = initiative
+	# Verify if it works
+	player["skills_id"] = skills.keys()
+	return player
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_update_hud()
@@ -55,6 +70,21 @@ func _adjust_hud() -> void:
 	nametag.size = hud_size
 	nametag.bbcode_enabled = true
 	nametag.text = "[font_size=%d]%s[/font_size]" % [round(hud_size[1] / 1.5), player_name]
+	pass
+
+func get_attack_damage(id: int) -> int:
+	var damage: int = attack_damage * skills[id].damage_multiplier
+	return round(damage)
+
+func got_hurt(damage_points: int):
+	actual_health -= damage_points
+	_update_hud()
+	pass
+func get_skills() -> Array:
+	var id_skills = []
+	for key in skills.keys():
+		id_skills.append({"name" : skills[key].name, "id": key, "is_multi_target": skills[key].is_multi_target})
+	return id_skills
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

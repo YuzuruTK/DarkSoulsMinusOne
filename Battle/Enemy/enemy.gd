@@ -30,8 +30,14 @@ func _adjust_name() -> void:
 	$Name.position = Vector2($HealthBar.position[0], $HealthBar.position[1] - 50)
 	$Name.size = $HealthBar.size
 	$Name.scale = $HealthBar.scale
-	$Name.text = "[font_size=%d][tornado radius=10.0 freq=5.0 connected=1]%s[/tornado][/font_size]" % [round($HealthBar.size[1] / 1.5), enemy_name]
+	$Name.text = "[font_size=%d]%s[/font_size]" % [round($HealthBar.size[1] / 1.5), enemy_name]
 	pass
+func got_hurt(damage_points: int) -> void:
+	actual_health -= damage_points
+	_update_health()
+	pass
+func get_damage() -> int:
+	return attack_damage
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
