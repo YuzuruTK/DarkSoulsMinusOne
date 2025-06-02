@@ -7,9 +7,12 @@ script = ExtResource("1_vut7b")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Label" type="Label" parent="Camera2D"]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Label" type="RichTextLabel" parent="Camera2D"]
+offset_left = -250.0
+offset_top = -500.0
+offset_right = 250.0
+bbcode_enabled = true
+horizontal_alignment = 1
 
 [node name="PlayerGroup" type="Node2D" parent="."]
 position = Vector2(500, -250)

@@ -46,6 +46,7 @@ func _ready() -> void:
 	_camera_zoom($Camera2D, 0.8)
 	# while there is enemies and players alive the turns will increase
 	while len(enemies) != 0 and len(party) != 0:
+		$Camera2D/Label.text = "[font_size=%d][wave amp=50.0 freq=5.0 connected=1]Turno: %s[/wave][/font_size]" % [72, str(turn)]
 		await _turn_things()
 		var actors  = []
 		actors.append_array(enemies)
@@ -60,7 +61,7 @@ func _ready() -> void:
 			pass
 		turn += 1	
 		pass
-	#functions.save_characters(party.map(func(player: Player): return player.export()) as Array[Dictionary])
+	functions.save_characters(party.map(func(player: Player) -> Dictionary: return player.export()))
 	pass
 	
 func _character_action(character: Player) -> Dictionary:
@@ -69,7 +70,7 @@ func _character_action(character: Player) -> Dictionary:
 	character.add_child(battle_ui)
 	var enemies_available: Array[Dictionary] = []
 	# adds the enemies available in an array with custom object
-	for enemy in enemies: 
+	for enemy in enemies.filter(func(enemy: Enemy) -> bool: return enemy.actual_health > 0):
 		enemies_available.append({"name" : enemy.name, "id" : enemies.find(enemy)})
 	battle_ui.enemies_available = enemies_available
 	var action_choosed: Dictionary = await battle_ui.action_chosen
@@ -86,7 +87,6 @@ func _enemy_action(enemy: Enemy, target: Player):
 	pass
 
 func _turn_things() -> void:
-	$Camera2D/Label.text = ""
 	# for in each of characters to decide their actions
 	# Camera position calculus
 	var enemies_position = Vector2(0,0)
