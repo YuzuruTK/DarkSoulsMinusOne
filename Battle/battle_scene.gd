@@ -121,7 +121,6 @@ func _turn_things() -> void:
 	for actor in action_order:
 		if len($"EnemyGroup".get_children()) == 0 or len($"PlayerGroup".get_children()) == 0:
 			break
-		$Camera2D/ActionsShow.update_arrow(action_order.find(actor))
 		if actor not in action_order:
 			print(actor, action_order)
 			continue

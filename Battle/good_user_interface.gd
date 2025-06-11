@@ -1,143 +1,239 @@
 extends Node2D
-class_name  BattleUi
+class_name BattleUi
 
-enum GameStates {NONE, MENU_MAIN, END_TURN, SELECT_SKILL, MENU_ITEM, SELECT_ENEMY}
-var state = GameStates.MENU_MAIN
-var attack_id: int
-var enemy_selected: Array[String] = []
-var buttons: Array[Button] = []
-@onready var player: Player = $".."
-@onready var sprite: Sprite2D = $".."/Sprite
-@onready var enemies_available: Array[Dictionary] = []
-signal action_chosen(action_data)
+# Enums for better state management
+enum GameState {
+	NONE,
+	MENU_MAIN,
+	SELECT_SKILL,
+	SELECT_ENEMY,
+	MENU_ITEM,
+	END_TURN
+}
 
+# Constants
+const BUTTON_SPACING_RATIO = 2.0
+
+# State management
+var current_state: GameState = GameState.MENU_MAIN
+var selected_attack_id: int = -1
+var selected_enemies: Array[String] = []
+
+# UI Components
+var active_buttons: Array[Button] = []
+
+# References
+@onready var player: Player = get_parent() as Player
+@onready var sprite: Sprite2D = player.get_node("Sprite") if player else null
+
+# Data
+var enemies_available: Array[Dictionary] = []
+
+# Signals
+signal action_chosen(action_data: Dictionary)
+
+#region Godot Lifecycle
 func _ready() -> void:
-	pass # Replace with function body.
+	if not player:
+		push_error("BattleUi must be a child of a Player node")
+		return
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	_validate_setup()
+
 func _process(_delta: float) -> void:
-	if state == GameStates.NONE:
-		pass
-	elif state == GameStates.END_TURN:
-		delete_all_buttons()
-		state = GameStates.NONE
-		pass
-	elif state == GameStates.MENU_MAIN:
-		# remove all other buttons
-		delete_all_buttons()
-		# get the list of main buttons
-		buttons = create_main_buttons()
-		# position the buttons
-		position_buttons_around_character(buttons, sprite)
-		state = GameStates.NONE
-		pass
-	elif state == GameStates.SELECT_SKILL:
-		delete_all_buttons()
-		# create the attack buttons
-		buttons = create_attack_buttons()
-		# position the buttons
-		position_buttons_around_character(buttons, sprite)
-		state = GameStates.NONE
-		pass
-	elif state == GameStates.SELECT_ENEMY:
-		delete_all_buttons()
-		# create the attack buttons
-		buttons = create_enemy_selection_buttons()
-		# position the buttons
-		position_buttons_around_character(buttons, sprite)
-		state = GameStates.NONE
-	pass
-func delete_all_buttons() -> void:
-	# remove all other buttons
-	for button in buttons:
-			$".".remove_child(button)
-	pass
+	_handle_current_state()
 
-# Single Selection
-func create_enemy_selection_buttons() -> Array[Button]:
+func _validate_setup() -> void:
+	if not sprite:
+		push_warning("Sprite not found in player node")
+#endregion
+
+#region State Management
+func _handle_current_state() -> void:
+	match current_state:
+		GameState.NONE:
+			return
+		GameState.MENU_MAIN:
+			_show_main_menu()
+		GameState.SELECT_SKILL:
+			_show_skill_menu()
+		GameState.SELECT_ENEMY:
+			_show_enemy_selection()
+		GameState.END_TURN:
+			_end_turn()
+
+func _change_state(new_state: GameState) -> void:
+	current_state = new_state
+
+func _show_main_menu() -> void:
+	_clear_all_buttons()
+	active_buttons = _create_main_menu_buttons()
+	_position_buttons_around_sprite(active_buttons)
+	_change_state(GameState.NONE)
+
+func _show_skill_menu() -> void:
+	_clear_all_buttons()
+	active_buttons = _create_skill_buttons()
+	_position_buttons_around_sprite(active_buttons)
+	_change_state(GameState.NONE)
+
+func _show_enemy_selection() -> void:
+	_clear_all_buttons()
+	active_buttons = _create_enemy_selection_buttons()
+	_position_buttons_around_sprite(active_buttons)
+	_change_state(GameState.NONE)
+
+func _end_turn() -> void:
+	_clear_all_buttons()
+	_change_state(GameState.NONE)
+#endregion
+
+#region Button Management
+func _clear_all_buttons() -> void:
+	for button in active_buttons:
+		if is_instance_valid(button) and button.get_parent() == self:
+			remove_child(button)
+			button.queue_free()
+	active_buttons.clear()
+
+func _create_main_menu_buttons() -> Array[Button]:
 	var buttons: Array[Button] = []
-	var back_button = Button.new()
-	back_button.text = "voltar"
-	back_button.connect("pressed", func(): state = GameStates.MENU_MAIN)
-	$".".add_child(back_button)
-	buttons.append(back_button)
-	for enemy in enemies_available:
-		var button = Button.new()
-		button.text = enemy.name
-		button.connect("pressed", func(): emit_signal("action_chosen", {"enemies" : [enemy.id], "attack_id" : attack_id}); state = GameStates.END_TURN)
-		$".".add_child(button)
-		buttons.append(button)
-	return buttons
-func create_main_buttons() -> Array[Button]:
-	# Create the list of buttons
-	var buttons: Array[Button] = []	
-	# Preset of buttons 
-	var preset_buttons = [{
-		"name" : "Atacar",
-		"action" : func(): state = GameStates.SELECT_ENEMY; attack_id = 0
-	},
-	{
-		"name" : "Habilidades",
-		"action" : func(): state = GameStates.SELECT_SKILL
-	},
-	{
-		"name" : "Itens",
-		"action" : func(): state = GameStates.MENU_ITEM
-	}
+	
+	var button_configs = [
+		{
+			"text": "Atacar",
+			"action": func(): _on_attack_selected()
+		},
+		{
+			"text": "Habilidades",
+			"action": func(): _change_state(GameState.SELECT_SKILL)
+		},
+		{
+			"text": "Itens",
+			"action": func(): _change_state(GameState.MENU_ITEM)
+		}
 	]
-	# Creates the buttons based on preset
-	for preset in preset_buttons:
-		var button = Button.new()
-		button.text = preset["name"]
-		# Sets a Lambda Function that changes the state of game
-		button.connect("pressed", preset["action"])
-		# add the button to player node
-		$".".add_child(button)
-		# add the button to buttons list to return
+	
+	for config in button_configs:
+		var button = _create_button(config.text, config.action)
 		buttons.append(button)
+	
 	return buttons
 
-func create_attack_buttons() -> Array[Button]:
-	# Create a set of buttons with these names
+func _create_skill_buttons() -> Array[Button]:
 	var buttons: Array[Button] = []
-	# Generate the button using the buttons name
-	var skills: Array[Dictionary] = []
-	skills.insert(0, {"name": "voltar", "action": func(): state = GameStates.MENU_MAIN})
-	skills.append_array(player.get_skills())
-	skills.remove_at(1)
-	for skill in skills:
-		var button = Button.new()
-		button.text = skill["name"]
-		$".".add_child(button)
-		button.connect(
-			"pressed", skill["action"]
-			if skill.has("action")
-			else func(): emit_signal("action_chosen", {"enemies" : enemies_available.map(func(enemy): return enemy.id), "attack_id" : skill.id}); state = GameStates.END_TURN if skill["is_multi_target"] else func(): state = GameStates.SELECT_ENEMY; attack_id = skill.id
-		)
+	
+	# Back button
+	var back_button = _create_button("Voltar", func(): _change_state(GameState.MENU_MAIN))
+	buttons.append(back_button)
+	
+	# Skill buttons
+	var player_skills = player.get_skills()
+	for skill in player_skills:
+		var button = _create_button(skill.name, func(): _on_skill_selected(skill))
 		buttons.append(button)
+	
 	return buttons
 
-# Function to dinamically place and resize the buttons depending of the size of array
-func position_buttons_around_character(buttons: Array[Button], sprite: Sprite2D) -> void:
-	# Getting the size of texture
-	var sprite_x_size = sprite.texture.get_size()[0] * sprite.scale[0]
-	var sprite_y_size = sprite.texture.get_size()[1] * sprite.scale[1]
-	var number_of_buttons = len(buttons) if len(buttons) % 2 == 0 else len(buttons) + 1
-		# Making the size of the buttons acceptable
-	var magic_number = (number_of_buttons/ 2) + 1
-	var vertical_size = sprite_y_size / magic_number
-	var horizontal_size = sprite_y_size
-	var actual_height = -(sprite_y_size/2) + (vertical_size/magic_number)
-	for i in range(len(buttons)):
-		# Talvez sette a Anchor, não descobri
-		#buttons[i].set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-		buttons[i].size = Vector2(horizontal_size, vertical_size)
-		# Positioning the act button right after the texture
-		if (i % 2) != 0:
-			buttons[i].position = Vector2(sprite_x_size / 2, actual_height)
-			#buttons[i].rotation = -0.25
-			actual_height = actual_height + vertical_size + (vertical_size/magic_number)
-		else: 
-			buttons[i].position = Vector2(-(((sprite_x_size) / 2) + horizontal_size), actual_height)
-			#buttons[i].rotation = 0.25
-	pass
+func _create_enemy_selection_buttons() -> Array[Button]:
+	var buttons: Array[Button] = []
+	
+	# Back button
+	var back_button = _create_button("Voltar", func(): _change_state(GameState.MENU_MAIN))
+	buttons.append(back_button)
+	
+	# Enemy buttons
+	for enemy in enemies_available:
+		var button = _create_button(enemy.name, func(): _on_enemy_selected(enemy))
+		buttons.append(button)
+	
+	return buttons
+
+func _create_button(text: String, callback: Callable) -> Button:
+	var button = Button.new()
+	button.text = text
+	button.pressed.connect(callback)
+	add_child(button)
+	return button
+#endregion
+
+#region Button Actions
+func _on_attack_selected() -> void:
+	selected_attack_id = 0 # Basic attack
+	_change_state(GameState.SELECT_ENEMY)
+
+func _on_skill_selected(skill: Dictionary) -> void:
+	selected_attack_id = skill.id
+	
+	if skill.is_multi_target:
+		# Multi-target skill affects all enemies
+		var all_enemy_ids = enemies_available.map(func(enemy): return enemy.id)
+		_emit_action_chosen(all_enemy_ids)
+	else:
+		# Single-target skill requires enemy selection
+		_change_state(GameState.SELECT_ENEMY)
+
+func _on_enemy_selected(enemy: Dictionary) -> void:
+	_emit_action_chosen([enemy.id])
+
+func _emit_action_chosen(enemy_ids: Array) -> void:
+	var action_data = {
+		"enemies": enemy_ids,
+		"attack_id": selected_attack_id
+	}
+	action_chosen.emit(action_data)
+	_change_state(GameState.END_TURN)
+#endregion
+
+#region UI Positioning
+func _position_buttons_around_sprite(buttons: Array[Button]) -> void:
+	if not sprite or buttons.is_empty():
+		return
+	
+	var sprite_size = _get_sprite_display_size()
+	var button_count = buttons.size()
+	
+	# Make even number for symmetric positioning
+	var positioning_count = button_count if button_count % 2 == 0 else button_count + 1
+	
+	var button_size = _calculate_button_size(sprite_size, positioning_count)
+	var positions = _calculate_button_positions(sprite_size, button_size, button_count)
+	
+	for i in range(buttons.size()):
+		var button = buttons[i]
+		button.size = button_size
+		button.position = positions[i]
+
+func _get_sprite_display_size() -> Vector2:
+	if not sprite or not sprite.texture:
+		return Vector2(100, 100) # Fallback size
+	
+	var texture_size = sprite.texture.get_size()
+	return texture_size * sprite.scale
+
+func _calculate_button_size(sprite_size: Vector2, button_count: int) -> Vector2:
+	var magic_number = (button_count / 2) + 1
+	var vertical_size = sprite_size.y / magic_number
+	var horizontal_size = sprite_size.y
+	
+	return Vector2(horizontal_size, vertical_size)
+
+func _calculate_button_positions(sprite_size: Vector2, button_size: Vector2, button_count: int) -> Array[Vector2]:
+	var positions: Array[Vector2] = []
+	var magic_number = (button_count / 2) + 1 if button_count % 2 == 0 else ((button_count + 1) / 2) + 1
+	var vertical_spacing = button_size.y / magic_number
+	var current_height = - (sprite_size.y / 2) + vertical_spacing
+	
+	for i in range(button_count):
+		var position: Vector2
+		
+		if i % 2 != 0: # Right side
+			position = Vector2(sprite_size.x / 2, current_height)
+			current_height += button_size.y + vertical_spacing
+		else: # Left side
+			position = Vector2(- ((sprite_size.x / 2) + button_size.x), current_height)
+		
+		positions.append(position)
+	
+	return positions
+#endregion
