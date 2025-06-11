@@ -35,6 +35,11 @@ func _adjust_name() -> void:
 func got_hurt(damage_points: int) -> void:
 	actual_health -= damage_points
 	_update_health()
+	for i in 3:
+		visible = false
+		await get_tree().create_timer(0.1).timeout
+		visible = true
+		await get_tree().create_timer(0.1).timeout
 	pass
 func get_damage() -> int:
 	return attack_damage

@@ -4,6 +4,7 @@ class_name Player
 @onready var mana_bar = $"ManaBar"
 @onready var health_bar = $"HealthBar"
 @onready var nametag = $"Name"
+@onready var sprite = $"Sprite"
 
 var state = ""
 @export var skills: Dictionary[int, Dictionary] = {}
@@ -79,6 +80,11 @@ func get_attack_damage(id: int) -> int:
 func got_hurt(damage_points: int):
 	actual_health -= damage_points
 	_update_hud()
+	for i in 3:
+		visible = false
+		await get_tree().create_timer(0.1).timeout
+		visible = true
+		await get_tree().create_timer(0.1).timeout
 	pass
 func get_skills() -> Array:
 	var id_skills = []

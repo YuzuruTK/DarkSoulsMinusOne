@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Snake",
+        "max_h": 10,
+        "actual_h": 10,
+        "atk_dam": 3,
+        "initiative": 1,
+        "skills_id": [
+            0,
+            1
+        ]
+    },
+    {
+        "name": "Coach",
+        "max_h": 10,
+        "actual_h": 10,
+        "atk_dam": 3,
+        "initiative": 3,
+        "skills_id": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6
+        ]
+    },
+    {
+        "name": "Rick",
+        "max_h": 10,
+        "actual_h": 10,
+        "atk_dam": 3,
+        "initiative": 2,
+        "skills_id": [
+            0,
+            15
+        ]
+    },
+    {
+        "name": "Joao",
+        "max_h": 10,
+        "actual_h": 10,
+        "atk_dam": 3,
+        "initiative": 4,
+        "skills_id": [
+            0,
+            25
+        ]
+    }
+]

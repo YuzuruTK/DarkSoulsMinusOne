@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://birx5mfbbetwc"]
+
+[ext_resource type="Texture2D" uid="uid://qbdyro8ldygf" path="res://icon.svg" id="1_qt28w"]
+
+[node name="ActionsShow" type="HFlowContainer"]
+layout_direction = 3
+offset_left = -750.0
+offset_bottom = 100.0
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="arrow" type="Sprite2D" parent="."]
+scale = Vector2(10, 10)
+texture = ExtResource("1_qt28w")

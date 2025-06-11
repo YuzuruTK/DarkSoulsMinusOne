@@ -1,18 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwnkfc5qg0u23"]
+[gd_scene load_steps=6 format=3 uid="uid://bwnkfc5qg0u23"]
 
 [ext_resource type="Script" uid="uid://b5qr2r47ure0d" path="res://Battle/battle_scene.gd" id="1_vut7b"]
+[ext_resource type="Script" uid="uid://bcxyjmpeyupof" path="res://matrix_bbcode.gd" id="2_appw3"]
+[ext_resource type="PackedScene" uid="uid://birx5mfbbetwc" path="res://Battle/ui/action_label.tscn" id="4_yn3g4"]
+[ext_resource type="Script" uid="uid://chjaa00hlqmjt" path="res://Battle/ui/action_label.gd" id="5_j3bqf"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_ucmsg"]
+script = ExtResource("2_appw3")
+metadata/_custom_type_script = "uid://bcxyjmpeyupof"
 
 [node name="Battle Scene" type="Node2D"]
 script = ExtResource("1_vut7b")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Label" type="Label" parent="Camera2D"]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="TurnLabel" type="RichTextLabel" parent="Camera2D"]
+offset_left = -250.0
+offset_top = -500.0
+offset_right = 250.0
+offset_bottom = -400.0
+bbcode_enabled = true
+horizontal_alignment = 1
+custom_effects = [SubResource("RichTextEffect_ucmsg")]
+
+[node name="ActionsShow" parent="Camera2D" instance=ExtResource("4_yn3g4")]
+script = ExtResource("5_j3bqf")
 
 [node name="PlayerGroup" type="Node2D" parent="."]
-position = Vector2(500, -250)
+position = Vector2(600, -250)
 
 [node name="EnemyGroup" type="Node2D" parent="."]
-position = Vector2(-500, -250)
+position = Vector2(-600, -250)

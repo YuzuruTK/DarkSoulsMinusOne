@@ -1,8 +1,7 @@
 extends Node2D
 
-@onready var imported_players = [] 
 @onready var imported_enemies = [{"name" : "Mocego", "max_h" : 10, "actual_h" : 10, "atk_dam" : 1, "initiative" : randi_range(0, 10)},
-								{"name" : "Mocego 2", "max_h" : 12, "actual_h" : 7, "atk_dam" : 2, "initiative" : randi_range(0, 10)}]
+								{"name" : "HaisenValdooo", "max_h" : 12, "actual_h" : 7, "atk_dam" : 2, "initiative" : randi_range(0, 10)}]
 
 var enemies:Array[Enemy]
 var party:Array[Player]
@@ -16,12 +15,11 @@ var battle_interface = preload("res://Battle/good_user_interface.tscn")
 func _ready() -> void:
 	var functions = SaveFunctions.new()
 	add_child(functions)
-	imported_players = functions.load_characters()
 	var skills_table = functions.load_skills()
 	
 	turn = 0
 	# Create the characters
-	var temp_party = imported_players
+	var temp_party = functions.load_characters()
 	var temp_enemies = imported_enemies
 	# creates the characters objects and set them in the scene
 	for index in range(len(temp_party)):
@@ -46,6 +44,7 @@ func _ready() -> void:
 	_camera_zoom($Camera2D, 0.8)
 	# while there is enemies and players alive the turns will increase
 	while len(enemies) != 0 and len(party) != 0:
+		$Camera2D/TurnLabel.text = "[font_size=%d][wave amp=100.0 freq=5.0 connected=0]Turno: %s[/wave][/font_size]" % [72, str(turn)]
 		await _turn_things()
 		var actors  = []
 		actors.append_array(enemies)
@@ -58,9 +57,13 @@ func _ready() -> void:
 					enemies.erase(actor)
 				pass
 			pass
-		turn += 1	
+		turn += 1
 		pass
-	#functions.save_characters(party.map(func(player: Player): return player.export()) as Array[Dictionary])
+	$"Camera2D".remove_child($"Camera2D/ActionsShow")
+	#if len(enemies) == 0:
+		#$Camera2D/ActionsLabel.text = ""
+		#$Camera2D/TurnLabel.text = "[font_size=%d][shake rate=20.0 level=5 connected=1][rainbow freq=1.0 sat=0.8 val=0.8 speed=1.0]VOCE GANHOOOOU[/rainbow][/shake][/font_size]" % [72]
+	functions.save_characters(party.map(func(player: Player) -> Dictionary: return player.export()))
 	pass
 	
 func _character_action(character: Player) -> Dictionary:
@@ -69,7 +72,7 @@ func _character_action(character: Player) -> Dictionary:
 	character.add_child(battle_ui)
 	var enemies_available: Array[Dictionary] = []
 	# adds the enemies available in an array with custom object
-	for enemy in enemies: 
+	for enemy in enemies.filter(func(enemy: Enemy) -> bool: return enemy.actual_health > 0):
 		enemies_available.append({"name" : enemy.name, "id" : enemies.find(enemy)})
 	battle_ui.enemies_available = enemies_available
 	var action_choosed: Dictionary = await battle_ui.action_chosen
@@ -81,12 +84,11 @@ func _enemy_action(enemy: Enemy, target: Player):
 	var possible_actions = ["attack", "attack"]
 	var action_choosed = possible_actions[randi_range(0, len(possible_actions) - 1)]
 	if action_choosed == "attack":
-		target.got_hurt(enemy.attack_damage)
+		await target.got_hurt(enemy.attack_damage)
 		pass
 	pass
 
 func _turn_things() -> void:
-	$Camera2D/Label.text = ""
 	# for in each of characters to decide their actions
 	# Camera position calculus
 	var enemies_position = Vector2(0,0)
@@ -98,18 +100,33 @@ func _turn_things() -> void:
 	action_order.append_array(enemies)
 	action_order.append_array(party)
 	action_order.sort_custom(func(a,b): return a.initiative < b.initiative)
-	# Adjusting Order
-	#for actor in action_order:
-		#if actor is Player:
-			#$Camera2D/Label.text += actor.player_name
-		#elif actor is Enemy:
-			#$Camera2D/Label.text += actor.enemy_name
-		#$Camera2D/Label.text += ", "
+ 	#Adjusting Order
+	var action_order_labels = []
+	for child in $Camera2D/ActionsShow.get_children():
+		$Camera2D/ActionsShow.remove_child(child)
+	var order = 0
+	for actor in action_order:
+		var action_label = RichTextLabel.new()
+		action_label.bbcode_enabled = true
+		action_label.custom_minimum_size = Vector2($Camera2D/ActionsShow.size.x / 4, $Camera2D/ActionsShow.size.y)
+		
+		if actor is Player:
+			action_label.text += "[font_size=30][color=BLUE]%s[/color]" % actor.player_name
+		elif actor is Enemy:
+			action_label.text += "[font_size=30][color=RED]%s[/color]" % actor.enemy_name
+		$Camera2D/ActionsShow.add_element(order ,action_label)
+		order += 1
+	$Camera2D/ActionsShow.position = Vector2( - $Camera2D/ActionsShow.size.x / 2, 500)
 	# Doing the actions
 	for actor in action_order:
 		if len($"EnemyGroup".get_children()) == 0 or len($"PlayerGroup".get_children()) == 0:
 			break
+		$Camera2D/ActionsShow.update_arrow(action_order.find(actor))
+		if actor not in action_order:
+			print(actor, action_order)
+			continue
 		if actor is Player:
+			print(actor.player_name)
 			var player_position = Vector2($EnemyGroup.position[0] + $PlayerGroup.position[0], 0)
 			var old_player_position = actor.position
 			_node_movement_smooth(actor, player_position, true)
@@ -122,24 +139,29 @@ func _turn_things() -> void:
 				await enemies[enemy_id].got_hurt(atk_damage)
 				if enemies[enemy_id].actual_health <= 0:
 					$"EnemyGroup".remove_child(enemies[enemy_id])
+					$Camera2D/ActionsShow.delete_element(action_order.find(enemies[enemy_id]))
 					action_order.erase(enemies[enemy_id])
 			_node_movement_smooth(actor, old_player_position, false)
 			pass
 	# for in enemies to decide random movements
 		elif actor is Enemy:
+			print(actor.enemy_name)
+			await get_tree().create_timer(0.5).timeout
 			if len(party) == 0:
 				break
 			var attack_selection = randi_range(0, len(party) - 1)
 			var characters_affected = await _enemy_action(actor, party[attack_selection])
 			if party[attack_selection].actual_health <= 0:
-				$"EnemyGroup".remove_child(party[attack_selection])
+				$"PlayerGroup".remove_child(party[attack_selection])
+				$Camera2D/ActionsShow.delete_element(action_order.find(party[attack_selection]))
 				action_order.erase(party[attack_selection])
-				enemies.erase(party[attack_selection])
+				party.erase(party[attack_selection])
 			if len($"PlayerGroup".get_children()) == 0:
 				break
 			pass
-	# decide the order of attacks based on initiative
+		$Camera2D/ActionsShow.delete_element(action_order.find(actor))
 	pass
+	
 func _process_character_damage(character: Player, enemy: Enemy, attack: String):
 	if attack == "1":
 		enemy.actual_health -= character.attack_damage
