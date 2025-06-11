@@ -1,0 +1,27 @@
+id,name,damage_multiplier,description,is_multi_target
+0,Attack,0.50,A basic Attack,FALSE
+1,Fireball,1.5,A ball of Fire,TRUE
+2,Ice Spike,1.2,A sharp spike of ice,FALSE
+3,Thunderstorm,2.0,A powerful electrical storm,TRUE
+4,Poison Cloud,1.1,A toxic cloud damaging multiple foes,TRUE
+5,Double Slash,1.3,Two quick sword attacks,FALSE
+6,Earthquake,1.8,A tremor damaging all enemies,TRUE
+7,Shield Bash,0.8,A bash that stuns the enemy,FALSE
+8,Wind Blade,1.4,A cutting blade of wind,TRUE
+9,Life Drain,1.0,Steals health from a single enemy,FALSE
+10,Firestorm,2.2,A massive fiery explosion,TRUE
+11,Water Jet,1.3,A strong jet of water,FALSE
+12,Shadow Strike,1.6,A strike from the shadows,FALSE
+13,Holy Light,1.7,Deals damage to undead enemies,TRUE
+14,Poisoned Dagger,1.1,An attack that poisons the target,FALSE
+15,Arcane Blast,1.9,A burst of magical energy,TRUE
+16,Thunder Clap,1.5,A clap that stuns and damages,TRUE
+17,Quick Shot,0.7,A fast ranged attack,FALSE
+18,Blizzard,2.1,A freezing storm damaging all foes,TRUE
+19,Cursed Flame,1.4,Deals fire damage and curses,TRUE
+20,Razor Wind,1.3,A sharp wind cutting through enemies,TRUE
+21,Flame Whip,1.5,A whip engulfed in flames,FALSE
+22,Icy Shards,1.2,Multiple ice shards launched at enemies,TRUE
+23,Smash,1.0,A heavy blunt attack,FALSE
+24,Searing Ray,1.7,A focused beam of intense heat,FALSE
+25,Venom Strike,1.3,Strikes with venomous claws,FALSE
