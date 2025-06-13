@@ -77,12 +77,7 @@ func got_hurt(damage_points: int) -> void:
 	await _play_hurt_animation()
 
 func _play_hurt_animation() -> void:
-	if animation_player and animation_player.has_animation("hurt"):
-		animation_player.play("hurt")
-		await animation_player.animation_finished
-	else:
-		# Fallback flash animation
-		await _play_flash_animation()
+	await _play_flash_animation()
 
 func _play_flash_animation() -> void:
 	for i in HURT_FLASH_COUNT:

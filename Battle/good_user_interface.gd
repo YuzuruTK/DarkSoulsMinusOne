@@ -144,11 +144,32 @@ func _create_enemy_selection_buttons() -> Array[Button]:
 	
 	# Enemy buttons
 	for enemy in enemies_available:
-		var button = _create_button(enemy.name, func(): _on_enemy_selected(enemy))
+		var unique_name = get_unique_enemy_name(enemy.name, buttons)
+		var button = _create_button(unique_name, func(): _on_enemy_selected(enemy))
 		buttons.append(button)
 	
 	return buttons
-
+	
+func get_unique_enemy_name(base_name: String, buttons) -> String:
+	var existing_names = []
+	
+	# Collect all existing button names
+	for button in buttons:
+		existing_names.append(button.text)
+	
+	# If the base name doesn't exist, return it as is
+	if base_name not in existing_names:
+		return base_name
+	
+	# Find the next available number
+	var counter = 2
+	var unique_name = base_name + " " + str(counter)
+	
+	while unique_name in existing_names:
+		counter += 1
+		unique_name = base_name + " " + str(counter)
+	
+	return unique_name
 func _create_button(text: String, callback: Callable) -> Button:
 	var button = Button.new()
 	button.text = text
