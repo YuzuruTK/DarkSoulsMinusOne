@@ -18,6 +18,7 @@ const BUTTON_SPACING_RATIO = 2.0
 var current_state: GameState = GameState.MENU_MAIN
 var selected_attack_id: int = -1
 var selected_enemies: Array[String] = []
+var selected_item_id: String = ""
 
 # UI Components
 var active_buttons: Array[Button] = []
@@ -59,6 +60,8 @@ func _handle_current_state() -> void:
 			_show_skill_menu()
 		GameState.SELECT_ENEMY:
 			_show_enemy_selection()
+		GameState.MENU_ITEM:
+			_show_item_menu()
 		GameState.END_TURN:
 			_end_turn()
 
@@ -80,6 +83,12 @@ func _show_skill_menu() -> void:
 func _show_enemy_selection() -> void:
 	_clear_all_buttons()
 	active_buttons = _create_enemy_selection_buttons()
+	_position_buttons_around_sprite(active_buttons)
+	_change_state(GameState.NONE)
+
+func _show_item_menu() -> void:
+	_clear_all_buttons()
+	active_buttons = _create_item_buttons()
 	_position_buttons_around_sprite(active_buttons)
 	_change_state(GameState.NONE)
 
@@ -149,6 +158,29 @@ func _create_enemy_selection_buttons() -> Array[Button]:
 		buttons.append(button)
 	
 	return buttons
+
+func _create_item_buttons() -> Array[Button]:
+	var buttons: Array[Button] = []
+	
+	# Back button
+	var back_button = _create_button("Voltar", func(): _change_state(GameState.MENU_MAIN))
+	buttons.append(back_button)
+	
+	# Item buttons - only show items with quantity > 0
+	var available_items = player.get_available_items()
+	
+	if available_items.is_empty():
+		# No items available
+		var no_items_button = _create_button("Sem itens disponíveis", func(): pass)
+		no_items_button.disabled = true
+		buttons.append(no_items_button)
+	else:
+		for item in available_items:
+			var button_text = "%s (%d)" % [item.name, item.quantity]
+			var button = _create_button(button_text, func(): _on_item_selected(item))
+			buttons.append(button)
+	
+	return buttons
 	
 func get_unique_enemy_name(base_name: String, buttons) -> String:
 	var existing_names = []
@@ -170,6 +202,7 @@ func get_unique_enemy_name(base_name: String, buttons) -> String:
 		unique_name = base_name + " " + str(counter)
 	
 	return unique_name
+
 func _create_button(text: String, callback: Callable) -> Button:
 	var button = Button.new()
 	button.text = text
@@ -197,8 +230,28 @@ func _on_skill_selected(skill: Dictionary) -> void:
 func _on_enemy_selected(enemy: Dictionary) -> void:
 	_emit_action_chosen([enemy.id])
 
+func _on_item_selected(item: Dictionary) -> void:
+	selected_item_id = item.id
+	
+	# Use the item immediately
+	if player.use_item(selected_item_id):
+		print("Used item: %s" % item.name)
+		# Emit action with item usage
+		var action_data = {
+			"action_type": "item",
+			"item_id": selected_item_id,
+			"item_name": item.name
+		}
+		action_chosen.emit(action_data)
+		_change_state(GameState.END_TURN)
+	else:
+		push_warning("Failed to use item: %s" % item.name)
+		# Go back to item menu if item usage failed
+		_change_state(GameState.MENU_ITEM)
+
 func _emit_action_chosen(enemy_ids: Array) -> void:
 	var action_data = {
+		"action_type": "attack",
 		"enemies": enemy_ids,
 		"attack_id": selected_attack_id
 	}

@@ -29,10 +29,14 @@ var initiative: int = 0
 @export var skills: Dictionary[int, Dictionary] = {}
 var buttons: Array[Button] = []
 
+# Item manager reference
+var item_manager: ItemManager
+
 #region Initialization
 func initialize(player_params: Dictionary, skill_table: Dictionary) -> void:
 	_set_base_stats(player_params)
 	_initialize_skills(player_params, skill_table)
+	_initialize_item_manager()
 
 func _set_base_stats(params: Dictionary) -> void:
 	player_name = params.name
@@ -46,11 +50,16 @@ func _initialize_skills(params: Dictionary, skill_table: Dictionary) -> void:
 	for skill_id: int in skill_ids:
 		if skill_table.has(skill_id):
 			skills[skill_id] = skill_table[skill_id]
+
+func _initialize_item_manager() -> void:
+	if not item_manager:
+		item_manager = ItemManager.new()
+		add_child(item_manager)
 #endregion
 
 #region Data Export
 func export() -> Dictionary:
-	return {
+	var export_data = {
 		"name": player_name,
 		"max_h": max_health,
 		"actual_h": actual_health,
@@ -58,6 +67,12 @@ func export() -> Dictionary:
 		"initiative": initiative,
 		"skills_id": skills.keys()
 	}
+	
+	# Include inventory if item_manager exists
+	if item_manager:
+		export_data["inventory"] = item_manager.export_inventory()
+	
+	return export_data
 #endregion
 
 #region Godot Lifecycle
@@ -140,6 +155,46 @@ func get_skills() -> Array[Dictionary]:
 		})
 	
 	return skill_list
+#endregion
+
+#region Item Management
+func get_available_items() -> Array[Dictionary]:
+	if item_manager:
+		return item_manager.get_available_items()
+	return []
+
+func use_item(item_id: String) -> bool:
+	if not item_manager:
+		return false
+	
+	var item_data = item_manager.get_item_data(item_id)
+	if item_data.is_empty():
+		return false
+	
+	# Check if we can use the item
+	if not item_manager.use_item(item_id):
+		return false
+	
+	# Apply item effects
+	_apply_item_effect(item_data)
+	return true
+
+func _apply_item_effect(item_data: Dictionary) -> void:
+	match item_data.type:
+		"health_heal":
+			_heal_health(item_data.value)
+		"mana_heal":
+			_heal_mana(item_data.value)
+
+func _heal_health(amount: int) -> void:
+	actual_health = min(max_health, actual_health + amount)
+	_update_hud()
+	print("%s used item and healed %d health! Current: %d/%d" % [player_name, amount, actual_health, max_health])
+
+func _heal_mana(amount: int) -> void:
+	actual_mana = min(max_mana, actual_mana + amount)
+	_update_hud()
+	print("%s used item and restored %d mana! Current: %d/%d" % [player_name, amount, actual_mana, max_mana])
 #endregion
 
 #region Health Checks
