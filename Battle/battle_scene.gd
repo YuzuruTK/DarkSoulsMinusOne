@@ -77,7 +77,6 @@ func _create_characters() -> void:
 	var party_data = save_functions.load_characters()
 	var number_of_enemies = randi_range(2, len(party))
 	var enemy_data = enemy_generator.generate_scaled_enemies(len(party_data), number_of_enemies)
-	
 	_create_party(party_data)
 	_create_enemies(enemy_data)
 
@@ -88,6 +87,7 @@ func _create_party(party_data: Array) -> void:
 
 func _create_enemies(enemy_data: Array) -> void:
 	for index in range(enemy_data.size()):
+		print()
 		var enemy_instance = _create_enemy(enemy_data[index], index)
 		enemies.append(enemy_instance)
 
@@ -105,7 +105,7 @@ func _create_enemy(enemy_data: Dictionary, index: int) -> Enemy:
 	var enemy_instance: Enemy = enemy_scene.instantiate()
 	enemy_instance.initialize(enemy_data)
 	enemy_instance.name = enemy_data.name
-	
+
 	enemy_group.add_child(enemy_instance)
 	_position_enemy(enemy_instance, index)
 	

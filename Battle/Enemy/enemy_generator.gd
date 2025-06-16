@@ -26,7 +26,7 @@ const ENEMY_NAMES = {
 	EnemyType.MORCEGO: ["Asa Negra", "Sombra Veloz", "Sugador Noturno", "Morcegão Caçador"],
 	EnemyType.CAO: ["Feroz da Matilha", "Uivador da Campanha", "Cão Bravo", "Caçador Selvagem"],
 	EnemyType.CORVO: ["Bico da Morte", "Mau Presságio", "Olho Escarlate", "Arauto Negro"],
-	EnemyType.JAVALI: ["Dente de Sabre", "Furioso da Mata", "Javali Monstruoso", "Rei da Espinheira"], 
+	EnemyType.JAVALI: ["Dente de Sabre", "Furioso da Mata", "Javali Monstruoso", "Rei da Espinheira"],
 	EnemyType.SOLDADO: ["Guarda Farroupilha", "Lanceiro Invencível", "Dragão do Sul", "Sentinela Antiga"],
 	EnemyType.BANDOLEIRO: ["Facão de Prata", "Sombra do Bolicho", "Cavalo Selvagem", "Gaucho Sem Lei"],
 	EnemyType.ASSOMBRACAO: ["Alma Gaúcha Errante", "Fantasma da Estância", "Lamento do Vento", "Sombra Ancestral"],
@@ -55,7 +55,7 @@ const DIFFICULTY_MULTIPLIERS = {
 }
 
 # Random variation ranges (as percentages)
-const STAT_VARIANCE = 0.2  # ±20% variation
+const STAT_VARIANCE = 0.2 # ±20% variation
 
 #region Public Methods
 
@@ -83,7 +83,7 @@ func generate_enemy_of_type(enemy_type: EnemyType, difficulty: Difficulty = Diff
 		"name": name,
 		"type": EnemyType.keys()[enemy_type].to_lower(),
 		"max_h": max_health,
-		"actual_h": max_health,  # Start at full health
+		"actual_h": max_health, # Start at full health
 		"atk_dam": attack_damage,
 		"initiative": initiative
 	}
@@ -97,9 +97,16 @@ func generate_enemy_group(group_size: int, difficulty: Difficulty = Difficulty.N
 	if balance_types and group_size > 1:
 		# Ensure variety in enemy types
 		var types_to_use = _select_balanced_types(group_size)
+		var enemy_names = {}
 		for i in range(group_size):
 			var enemy_type = types_to_use[i % types_to_use.size()]
-			enemies.append(generate_enemy_of_type(enemy_type, difficulty))
+			var enemy = generate_enemy_of_type(enemy_type, difficulty)
+			if enemy.name in enemy_names:
+				enemy_names[enemy.name] += 1
+				enemy.name += " " + str(enemy_names[enemy.name])
+			else:
+				enemy_names[enemy.name] = 1
+			enemies.append(enemy)
 	else:
 		# Completely random
 		for i in range(group_size):
@@ -189,7 +196,7 @@ func _determine_difficulty_from_level(average_level: int) -> Difficulty:
 
 func _calculate_enemy_count(player_count: int, average_level: int) -> int:
 	# Base enemy count on party size and level
-	var base_count = max(1, player_count - 1)  # Usually 1 less than party size
+	var base_count = max(1, player_count - 1) # Usually 1 less than party size
 	
 	# Adjust based on level
 	if average_level > 5:
@@ -197,7 +204,7 @@ func _calculate_enemy_count(player_count: int, average_level: int) -> int:
 	if average_level > 10:
 		base_count += 1
 	
-	return min(base_count, 4)  # Cap at 4 enemies for manageable battles
+	return min(base_count, 4) # Cap at 4 enemies for manageable battles
 
 #endregion
 
