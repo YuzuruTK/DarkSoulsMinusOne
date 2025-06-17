@@ -38,12 +38,6 @@ var action_order: Array = []
 var party: Array[Player] = []
 var enemies: Array[Enemy] = []
 
-# Data
-var imported_enemies = [
-	{"name": "Mocego", "max_h": 10, "actual_h": 10, "atk_dam": 1, "initiative": randi_range(0, 10)},
-	{"name": "HaisenValdooo", "max_h": 12, "actual_h": 7, "atk_dam": 2, "initiative": randi_range(0, 10)}
-]
-
 # Dependencies
 var save_functions: SaveFunctions
 var skills_table: Dictionary
@@ -137,7 +131,7 @@ func _calculate_action_order() -> void:
 	action_order.clear()
 	action_order.append_array(enemies)
 	action_order.append_array(party)
-	action_order.sort_custom(func(a, b): return a.initiative < b.initiative)
+	action_order.sort_custom(func(a, b): return a.initiative > b.initiative)
 
 func _display_action_order() -> void:
 	_clear_action_display()
@@ -280,6 +274,17 @@ func _get_available_enemies() -> Array[Dictionary]:
 	return available
 
 func _process_player_action(player: Player, action_data: Dictionary) -> void:
+	var action_type = action_data.get("action_type", "attack")
+	
+	match action_type:
+		"attack":
+			await _process_attack_action(player, action_data)
+		"item":
+			await _process_item_action(player, action_data)
+		_:
+			push_warning("Unknown action type: %s" % action_type)
+
+func _process_attack_action(player: Player, action_data: Dictionary) -> void:
 	var attack_id = action_data.get("attack_id", 0)
 	var damage = player.get_attack_damage(attack_id)
 	var target_enemy_ids = action_data.get("enemies", [])
@@ -287,6 +292,39 @@ func _process_player_action(player: Player, action_data: Dictionary) -> void:
 	for enemy_id in target_enemy_ids:
 		if enemy_id < enemies.size():
 			await _damage_enemy(enemies[enemy_id], damage)
+
+func _process_item_action(player: Player, action_data: Dictionary) -> void:
+	var item_name = action_data.get("item_name", "Unknown Item")
+	print("%s used item: %s" % [player.player_name, item_name])
+	
+	# Add visual feedback for item usage
+	await _show_item_usage_feedback(player, item_name)
+	
+	# Item effects are already applied in the UI when the item is used
+	# No additional processing needed here since the Player class handles the effects
+
+func _show_item_usage_feedback(player: Player, item_name: String) -> void:
+	# Create a temporary label to show item usage
+	var feedback_label = RichTextLabel.new()
+	feedback_label.bbcode_enabled = true
+	feedback_label.text = "[font_size=24][color=GREEN]Used %s![/color][/font_size]" % item_name
+	feedback_label.size = Vector2(200, 50)
+	feedback_label.position = Vector2(-100, -150)
+	feedback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
+	player.add_child(feedback_label)
+	
+	# Animate the feedback
+	var tween = create_tween()
+	tween.parallel().tween_property(feedback_label, "modulate:a", 0.0, 1.5)
+	tween.parallel().tween_property(feedback_label, "position:y", feedback_label.position.y - 50, 1.5)
+	
+	await tween.finished
+	
+	# Clean up
+	if is_instance_valid(feedback_label):
+		player.remove_child(feedback_label)
+		feedback_label.queue_free()
 
 func _damage_enemy(enemy: Enemy, damage: int) -> void:
 	await enemy.got_hurt(damage)

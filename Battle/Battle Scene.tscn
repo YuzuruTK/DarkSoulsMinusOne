@@ -1,12 +1,31 @@
 [gd_scene load_steps=6 format=3 uid="uid://bwnkfc5qg0u23"]
 
 [ext_resource type="Script" uid="uid://b5qr2r47ure0d" path="res://Battle/battle_scene.gd" id="1_vut7b"]
-[ext_resource type="Script" uid="uid://bcxyjmpeyupof" path="res://matrix_bbcode.gd" id="2_appw3"]
 [ext_resource type="PackedScene" uid="uid://birx5mfbbetwc" path="res://Battle/ui/action_label.tscn" id="4_yn3g4"]
 [ext_resource type="Script" uid="uid://chjaa00hlqmjt" path="res://Battle/ui/action_label.gd" id="5_j3bqf"]
 
+[sub_resource type="GDScript" id="GDScript_ucmsg"]
+script/source = "@tool
+extends RichTextEffect
+class_name RichTextGhost
+
+# Syntax: [ghost freq=5.0 span=10.0][/ghost]
+
+# Define the tag name.
+var bbcode = \"ghost\"
+
+func _process_custom_fx(char_fx):
+	# Get parameters, or use the provided default value if missing.
+	var speed = char_fx.env.get(\"freq\", 5.0)
+	var span = char_fx.env.get(\"span\", 10.0)
+
+	var alpha = sin(char_fx.elapsed_time * speed + (char_fx.range.x / span)) * 0.5 + 0.5
+	char_fx.color.a = alpha
+	return true
+"
+
 [sub_resource type="RichTextEffect" id="RichTextEffect_ucmsg"]
-script = ExtResource("2_appw3")
+script = SubResource("GDScript_ucmsg")
 metadata/_custom_type_script = "uid://bcxyjmpeyupof"
 
 [node name="Battle Scene" type="Node2D"]

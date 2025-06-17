@@ -7,14 +7,14 @@ const ITEMS = {
 	"chimarrao": {
 		"name": "Chimarrão",
 		"type": "mana_heal",
-		"value": 30,
-		"description": "Restaura 30 pontos de mana"
+		"value": 10,
+		"description": "Restaura 10 pontos de mana"
 	},
 	"churrasco": {
 		"name": "Churrasco",
 		"type": "health_heal", 
-		"value": 25,
-		"description": "Restaura 25 pontos de vida"
+		"value": 6,
+		"description": "Restaura 6 pontos de vida"
 	}
 }
 

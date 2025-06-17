@@ -36,14 +36,14 @@ const ENEMY_NAMES = {
 
 # Base stats for each enemy type
 const BASE_STATS = {
-	EnemyType.MORCEGO: {"max_h": 8, "atk_dam": 2, "init_range": [1, 8]},
-	EnemyType.CAO: {"max_h": 20, "atk_dam": 4, "init_range": [2, 6]},
-	EnemyType.CORVO: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]},
-	EnemyType.JAVALI: {"max_h": 12, "atk_dam": 1, "init_range": [1, 4]},
-	EnemyType.SOLDADO: {"max_h": 14, "atk_dam": 3, "init_range": [5, 10]},
-	EnemyType.BANDOLEIRO: {"max_h": 9, "atk_dam": 2, "init_range": [6, 12]},
-	EnemyType.ASSOMBRACAO: {"max_h": 11, "atk_dam": 3, "init_range": [4, 9]},
-	EnemyType.ALIEN: {"max_h": 15, "atk_dam": 5, "init_range": [2, 7]},
+	EnemyType.MORCEGO: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]},          # Fast annoyance
+	EnemyType.CAO: {"max_h": 18, "atk_dam": 5, "init_range": [2, 6]},              # Aggressive brute
+	EnemyType.CORVO: {"max_h": 12, "atk_dam": 4, "init_range": [4, 9]},            # Agile and smart
+	EnemyType.JAVALI: {"max_h": 14, "atk_dam": 2, "init_range": [1, 4]},           # Tanky slow beast
+	EnemyType.SOLDADO: {"max_h": 16, "atk_dam": 4, "init_range": [5, 10]},         # Tactical, average all
+	EnemyType.BANDOLEIRO: {"max_h": 11, "atk_dam": 3, "init_range": [6, 12]},      # Ambusher
+	EnemyType.ASSOMBRACAO: {"max_h": 13, "atk_dam": 4, "init_range": [5, 10]},     # Magic-like threat
+	EnemyType.ALIEN: {"max_h": 18, "atk_dam": 6, "init_range": [3, 7]},            # High damage threat
 }
 
 # Difficulty multipliers
