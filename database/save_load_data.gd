@@ -5,6 +5,15 @@ class_name SaveFunctions
 func _ready() -> void:
 	download_skills()
 
+func delete_save_file():
+	var save_path = "user://characters.save"
+	if FileAccess.file_exists(save_path):
+		var absolute_path = ProjectSettings.globalize_path(save_path)
+		DirAccess.remove_absolute(absolute_path)
+		print("characters.save deleted successfully!")
+	else:
+		print("characters.save doesn't exist")
+		
 func save_characters(characters: Array):
 	var path = "user://characters.save"
 	var file = FileAccess.open(path, FileAccess.WRITE)
@@ -15,6 +24,8 @@ func save_characters(characters: Array):
 	pass
 func load_characters() -> Array:
 	var firstPath = "res://Characters.json"
+	# Delete Save for testing
+	#delete_save_file()
 	var path = "user://characters.save"
 	if not FileAccess.file_exists(path):
 		path = firstPath

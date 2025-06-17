@@ -9,7 +9,9 @@ const HURT_FLASH_COUNT = 3
 
 # Node references
 @onready var mana_bar = $ManaBar
+@onready var mana_label = Label.new()
 @onready var health_bar = $HealthBar
+@onready var health_label = Label.new()
 @onready var nametag = $Name
 @onready var sprite = $Sprite
 
@@ -83,6 +85,8 @@ func export() -> Dictionary:
 
 #region Godot Lifecycle
 func _ready() -> void:
+	$".".add_child(health_label)
+	$".".add_child(mana_label)
 	_setup_hud()
 
 func _process(_delta: float) -> void:
@@ -100,6 +104,9 @@ func _update_hud() -> void:
 	
 	health_bar.value = health_percentage
 	mana_bar.value = mana_percentage
+	
+	mana_label.text = "%d / %d" % [actual_mana, max_mana]
+	health_label.text = "%d / %d" % [actual_health, max_health]
 
 func _adjust_hud_layout() -> void:
 	_setup_mana_bar()
@@ -111,12 +118,14 @@ func _setup_mana_bar() -> void:
 	mana_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
 	mana_bar.size = HUD_SIZE
 	mana_bar.scale = Vector2(-HUD_SCALE.x, HUD_SCALE.y)
+	mana_label.position = Vector2($".".position.x - (mana_label.get_combined_minimum_size().x / 2),mana_bar.position.y + 26)
 
 func _setup_health_bar() -> void:
 	health_bar.position = Vector2(-200, -250)
 	health_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
 	health_bar.size = HUD_SIZE
 	health_bar.scale = HUD_SCALE
+	health_label.position = Vector2($".".position.x - (health_label.get_combined_minimum_size().x / 2),health_bar.position.y + 26)
 
 func _setup_nametag() -> void:
 	nametag.position = Vector2(-200, -300)
