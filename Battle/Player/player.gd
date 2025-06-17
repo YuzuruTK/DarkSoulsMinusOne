@@ -140,6 +140,7 @@ func consume_mana(skill_id: int) -> bool:
 		return false
 	
 	var mana_cost = skills[skill_id].get("mana_cost", 0)
+	print(skills[skill_id])
 	actual_mana -= mana_cost
 	actual_mana = max(0, actual_mana)  # Ensure mana doesn't go negative
 	_update_hud()
