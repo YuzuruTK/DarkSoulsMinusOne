@@ -27,7 +27,6 @@ func load_characters() -> Array:
 		if result is Array:
 			return result
 	return []
-	
 func load_skills() -> Dictionary:
 	var path = "res://database/skills/skills.csv"
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -49,15 +48,20 @@ func load_skills() -> Dictionary:
 		if line == "":
 			continue
 		var values = line.split(",")
-		var skill = {"name": values[1], "damage_multiplier" : float(values[2]), "description" : values[3], "is_multi_target" : values[4] == "TRUE"}
+		
+		# Parse all skill properties including mana_cost
+		var skill = {
+			"name": values[1],
+			"damage_multiplier": float(values[2]),
+			"description": values[3],
+			"is_multi_target": values[4] == "TRUE",
+			"mana_cost": int(values[5]) if values.size() > 5 else 0
+		}
+		
 		data[int(values[0])] = skill
 	return data
 
-
 func download_skills():
-	if !is_inside_tree():
-		push_error("download_skills() chamado fora da árvore!")
-		return
 
 	var url = "https://docs.google.com/spreadsheets/d/1yzeKOgEGvKEkrAPS7ku6sVcL6IcdF73H0boI2i4lGIE/gviz/tq?tqx=out:csv&sheet=skills"
 	var save_path = "user://skills.csv"

@@ -6,10 +6,10 @@ uid="uid://ch6x1bs2moe0o"
 
 [deps]
 
-files=["res://database/skills/skills.name.translation", "res://database/skills/skills.damage.translation", "res://database/skills/skills.description.translation", "res://database/skills/skills.is.translation"]
+files=["res://database/skills/skills.name.translation", "res://database/skills/skills.damage.translation", "res://database/skills/skills.description.translation", "res://database/skills/skills.is.translation", "res://database/skills/skills.mana.translation"]
 
 source_file="res://database/skills/skills.csv"
-dest_files=["res://database/skills/skills.name.translation", "res://database/skills/skills.damage.translation", "res://database/skills/skills.description.translation", "res://database/skills/skills.is.translation"]
+dest_files=["res://database/skills/skills.name.translation", "res://database/skills/skills.damage.translation", "res://database/skills/skills.description.translation", "res://database/skills/skills.is.translation", "res://database/skills/skills.mana.translation"]
 
 [params]
 
