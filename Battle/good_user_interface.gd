@@ -111,20 +111,29 @@ func _create_main_menu_buttons() -> Array[Button]:
 	var button_configs = [
 		{
 			"text": "Atacar",
-			"action": func(): _on_attack_selected()
+			"action": func(): _on_attack_selected(),
+			"enabled": true
 		},
 		{
 			"text": "Habilidades",
-			"action": func(): _change_state(GameState.SELECT_SKILL)
+			"action": func(): _change_state(GameState.SELECT_SKILL),
+			"enabled": player.has_usable_skills()
 		},
 		{
 			"text": "Itens",
-			"action": func(): _change_state(GameState.MENU_ITEM)
+			"action": func(): _change_state(GameState.MENU_ITEM),
+			"enabled": true
 		}
 	]
 	
 	for config in button_configs:
 		var button = _create_button(config.text, config.action)
+		button.disabled = not config.enabled
+		
+		# Add tooltip for disabled skills button
+		if config.text == "Habilidades" and not config.enabled:
+			button.tooltip_text = "Sem mana suficiente para usar habilidades"
+		
 		buttons.append(button)
 	
 	return buttons
@@ -138,11 +147,54 @@ func _create_skill_buttons() -> Array[Button]:
 	
 	# Skill buttons
 	var player_skills = player.get_skills()
-	for skill in player_skills:
-		var button = _create_button(skill.name, func(): _on_skill_selected(skill))
-		buttons.append(button)
+	
+	if player_skills.is_empty():
+		var no_skills_button = _create_button("Nenhuma habilidade disponível", func(): pass)
+		no_skills_button.disabled = true
+		buttons.append(no_skills_button)
+	else:
+		for skill in player_skills:
+			var button_text = _format_skill_button_text(skill)
+			var button = _create_button(button_text, func(): _on_skill_selected(skill))
+			
+			# Disable button if not enough mana
+			button.disabled = not skill.can_use
+			
+			# Add tooltip with skill info
+			var tooltip = _create_skill_tooltip(skill)
+			button.tooltip_text = tooltip
+			
+			buttons.append(button)
 	
 	return buttons
+
+func _format_skill_button_text(skill: Dictionary) -> String:
+	var base_text = skill.name
+	var mana_cost = skill.get("mana_cost", 0)
+	
+	if mana_cost > 0:
+		base_text += " (%d MP)" % mana_cost
+	
+	if not skill.can_use and mana_cost > 0:
+		base_text += " [Sem Mana]"
+	
+	return base_text
+
+func _create_skill_tooltip(skill: Dictionary) -> String:
+	var tooltip = skill.name
+	
+	if skill.has("description") and skill.description != "":
+		tooltip += "\n" + skill.description
+	
+	var mana_cost = skill.get("mana_cost", 0)
+	if mana_cost > 0:
+		tooltip += "\nCusto de Mana: %d" % mana_cost
+		tooltip += "\nMana Atual: %d/%d" % [player.actual_mana, player.max_mana]
+	
+	if skill.get("is_multi_target", false):
+		tooltip += "\nAtinge todos os inimigos"
+	
+	return tooltip
 
 func _create_enemy_selection_buttons() -> Array[Button]:
 	var buttons: Array[Button] = []
@@ -178,6 +230,11 @@ func _create_item_buttons() -> Array[Button]:
 		for item in available_items:
 			var button_text = "%s (%d)" % [item.name, item.quantity]
 			var button = _create_button(button_text, func(): _on_item_selected(item))
+			
+			# Add tooltip for item description
+			if item.has("description"):
+				button.tooltip_text = item.description
+			
 			buttons.append(button)
 	
 	return buttons
@@ -213,22 +270,43 @@ func _create_button(text: String, callback: Callable) -> Button:
 
 #region Button Actions
 func _on_attack_selected() -> void:
-	selected_attack_id = 0 # Basic attack
+	selected_attack_id = 0 # Basic attack (no mana cost)
 	_change_state(GameState.SELECT_ENEMY)
 
 func _on_skill_selected(skill: Dictionary) -> void:
 	selected_attack_id = skill.id
 	
+	# Check if player has enough mana
+	if not skill.can_use:
+		push_warning("Not enough mana to use skill: %s" % skill.name)
+		# Show feedback to player
+		_show_insufficient_mana_feedback(skill)
+		return
+	
 	if skill.is_multi_target:
 		# Multi-target skill affects all enemies
-		var all_enemy_ids = enemies_available.map(func(enemy): return enemy.id)
-		_emit_action_chosen(all_enemy_ids)
+		if _try_use_skill(skill.id):
+			var all_enemy_ids = enemies_available.map(func(enemy): return enemy.id)
+			_emit_action_chosen(all_enemy_ids)
 	else:
 		# Single-target skill requires enemy selection
 		_change_state(GameState.SELECT_ENEMY)
 
+func _show_insufficient_mana_feedback(skill: Dictionary) -> void:
+	print("Insufficient mana for skill: %s (Cost: %d, Available: %d)" % [skill.name, skill.mana_cost, player.actual_mana])
+	# You could add visual feedback here like flashing the mana bar
+	# or showing a temporary message
+
 func _on_enemy_selected(enemy: Dictionary) -> void:
-	_emit_action_chosen([enemy.id])
+	# Try to use the skill (consume mana if successful)
+	if _try_use_skill(selected_attack_id):
+		_emit_action_chosen([enemy.id])
+	else:
+		# If skill usage failed, go back to main menu
+		_change_state(GameState.MENU_MAIN)
+
+func _try_use_skill(skill_id: int) -> bool:
+	return player.use_skill(skill_id)
 
 func _on_item_selected(item: Dictionary) -> void:
 	selected_item_id = item.id
@@ -257,6 +335,17 @@ func _emit_action_chosen(enemy_ids: Array) -> void:
 	}
 	action_chosen.emit(action_data)
 	_change_state(GameState.END_TURN)
+#endregion
+
+#region Public Interface
+func set_enemies_available(enemies: Array[Dictionary]) -> void:
+	enemies_available = enemies
+
+func refresh_ui() -> void:
+	# Refresh the current state to update button states
+	var current = current_state
+	_change_state(GameState.NONE)
+	_change_state(current)
 #endregion
 
 #region UI Positioning
@@ -310,4 +399,4 @@ func _calculate_button_positions(sprite_size: Vector2, button_size: Vector2, but
 		positions.append(position)
 	
 	return positions
-#endregion
+#endregion	
