@@ -1,0 +1,3 @@
+id,name,type,value,description
+0,Chimarrão,mana_heal,10,Restaura 10 pontos de mana
+1,Churrasco,health_heal,6,Restaura 6 pontos de vida
