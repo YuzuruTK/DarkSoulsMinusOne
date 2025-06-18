@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://fr0ymyrve5ca"
+
+[deps]
+
+files=["res://database/weapons_armors/something.name.translation", "res://database/weapons_armors/something.type.translation", "res://database/weapons_armors/something.attack.translation", "res://database/weapons_armors/something.defense.translation", "res://database/weapons_armors/something.description.translation"]
+
+source_file="res://database/weapons_armors/something.csv"
+dest_files=["res://database/weapons_armors/something.name.translation", "res://database/weapons_armors/something.type.translation", "res://database/weapons_armors/something.attack.translation", "res://database/weapons_armors/something.defense.translation", "res://database/weapons_armors/something.description.translation"]
+
+[params]
+
+compress=true
+delimiter=0

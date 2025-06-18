@@ -1,0 +1,17 @@
+id,name,type,attack,defense,description
+leather_armor,Armor de Couro,armor,0,2,Reduz 2 pontos de dano recebido
+iron_armor,Armadura de Ferro,armor,0,4,Reduz 4 pontos de dano recebido
+steel_armor,Armadura de Aço,armor,0,6,Reduz 6 pontos de dano recebido
+dragon_armor,Armadura de Dragão,armor,0,8,Reduz 8 pontos de dano recebido
+wooden_sword,Espada de Madeira,weapon,2,0,Adiciona 2 pontos de ataque
+iron_sword,Espada de Ferro,weapon,4,0,Adiciona 4 pontos de ataque
+steel_sword,Espada de Aço,weapon,6,0,Adiciona 6 pontos de ataque
+enchanted_blade,Lâmina Encantada,weapon,8,0,Adiciona 8 pontos de ataque
+demon_sword,Espada Demoníaca,weapon,10,0,Adiciona 10 pontos de ataque
+club,Porrete,weapon,1,0,Uma arma simples de madeira
+dagger,Punhal,weapon,3,0,Uma lâmina rápida e afiada
+battle_axe,Machado de Guerra,weapon,7,0,Um machado pesado e poderoso
+cloth_robe,Vestes de Pano,armor,0,1,Proteção básica contra ataques
+chain_mail,Cota de Malha,armor,0,3,Armadura flexível de anéis metálicos
+plate_armor,Armadura de Placas,armor,0,5,Proteção pesada de metal sólido
+mystic_robes,Vestes Místicas,armor,0,7,Vestes imbuídas com magia protetiva
