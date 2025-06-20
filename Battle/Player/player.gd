@@ -30,6 +30,7 @@ var initiative: int = 0
 # Calculated stats (including equipment)
 var max_health: float = 0
 var attack_damage: float = 0
+var def: int = 0
 
 # Skills and UI
 @export var skills: Dictionary[int, Dictionary] = {}
@@ -45,6 +46,7 @@ func initialize(player_params: Dictionary, skill_table: Dictionary) -> void:
 	_initialize_skills(player_params, skill_table)
 	_initialize_managers()
 	_load_equipment_from_params(player_params)
+	_load_inventory_from_params(player_params)
 	_recalculate_stats()
 
 func _set_base_stats(params: Dictionary) -> void:
@@ -67,15 +69,23 @@ func _initialize_skills(params: Dictionary, skill_table: Dictionary) -> void:
 func _initialize_managers() -> void:
 	if not item_manager:
 		item_manager = ItemManager.new()
+		item_manager._load_items_data()
+		item_manager._initialize_inventory()
 		add_child(item_manager)
 	
 	if not equipment_manager:
 		equipment_manager = EquipmentManager.new()
 		add_child(equipment_manager)
+		equipment_manager._load_equipment_data()
+		equipment_manager._initialize_equipment()
 
 func _load_equipment_from_params(params: Dictionary) -> void:
 	if params.has("equipment") and equipment_manager:
 		equipment_manager.import_equipment(params.equipment)
+
+func _load_inventory_from_params(params: Dictionary) -> void:
+	if params.has("inventory") and item_manager:
+		item_manager.import_inventory(params.inventory)
 
 func _recalculate_stats() -> void:
 	if not equipment_manager:
@@ -84,13 +94,13 @@ func _recalculate_stats() -> void:
 	# Calculate max health with equipment bonuses
 	var defense_bonus = equipment_manager.get_total_defense_bonus()
 	max_health = base_max_health + (defense_bonus * 2)  # Each defense point adds 2 max health
-	
+	def = defense_bonus
 	# Calculate attack damage with equipment bonuses
 	var attack_bonus = equipment_manager.get_total_attack_bonus()
 	attack_damage = base_attack_damage + attack_bonus
 	
 	# Update HUD to reflect new stats
-	_update_hud()
+	#_update_hud()
 #endregion
 
 #region Data Export
@@ -113,7 +123,7 @@ func export() -> Dictionary:
 	# Include equipment if equipment_manager exists
 	if equipment_manager:
 		export_data["equipment"] = equipment_manager.export_equipment()
-	
+		
 	return export_data
 #endregion
 
@@ -183,7 +193,6 @@ func consume_mana(skill_id: int) -> bool:
 		return false
 	
 	var mana_cost = skills[skill_id].get("mana_cost", 0)
-	print(skills[skill_id])
 	actual_mana -= mana_cost
 	actual_mana = max(0, actual_mana)
 	_update_hud()
@@ -207,6 +216,8 @@ func can_use_skill(skill_id: int) -> bool:
 	return skills.has(skill_id) and has_enough_mana(skill_id)
 
 func get_attack_damage(skill_id: int) -> int:
+	if skill_id == 0:
+		return attack_damage
 	if not skills.has(skill_id):
 		push_warning("Skill ID %d not found for player %s" % [skill_id, player_name])
 		return 0
@@ -232,14 +243,10 @@ func use_skill(skill_id: int) -> bool:
 
 func got_hurt(damage_points: int) -> void:
 	# Apply defense bonus from equipment
-	var defense_bonus = 0
-	if equipment_manager:
-		defense_bonus = equipment_manager.get_total_defense_bonus()
-	
-	var actual_damage = max(1, damage_points - defense_bonus)  # Minimum 1 damage
+	var actual_damage = max(1, damage_points - def)  # Minimum 1 damage
 	actual_health = max(0, actual_health - actual_damage)
 	
-	print("%s took %d damage (reduced from %d by %d defense)" % [player_name, actual_damage, damage_points, defense_bonus])
+	print("%s took %d damage (reduced from %d by %d defense)" % [player_name, actual_damage, damage_points, def])
 	_update_hud()
 	await _play_hurt_animation()
 

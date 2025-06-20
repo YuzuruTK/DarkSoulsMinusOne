@@ -3,17 +3,14 @@ extends Node2D
 class_name SaveFunctions
 
 func _ready() -> void:
-	download_skills()
-	download_equipment()
-
-func delete_save_file():
-	var save_path = "user://characters.save"
+	pass
+func delete_save_file(save_path):
 	if FileAccess.file_exists(save_path):
 		var absolute_path = ProjectSettings.globalize_path(save_path)
 		DirAccess.remove_absolute(absolute_path)
-		print("characters.save deleted successfully!")
+		print(save_path, " deleted successfully!")
 	else:
-		print("characters.save doesn't exist")
+		print(save_path," doesn't exist")
 		
 func save_characters(characters: Array):
 	var path = "user://characters.save"
@@ -29,7 +26,7 @@ func save_characters(characters: Array):
 func load_characters() -> Array:
 	var firstPath = "res://Characters.json"
 	# Delete Save for testing
-	#delete_save_file()
+	delete_save_file("user://characters.save")	
 	var path = "user://characters.save"
 	if not FileAccess.file_exists(path):
 		path = firstPath
@@ -46,6 +43,7 @@ func load_characters() -> Array:
 func load_skills() -> Dictionary:
 	# Try loading from user directory first (downloaded version)
 	var user_path = "user://skills.csv"
+	delete_save_file("user://skills.csv")
 	var fallback_path = "res://database/skills/skills.csv"
 	
 	var path = user_path if FileAccess.file_exists(user_path) else fallback_path
@@ -93,6 +91,7 @@ func load_skills() -> Dictionary:
 func load_equipment() -> Dictionary:
 	# Try loading from user directory first (downloaded version)
 	var user_path = "user://equipment.csv"
+	delete_save_file("user://equipment.csv")
 	var fallback_path = "res://database/weapons_armors/something.csv"
 	
 	var path = user_path if FileAccess.file_exists(user_path) else fallback_path
@@ -142,6 +141,7 @@ func load_items() -> Dictionary:
 	# This function loads consumable items (potions, etc.)
 	# You can implement this similar to equipment if you have an items CSV
 	var user_path = "user://items.csv"
+	delete_save_file("user://items.csv")
 	var fallback_path = "res://database/items/items.csv"
 	
 	var path = user_path if FileAccess.file_exists(user_path) else fallback_path
@@ -183,54 +183,6 @@ func load_items() -> Dictionary:
 	
 	print("Loaded ", data.size(), " items")
 	return data
-
-func download_skills():
-	var url = "https://docs.google.com/spreadsheets/d/1yzeKOgEGvKEkrAPS7ku6sVcL6IcdF73H0boI2i4lGIE/gviz/tq?tqx=out:csv&sheet=skills"
-	var save_path = "user://skills.csv"
-	
-	await _download_csv(url, save_path, "skills")
-
-func download_equipment():
-	# Add your Google Sheets URL for equipment here
-	var url = "https://docs.google.com/spreadsheets/d/1yzeKOgEGvKEkrAPS7ku6sVcL6IcdF73H0boI2i4lGIE/gviz/tq?tqx=out:csv&sheet=equips"
-	var save_path = "user://equipment.csv"
-	
-	await _download_csv(url, save_path, "equipment")
-
-func download_items():
-	# Add your Google Sheets URL for items here
-	var url = "https://docs.google.com/spreadsheets/d/1yzeKOgEGvKEkrAPS7ku6sVcL6IcdF73H0boI2i4lGIE/gviz/tq?tqx=out:csv&sheet=items"
-	var save_path = "user://items.csv"
-	
-	await _download_csv(url, save_path, "items")
-
-func _download_csv(url: String, save_path: String, data_type: String):
-	var http = HTTPRequest.new()
-	add_child(http)
-
-	await get_tree().process_frame  # Wait for HTTPRequest to enter the tree
-	
-	http.request_completed.connect(func(result, response_code, headers, body):
-		if result == HTTPRequest.RESULT_SUCCESS and response_code == 200:
-			var csv_text = body.get_string_from_utf8()
-			var file = FileAccess.open(save_path, FileAccess.WRITE)
-			if file:
-				file.store_string(csv_text)
-				file.close()
-				print("%s CSV downloaded and saved to: %s" % [data_type.capitalize(), save_path])
-			else:
-				push_error("Failed to save %s CSV to: %s" % [data_type, save_path])
-		else:
-			push_error("Failed to download %s CSV. Result: %d, Response: %d" % [data_type, result, response_code])
-		
-		# Clean up
-		http.queue_free()
-	)
-
-	var error = http.request(url, [], HTTPClient.METHOD_GET, "")
-	if error != OK:
-		push_error("HTTPRequest failed to start for %s: %d" % [data_type, error])
-		http.queue_free()
 
 # Utility function to get all game data at once
 func load_all_game_data() -> Dictionary:

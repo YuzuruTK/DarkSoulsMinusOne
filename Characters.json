@@ -10,7 +10,15 @@
 		"skills_id": [
 			0,
 			1
-		]
+		],
+		"equipment": {
+			"armor": "leather_armor",
+			"weapon": "wooden_sword"
+		},
+		"inventory": {
+			"chimarrao": 2,
+			"churrasco": 1
+		}
 	},
 	{
 		"name": "Coach",
@@ -27,7 +35,15 @@
 			4,
 			5,
 			6
-		]
+		],
+		"equipment": {
+			"armor": "iron_armor",
+			"weapon": "iron_sword"
+		},
+		"inventory": {
+			"chimarrao": 4,
+			"churrasco": 3
+		}
 	},
 	{
 		"name": "Rick",
@@ -40,7 +56,15 @@
 		"skills_id": [
 			0,
 			15
-		]
+		],
+		"equipment": {
+			"armor": "steel_armor",
+			"weapon": "steel_sword"
+		},
+		"inventory": {
+			"chimarrao": 3,
+			"churrasco": 2
+		}
 	},
 	{
 		"name": "Joao",
@@ -53,6 +77,14 @@
 		"skills_id": [
 			0,
 			25
-		]
+		],
+		"equipment": {
+			"armor": "chain_mail",
+			"weapon": "enchanted_blade"
+		},
+		"inventory": {
+			"chimarrao": 5,
+			"churrasco": 4
+		}
 	}
 ]

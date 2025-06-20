@@ -2,51 +2,8 @@
 extends Node
 class_name EquipmentManager
 
-# Equipment definitions
-const EQUIPMENT = {
-	"leather_armor": {
-		"name": "Armor de Couro",
-		"type": "armor",
-		"defense": 2,
-		"description": "Reduz 2 pontos de dano recebido"
-	},
-	"iron_armor": {
-		"name": "Armadura de Ferro",
-		"type": "armor", 
-		"defense": 4,
-		"description": "Reduz 4 pontos de dano recebido"
-	},
-	"steel_armor": {
-		"name": "Armadura de Aço",
-		"type": "armor",
-		"defense": 6,
-		"description": "Reduz 6 pontos de dano recebido"
-	},
-	"wooden_sword": {
-		"name": "Espada de Madeira",
-		"type": "weapon",
-		"attack": 2,
-		"description": "Adiciona 2 pontos de ataque"
-	},
-	"iron_sword": {
-		"name": "Espada de Ferro",
-		"type": "weapon",
-		"attack": 4,
-		"description": "Adiciona 4 pontos de ataque"
-	},
-	"steel_sword": {
-		"name": "Espada de Aço",
-		"type": "weapon",
-		"attack": 6,
-		"description": "Adiciona 6 pontos de ataque"
-	},
-	"enchanted_blade": {
-		"name": "Lâmina Encantada",
-		"type": "weapon",
-		"attack": 8,
-		"description": "Adiciona 8 pontos de ataque"
-	}
-}
+# Equipment definitions - will be loaded from CSV
+var EQUIPMENT: Dictionary = {}
 
 # Default equipment for new characters
 const DEFAULT_EQUIPMENT = {
@@ -58,7 +15,83 @@ const DEFAULT_EQUIPMENT = {
 var equipped: Dictionary = {}
 
 func _ready() -> void:
-	_initialize_equipment()
+	pass
+func _load_equipment_data() -> void:
+	# Load equipment from the save/load system
+	var save_system = get_node_or_null("/root/SaveFunctions")
+	if save_system:
+		EQUIPMENT = save_system.load_equipment()
+	else:
+		# Fallback to hardcoded data if save system not available
+		_load_fallback_equipment()
+
+func _load_fallback_equipment() -> void:
+	# Fallback equipment data matching CSV structure
+	EQUIPMENT = {
+		"leather_armor": {
+			"name": "Armor de Couro",
+			"type": "armor",
+			"attack_bonus": 0,
+			"defense_bonus": 2,
+			"description": "Reduz 2 pontos de dano recebido"
+		},
+		"iron_armor": {
+			"name": "Armadura de Ferro",
+			"type": "armor", 
+			"attack_bonus": 0,
+			"defense_bonus": 4,
+			"description": "Reduz 4 pontos de dano recebido"
+		},
+		"steel_armor": {
+			"name": "Armadura de Aço",
+			"type": "armor",
+			"attack_bonus": 0,
+			"defense_bonus": 6,
+			"description": "Reduz 6 pontos de dano recebido"
+		},
+		"dragon_armor": {
+			"name": "Armadura de Dragão",
+			"type": "armor",
+			"attack_bonus": 0,
+			"defense_bonus": 8,
+			"description": "Reduz 8 pontos de dano recebido"
+		},
+		"wooden_sword": {
+			"name": "Espada de Madeira",
+			"type": "weapon",
+			"attack_bonus": 2,
+			"defense_bonus": 0,
+			"description": "Adiciona 2 pontos de ataque"
+		},
+		"iron_sword": {
+			"name": "Espada de Ferro",
+			"type": "weapon",
+			"attack_bonus": 4,
+			"defense_bonus": 0,
+			"description": "Adiciona 4 pontos de ataque"
+		},
+		"steel_sword": {
+			"name": "Espada de Aço",
+			"type": "weapon",
+			"attack_bonus": 6,
+			"defense_bonus": 0,
+			"description": "Adiciona 6 pontos de ataque"
+		},
+		"enchanted_blade": {
+			"name": "Lâmina Encantada",
+			"type": "weapon",
+			"attack_bonus": 8,
+			"defense_bonus": 0,
+			"description": "Adiciona 8 pontos de ataque"
+		},
+		"demon_sword": {
+			"name": "Espada Demoníaca",
+			"type": "weapon",
+			"attack_bonus": 10,
+			"defense_bonus": 0,
+			"description": "Adiciona 10 pontos de ataque"
+		}
+	}
 
 func _initialize_equipment() -> void:
 	equipped = DEFAULT_EQUIPMENT.duplicate()
@@ -130,7 +163,6 @@ func unequip_item(equipment_type: String) -> bool:
 func get_equipped_item(equipment_type: String) -> Dictionary:
 	if not equipped.has(equipment_type) or equipped[equipment_type] == "":
 		return {}
-	
 	var item_id = equipped[equipment_type]
 	if EQUIPMENT.has(item_id):
 		var item_data = EQUIPMENT[item_id].duplicate()
@@ -144,14 +176,14 @@ func get_total_attack_bonus() -> int:
 	var weapon = get_equipped_item("weapon")
 	if weapon.is_empty():
 		return 0
-	return weapon.get("attack", 0)
+	return weapon.get("attack_bonus", 0)
 
 # Get total defense bonus from equipped armor
 func get_total_defense_bonus() -> int:
 	var armor = get_equipped_item("armor")
 	if armor.is_empty():
 		return 0
-	return armor.get("defense", 0)
+	return armor.get("defense_bonus", 0)
 
 # Get equipment data by ID
 func get_equipment_data(item_id: String) -> Dictionary:

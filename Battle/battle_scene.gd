@@ -11,7 +11,7 @@ enum BattleState {
 	BATTLE_LOST
 }
 
-# Constants
+#	 Constants
 const CAMERA_ZOOM_LEVEL = 0.8
 const CAMERA_ZOOM_DURATION = 1.0
 const MOVEMENT_DURATION = 1.0
@@ -81,7 +81,6 @@ func _create_party(party_data: Array) -> void:
 
 func _create_enemies(enemy_data: Array) -> void:
 	for index in range(enemy_data.size()):
-		print()
 		var enemy_instance = _create_enemy(enemy_data[index], index)
 		enemies.append(enemy_instance)
 
