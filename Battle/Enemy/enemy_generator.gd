@@ -3,13 +3,13 @@ class_name EnemyGenerator
 
 # Enemy type definitions with base stats
 enum EnemyType {
-	MORCEGO,
-	CAO,
-	CORVO,
-	JAVALI,
-	SOLDADO,
-	BANDOLEIRO,
-	ASSOMBRACAO,
+	SKELETON,
+	WOLF,
+	BIRD,
+	HOG,
+	SOLDIER,
+	TIGER,
+	PHANTASM,
 	ALIEN,
 }
 
@@ -23,27 +23,27 @@ enum Difficulty {
 
 # Enemy name pools for each type
 const ENEMY_NAMES = {
-	EnemyType.MORCEGO: ["Asa Negra", "Sombra Veloz", "Sugador Noturno", "Morcegão Caçador"],
-	EnemyType.CAO: ["Feroz da Matilha", "Uivador da Campanha", "Cão Bravo", "Caçador Selvagem"],
-	EnemyType.CORVO: ["Bico da Morte", "Mau Presságio", "Olho Escarlate", "Arauto Negro"],
-	EnemyType.JAVALI: ["Dente de Sabre", "Furioso da Mata", "Javali Monstruoso", "Rei da Espinheira"],
-	EnemyType.SOLDADO: ["Guarda Farroupilha", "Lanceiro Invencível", "Dragão do Sul", "Sentinela Antiga"],
-	EnemyType.BANDOLEIRO: ["Facão de Prata", "Sombra do Bolicho", "Cavalo Selvagem", "Gaucho Sem Lei"],
-	EnemyType.ASSOMBRACAO: ["Alma Gaúcha Errante", "Fantasma da Estância", "Lamento do Vento", "Sombra Ancestral"],
+	EnemyType.WOLF: ["Nightfang", "Alpha", "Uivador", "Shadowpelt"],
+	EnemyType.BIRD: ["Stormcaller", "Harbinger", "Arara", "Tucano", "Want-Want"],
+	EnemyType.HOG: ["Tusker", "Razorback", "Grunter", "Caititu", "Queixada"],
+	EnemyType.SKELETON: ["Gravewalker", "Hollow", "Reaper", "Caveira", "Puro-Osso"],
+	EnemyType.SOLDIER: ["Ironheart", "Sentinel", "Vanguard", "Brigadeiro", "Sargento", "Jagunço", "Milico", "Jorge"],
+	EnemyType.PHANTASM: ["Wraith", "Phantom", "Fantasma", "Aparição", "Sombra", "Specter"],
 	EnemyType.ALIEN: ["Vagalume Estelar", "Observador Silencioso", "Código Cósmico", "Estranho do Espaço"],
+	EnemyType.TIGER: ["Shadow Stalker", "Night Hunter", "Suçuarana", "Pintada", "Jaguar"]
 }
 
 
 # Base stats for each enemy type
 const BASE_STATS = {
-	EnemyType.MORCEGO: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]},          # Fast annoyance
-	EnemyType.CAO: {"max_h": 18, "atk_dam": 5, "init_range": [2, 6]},              # Aggressive brute
-	EnemyType.CORVO: {"max_h": 12, "atk_dam": 4, "init_range": [4, 9]},            # Agile and smart
-	EnemyType.JAVALI: {"max_h": 14, "atk_dam": 2, "init_range": [1, 4]},           # Tanky slow beast
-	EnemyType.SOLDADO: {"max_h": 16, "atk_dam": 4, "init_range": [5, 10]},         # Tactical, average all
-	EnemyType.BANDOLEIRO: {"max_h": 11, "atk_dam": 3, "init_range": [6, 12]},      # Ambusher
-	EnemyType.ASSOMBRACAO: {"max_h": 13, "atk_dam": 4, "init_range": [5, 10]},     # Magic-like threat
+	EnemyType.WOLF: {"max_h": 18, "atk_dam": 5, "init_range": [2, 6]},              # Aggressive brute
+	EnemyType.BIRD: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]},          # Fast annoyance
+	EnemyType.HOG: {"max_h": 14, "atk_dam": 2, "init_range": [1, 4]},           # Tanky slow beast
+	EnemyType.SKELETON: {"max_h": 12, "atk_dam": 4, "init_range": [4, 9]},            # Agile and smart
+	EnemyType.SOLDIER: {"max_h": 16, "atk_dam": 4, "init_range": [5, 10]},         # Tactical, average all
+	EnemyType.PHANTASM : {"max_h": 13, "atk_dam": 4, "init_range": [5, 10]},     # Magic-like threat
 	EnemyType.ALIEN: {"max_h": 18, "atk_dam": 6, "init_range": [3, 7]},            # High damage threat
+	EnemyType.TIGER: {"max_h": 11, "atk_dam": 3, "init_range": [6, 12]},      # Ambusher
 }
 
 # Difficulty multipliers
@@ -124,7 +124,7 @@ func generate_scaled_enemies(player_count: int, average_player_level: int) -> Ar
 ## Generates a boss enemy
 func generate_boss_enemy(difficulty: Difficulty = Difficulty.HARD) -> Dictionary:
 	# Bosses are typically golems or dragons
-	var boss_types = [EnemyType.ASSOMBRACAO, EnemyType.ALIEN]
+	var boss_types = [EnemyType.TIGER, EnemyType.ALIEN]
 	var boss_type = boss_types[randi() % boss_types.size()]
 	
 	var boss = generate_enemy_of_type(boss_type, difficulty)
@@ -225,30 +225,30 @@ func get_enemy_description(enemy_data: Dictionary) -> String:
 		desc += " They seem sluggish."
 	
 	return desc
-
-## Create a preset encounter (useful for testing)
-func create_preset_encounter(encounter_name: String) -> Array[Dictionary]:
-	match encounter_name.to_lower():
-		"morcegos":
-			return [
-				generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.EASY),
-				generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.EASY),
-				generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.NORMAL)
-			]
-		"caocego":
-			return [
-				generate_enemy_of_type(EnemyType.CAO, Difficulty.NORMAL),
-				generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.NORMAL)
-			]
-		"corvos":
-			return [
-				generate_enemy_of_type(EnemyType.CORVO, Difficulty.NORMAL),
-				generate_enemy_of_type(EnemyType.CORVO, Difficulty.NORMAL)
-			]
-		"boss":
-			return [generate_boss_enemy(Difficulty.NIGHTMARE)]
-		_:
-			push_warning("Unknown encounter: " + encounter_name)
-			return generate_enemy_group(2, Difficulty.NORMAL)
+#
+### Create a preset encounter (useful for testing)
+#func create_preset_encounter(encounter_name: String) -> Array[Dictionary]:
+	#match encounter_name.to_lower():
+		#"morcegos":
+			#return [
+				#generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.EASY),
+				#generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.EASY),
+				#generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.NORMAL)
+			#]
+		#"caocego":
+			#return [
+				#generate_enemy_of_type(EnemyType.CAO, Difficulty.NORMAL),
+				#generate_enemy_of_type(EnemyType.MORCEGO, Difficulty.NORMAL)
+			#]
+		#"corvos":
+			#return [
+				#generate_enemy_of_type(EnemyType.CORVO, Difficulty.NORMAL),
+				#generate_enemy_of_type(EnemyType.CORVO, Difficulty.NORMAL)
+			#]
+		#"boss":
+			#return [generate_boss_enemy(Difficulty.NIGHTMARE)]
+		#_:
+			#push_warning("Unknown encounter: " + encounter_name)
+			#return generate_enemy_group(2, Difficulty.NORMAL)
 
 #endregion
