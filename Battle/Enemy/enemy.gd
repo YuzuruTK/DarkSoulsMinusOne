@@ -14,6 +14,8 @@ const HURT_FLASH_COUNT = 3
 # Character state
 var state: String = ""
 var enemy_name: String = ""
+var enemy_type: String = ""
+var sprite_path: String = ""
 
 # Stats
 var max_health: float = 0
@@ -27,13 +29,33 @@ var buttons: Array[Button] = []
 #region Initialization
 func initialize(enemy_params: Dictionary) -> void:
 	_set_stats(enemy_params)
+	_load_sprite()
 
 func _set_stats(params: Dictionary) -> void:
 	enemy_name = params.get("name", "Unknown Enemy")
+	enemy_type = params.get("type", "unknown")
+	sprite_path = params.get("sprite_path", "res://Sprites/placeholder.png")
 	max_health = float(params.get("max_h", 10))
 	actual_health = float(params.get("actual_h", max_health))
 	attack_damage = float(params.get("atk_dam", 1))
 	initiative = params.get("initiative", 0)
+
+func _load_sprite() -> void:
+	if sprite == null:
+		push_warning("Sprite node not found for enemy: %s" % enemy_name)
+		return
+	
+	# Load the texture from the sprite path
+	var texture = load(sprite_path) as Texture2D
+	if texture != null:
+		sprite.texture = texture
+		print("Loaded sprite for %s: %s" % [enemy_name, sprite_path])
+	else:
+		push_warning("Failed to load sprite for %s at path: %s" % [enemy_name, sprite_path])
+		# Fallback to placeholder
+		var placeholder = load("res://Sprites/placeholder.png") as Texture2D
+		if placeholder != null:
+			sprite.texture = placeholder
 #endregion
 
 #region Godot Lifecycle
@@ -111,4 +133,13 @@ func get_available_actions() -> Array[String]:
 	var actions = ["attack"]
 	# Add more actions based on enemy type or abilities
 	return actions
+#endregion
+
+#region Sprite Management
+func change_sprite(new_sprite_path: String) -> void:
+	sprite_path = new_sprite_path
+	_load_sprite()
+
+func get_sprite_path() -> String:
+	return sprite_path
 #endregion
