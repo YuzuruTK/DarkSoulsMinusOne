@@ -1,0 +1,15 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://clsfd1i2k8qnu"
+valid=false
+
+[deps]
+
+source_file="res://minigames/termo/portuguese.csv"
+
+[params]
+
+compress=true
+delimiter=0
