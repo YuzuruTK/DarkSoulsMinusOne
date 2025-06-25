@@ -29,7 +29,7 @@ const ENEMY_SPRITES = {
 	EnemyType.SKELETON: "res://Sprites/enemies/skeleton_0.png",
 	EnemyType.SOLDIER: "res://Sprites/enemies/soldier_0.png",
 	EnemyType.PHANTASM: "res://Sprites/enemies/phantasm_0.png",
-	EnemyType.ALIEN: "res://Sprites/enemies/bat_0.png",  # Using bat as alien placeholder
+	EnemyType.ALIEN: "res://Sprites/enemies/bat_0.png", # Using bat as alien placeholder
 	EnemyType.TIGER: "res://Sprites/enemies/tiger_0.png"
 }
 
@@ -47,14 +47,14 @@ const ENEMY_NAMES = {
 
 # Base stats for each enemy type
 const BASE_STATS = {
-	EnemyType.WOLF: {"max_h": 18, "atk_dam": 5, "init_range": [2, 6]},              # Aggressive brute
-	EnemyType.BIRD: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]},          # Fast annoyance
-	EnemyType.HOG: {"max_h": 14, "atk_dam": 2, "init_range": [1, 4]},           # Tanky slow beast
-	EnemyType.SKELETON: {"max_h": 12, "atk_dam": 4, "init_range": [4, 9]},            # Agile and smart
-	EnemyType.SOLDIER: {"max_h": 16, "atk_dam": 4, "init_range": [5, 10]},         # Tactical, average all
-	EnemyType.PHANTASM : {"max_h": 13, "atk_dam": 4, "init_range": [5, 10]},     # Magic-like threat
-	EnemyType.ALIEN: {"max_h": 18, "atk_dam": 6, "init_range": [3, 7]},            # High damage threat
-	EnemyType.TIGER: {"max_h": 11, "atk_dam": 3, "init_range": [6, 12]},      # Ambusher
+	EnemyType.WOLF: {"max_h": 18, "atk_dam": 5, "init_range": [2, 6]}, # Aggressive brute
+	EnemyType.BIRD: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]}, # Fast annoyance
+	EnemyType.HOG: {"max_h": 14, "atk_dam": 2, "init_range": [1, 4]}, # Tanky slow beast
+	EnemyType.SKELETON: {"max_h": 12, "atk_dam": 4, "init_range": [4, 9]}, # Agile and smart
+	EnemyType.SOLDIER: {"max_h": 16, "atk_dam": 4, "init_range": [5, 10]}, # Tactical, average all
+	EnemyType.PHANTASM: {"max_h": 13, "atk_dam": 4, "init_range": [5, 10]}, # Magic-like threat
+	EnemyType.ALIEN: {"max_h": 18, "atk_dam": 6, "init_range": [3, 7]}, # High damage threat
+	EnemyType.TIGER: {"max_h": 11, "atk_dam": 3, "init_range": [6, 12]}, # Ambusher
 }
 
 # Difficulty multipliers
@@ -98,8 +98,8 @@ func generate_enemy_of_type(enemy_type: EnemyType, difficulty: Difficulty = Diff
 		"actual_h": max_health, # Start at full health
 		"atk_dam": attack_damage,
 		"initiative": initiative,
-		"sprite_path": sprite_path,  # Add sprite path to enemy data
-		"enemy_type": enemy_type     # Keep reference to enum for easy access
+		"sprite_path": sprite_path, # Add sprite path to enemy data
+		"enemy_type": enemy_type # Keep reference to enum for easy access
 	}
 	
 	return enemy_data

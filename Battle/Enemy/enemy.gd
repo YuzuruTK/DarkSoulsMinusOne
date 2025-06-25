@@ -29,7 +29,6 @@ var buttons: Array[Button] = []
 #region Initialization
 func initialize(enemy_params: Dictionary) -> void:
 	_set_stats(enemy_params)
-	_load_sprite()
 
 func _set_stats(params: Dictionary) -> void:
 	enemy_name = params.get("name", "Unknown Enemy")

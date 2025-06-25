@@ -98,8 +98,9 @@ func _create_enemy(enemy_data: Dictionary, index: int) -> Enemy:
 	var enemy_instance: Enemy = enemy_scene.instantiate()
 	enemy_instance.initialize(enemy_data)
 	enemy_instance.name = enemy_data.name
-
 	enemy_group.add_child(enemy_instance)
+	enemy_instance._load_sprite()
+
 	_position_enemy(enemy_instance, index)
 	
 	return enemy_instance
