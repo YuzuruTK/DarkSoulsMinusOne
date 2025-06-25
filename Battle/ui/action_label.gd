@@ -2,7 +2,6 @@ extends HFlowContainer
 
 @onready var nodes: Dictionary[int, MarginContainer] = {}
 @onready var root = $"."
-@onready var arrow = $"."/arrow
 
 func _ready() -> void:
 	# On your container node:

@@ -7,6 +7,14 @@ const HUD_SCALE = Vector2(0.25, 0.4)
 const HURT_FLASH_DURATION = 0.1
 const HURT_FLASH_COUNT = 3
 
+# Sprite mapping - maps character names to sprite file numbers
+const SPRITE_MAPPING = {
+	"Snake": "2",
+	"Coach": "4",
+	"Rick": "1",
+	"Joao": "3"
+}
+
 # Node references
 @onready var mana_bar = $ManaBar
 @onready var mana_label = Label.new()
@@ -18,6 +26,8 @@ const HURT_FLASH_COUNT = 3
 # Character state
 var state: String = ""
 var player_name: String = ""
+var sprite_texture: Texture2D
+var sprite_id: String
 
 # Base stats (without equipment bonuses)
 var base_max_health: float = 0
@@ -47,6 +57,7 @@ func initialize(player_params: Dictionary, skill_table: Dictionary) -> void:
 	_initialize_managers()
 	_load_equipment_from_params(player_params)
 	_load_inventory_from_params(player_params)
+	_load_sprite_from_params(player_params)
 	_recalculate_stats()
 
 func _set_base_stats(params: Dictionary) -> void:
@@ -87,13 +98,65 @@ func _load_inventory_from_params(params: Dictionary) -> void:
 	if params.has("inventory") and item_manager:
 		item_manager.import_inventory(params.inventory)
 
+func _load_sprite_from_params(params: Dictionary) -> void:
+	# Check if sprite_id is directly provided in params
+	if params.has("sprite_id"):
+		sprite_id = str(params.sprite_id)
+	# Otherwise, try to map from character name
+	elif SPRITE_MAPPING.has(player_name):
+		sprite_id = SPRITE_MAPPING[player_name]
+	else:
+		print("No sprite mapping found for player: ", player_name)
+		return
+
+func _load_sprite() -> void:
+	var sprite_path = "res://Sprites/characters/" + sprite_id + ".png"
+	
+	# Check if the sprite file exists
+	if ResourceLoader.exists(sprite_path):
+		sprite_texture = load(sprite_path)
+		if sprite_texture and sprite:
+			sprite.texture = sprite_texture
+			print("Loaded sprite for ", player_name, ": ", sprite_path)
+		else:
+			print("Failed to load sprite texture: ", sprite_path)
+	else:
+		print("Sprite file not found: ", sprite_path)
+		# Fallback to placeholder if available
+		_load_placeholder_sprite()
+
+func _load_placeholder_sprite() -> void:
+	var placeholder_path = "res://Sprites/placeholder.png"
+	if ResourceLoader.exists(placeholder_path):
+		sprite_texture = load(placeholder_path)
+		if sprite_texture and sprite:
+			sprite.texture = sprite_texture
+			print("Loaded placeholder sprite for ", player_name)
+
+# Function to change sprite during runtime
+func change_sprite(id: String) -> bool:
+	sprite_id = id
+	_load_sprite()
+	return sprite_texture != null
+
+# Function to get current sprite info
+func get_sprite_info() -> Dictionary:
+	if SPRITE_MAPPING.has(player_name):
+		sprite_id = SPRITE_MAPPING[player_name]
+	
+	return {
+		"sprite_id": sprite_id,
+		"sprite_path": "res://Sprites/characters/" + sprite_id + ".png" if sprite_id != "" else "",
+		"has_texture": sprite_texture != null
+	}
+
 func _recalculate_stats() -> void:
 	if not equipment_manager:
 		return
 	
 	# Calculate max health with equipment bonuses
 	var defense_bonus = equipment_manager.get_total_defense_bonus()
-	max_health = base_max_health + (defense_bonus * 2)  # Each defense point adds 2 max health
+	max_health = base_max_health + (defense_bonus * 2) # Each defense point adds 2 max health
 	def = defense_bonus
 	# Calculate attack damage with equipment bonuses
 	var attack_bonus = equipment_manager.get_total_attack_bonus()
@@ -107,14 +170,19 @@ func _recalculate_stats() -> void:
 func export() -> Dictionary:
 	var export_data = {
 		"name": player_name,
-		"max_h": base_max_health,  # Export base stats, not calculated ones
+		"max_h": base_max_health, # Export base stats, not calculated ones
 		"actual_h": actual_health,
 		"max_mana": max_mana,
 		"actual_mana": actual_mana,
-		"atk_dam": base_attack_damage,  # Export base attack, not calculated
+		"atk_dam": base_attack_damage, # Export base attack, not calculated
 		"initiative": initiative,
 		"skills_id": skills.keys()
 	}
+	
+	# Include sprite information
+	var sprite_info = get_sprite_info()
+	if sprite_info.sprite_id != "":
+		export_data["sprite_id"] = sprite_info.sprite_id
 	
 	# Include inventory if item_manager exists
 	if item_manager:
@@ -162,14 +230,14 @@ func _setup_mana_bar() -> void:
 	mana_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
 	mana_bar.size = HUD_SIZE
 	mana_bar.scale = Vector2(-HUD_SCALE.x, HUD_SCALE.y)
-	mana_label.position = Vector2($".".position.x - (mana_label.get_combined_minimum_size().x / 2),mana_bar.position.y + 26)
+	mana_label.position = Vector2($".".position.x - (mana_label.get_combined_minimum_size().x / 2), mana_bar.position.y + 26)
 
 func _setup_health_bar() -> void:
 	health_bar.position = Vector2(-200, -250)
 	health_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
 	health_bar.size = HUD_SIZE
 	health_bar.scale = HUD_SCALE
-	health_label.position = Vector2($".".position.x - (health_label.get_combined_minimum_size().x / 2),health_bar.position.y + 26)
+	health_label.position = Vector2($".".position.x - (health_label.get_combined_minimum_size().x / 2), health_bar.position.y + 26)
 
 func _setup_nametag() -> void:
 	nametag.position = Vector2(-200, -300)
@@ -228,7 +296,7 @@ func get_attack_damage(skill_id: int) -> int:
 		return 0
 	
 	var damage_multiplier = skills[skill_id].get("damage_multiplier", 1.0)
-	var damage = attack_damage * damage_multiplier  # Uses calculated attack_damage (includes equipment)
+	var damage = attack_damage * damage_multiplier # Uses calculated attack_damage (includes equipment)
 	return round(damage)
 
 func use_skill(skill_id: int) -> bool:
@@ -243,7 +311,7 @@ func use_skill(skill_id: int) -> bool:
 
 func got_hurt(damage_points: int) -> void:
 	# Apply defense bonus from equipment
-	var actual_damage = max(1, damage_points - def)  # Minimum 1 damage
+	var actual_damage = max(1, damage_points - def) # Minimum 1 damage
 	actual_health = max(0, actual_health - actual_damage)
 	
 	print("%s took %d damage (reduced from %d by %d defense)" % [player_name, actual_damage, damage_points, def])

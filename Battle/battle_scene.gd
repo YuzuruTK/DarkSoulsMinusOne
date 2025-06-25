@@ -59,7 +59,7 @@ func _setup_dependencies() -> void:
 func _setup_battle_scene() -> void:
 	current_turn = 0
 	_setup_camera()
-	await _create_characters()
+	_create_characters()
 	current_state = BattleState.BATTLE_ACTIVE
 
 func _setup_camera() -> void:
@@ -90,6 +90,7 @@ func _create_player(player_data: Dictionary, index: int) -> Player:
 	player_instance.name = player_data.name
 	
 	player_group.add_child(player_instance)
+	player_instance._load_sprite()
 	_position_player(player_instance, index)
 	
 	return player_instance

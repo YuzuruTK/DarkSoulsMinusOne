@@ -154,6 +154,8 @@ func _create_skill_buttons() -> Array[Button]:
 		buttons.append(no_skills_button)
 	else:
 		for skill in player_skills:
+			if skill.id == 0:
+				continue
 			var button_text = _format_skill_button_text(skill)
 			var button = _create_button(button_text, func(): _on_skill_selected(skill))
 			
@@ -163,7 +165,6 @@ func _create_skill_buttons() -> Array[Button]:
 			# Add tooltip with skill info
 			var tooltip = _create_skill_tooltip(skill)
 			button.tooltip_text = tooltip
-			
 			buttons.append(button)
 	
 	return buttons

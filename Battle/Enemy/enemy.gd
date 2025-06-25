@@ -2,11 +2,14 @@ extends CharacterBody2D
 class_name Enemy
 
 # Constants
+const HUD_SIZE = Vector2(400, 50)
+const HUD_SCALE = Vector2(0.25, 0.4)
 const HURT_FLASH_DURATION = 0.1
 const HURT_FLASH_COUNT = 3
 
 # Node references
 @onready var health_bar = $HealthBar
+@onready var health_label = Label.new()
 @onready var name_label = $Name
 @onready var sprite = $Sprite
 @onready var animation_player = $AnimationPlayer
@@ -59,16 +62,17 @@ func _load_sprite() -> void:
 
 #region Godot Lifecycle
 func _ready() -> void:
-	_setup_ui()
+	$".".add_child(health_label)
+	_setup_hud()
 
 func _process(_delta: float) -> void:
 	pass
 #endregion
 
-#region UI Management
-func _setup_ui() -> void:
-	_adjust_name_position()
+#region HUD Management
+func _setup_hud() -> void:
 	_update_health_display()
+	_adjust_hud_layout()
 
 func _update_health_display() -> void:
 	if health_bar == null:
@@ -77,17 +81,36 @@ func _update_health_display() -> void:
 	
 	var health_percentage = (actual_health / max_health) * 100
 	health_bar.value = health_percentage
+	
+	# Update health label
+	health_label.text = "%d / %d" % [actual_health, max_health]
 
-func _adjust_name_position() -> void:
-	if name_label == null or health_bar == null:
+func _adjust_hud_layout() -> void:
+	_setup_health_bar()
+	_setup_nametag()
+
+func _setup_health_bar() -> void:
+	if health_bar == null:
 		return
+		
+	health_bar.position = Vector2(-200, -150)
+	health_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
+	health_bar.size = HUD_SIZE
+	health_bar.scale = HUD_SCALE
 	
-	# Position name label above health bar
-	name_label.position = Vector2(health_bar.position.x, health_bar.position.y - 50)
-	name_label.size = health_bar.size
-	name_label.scale = health_bar.scale
+	# Position health label below the health bar
+	health_label.position = Vector2($".".position.x - (health_label.get_combined_minimum_size().x / 2), health_bar.position.y + 26)
+
+func _setup_nametag() -> void:
+	if name_label == null:
+		return
+		
+	name_label.position = Vector2(-200, -200)
+	name_label.size = HUD_SIZE
+	name_label.scale = HUD_SCALE
+	name_label.bbcode_enabled = true
 	
-	var font_size = round(health_bar.size.y / 1.5)
+	var font_size = round(HUD_SIZE.y / 1.5)
 	name_label.text = "[font_size=%d]%s[/font_size]" % [font_size, enemy_name]
 #endregion
 

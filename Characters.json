@@ -1,12 +1,13 @@
 [
 	{
-		"name": "Snake",
+		"name": "Antonio",
 		"max_h": 10,
 		"max_mana": 50,
 		"actual_mana": 50,
 		"actual_h": 10,
 		"atk_dam": 3,
 		"initiative": 1,
+		"sprite_id": "2",
 		"skills_id": [
 			0,
 			1
@@ -21,13 +22,14 @@
 		}
 	},
 	{
-		"name": "Coach",
+		"name": "Duda",
 		"max_h": 12,
 		"actual_h": 12,
 		"max_mana": 120,
 		"actual_mana": 120,
 		"atk_dam": 2,
 		"initiative": 3,
+		"sprite_id": "4",
 		"skills_id": [
 			0,
 			2,
@@ -46,13 +48,14 @@
 		}
 	},
 	{
-		"name": "Rick",
+		"name": "Vani",
 		"max_h": 8,
 		"actual_h": 8,
 		"max_mana": 80,
 		"actual_mana": 80,
 		"atk_dam": 4,
 		"initiative": 2,
+		"sprite_id": "1",
 		"skills_id": [
 			0,
 			15
@@ -67,13 +70,14 @@
 		}
 	},
 	{
-		"name": "Joao",
+		"name": "Cadu",
 		"max_h": 9,
 		"actual_h": 9,
 		"max_mana": 80,
 		"actual_mana": 80,
 		"atk_dam": 3,
 		"initiative": 4,
+		"sprite_id": "3",
 		"skills_id": [
 			0,
 			25
