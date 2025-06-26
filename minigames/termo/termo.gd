@@ -5,11 +5,18 @@ extends Control
 const WORD_LENGTH = 5
 const MAX_ATTEMPTS = 6
 const WORDS_FILE_PATH = "res://minigames/termo/words.txt"
+enum DIFFICULTY {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
 
 # Game words array (will be loaded from file)
 var WORDS: Array = []
 
 # Game state
+var difficulty_of_game: DIFFICULTY = DIFFICULTY.HARD
 var target_word: String
 var current_row: int = 0
 var current_col: int = 0
@@ -49,7 +56,7 @@ func load_words_from_file():
 		# Only add words that match the expected length and contain only letters
 		if line.length() == WORD_LENGTH and line.is_valid_identifier():
 			WORDS.append(line)
-		elif line.length() > 0:  # Skip empty lines but warn about invalid words
+		elif line.length() > 0: # Skip empty lines but warn about invalid words
 			print("Warning: Skipping invalid word: ", line)
 	
 	file.close()
@@ -107,8 +114,19 @@ func create_letter_tile() -> Label:
 	return tile
 
 func start_new_game():
+	var number: int = 0
 	# Reset game state
-	target_word = WORDS[randi() % WORDS.size()]
+	if difficulty_of_game == DIFFICULTY.HARD:
+		number = randi_range(800, 1200)
+		pass
+	elif difficulty_of_game == DIFFICULTY.MEDIUM:
+		number = randi_range(400, 800)
+		pass
+	else:
+		number = randi_range(0, 400)
+		pass
+	print(number)
+	target_word = WORDS[number]
 	current_row = 0
 	current_col = 0
 	game_over = false
@@ -125,7 +143,7 @@ func start_new_game():
 	message_label.text = "Acerte a palaaararass"
 	submit_button.disabled = false
 	
-	print("New game started. Target word: ", target_word)  # Debug only
+	print("New game started. Target word: ", target_word) # Debug only
 
 func _input(event):
 	if game_over:
@@ -160,6 +178,9 @@ func update_input_display():
 	for i in current_col:
 		current_word += letter_tiles[current_row][i].text
 	input_label.text = current_word
+
+func switch_letter():
+	pass
 
 func submit_guess():
 	if current_col != WORD_LENGTH:

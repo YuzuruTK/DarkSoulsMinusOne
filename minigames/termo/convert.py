@@ -1,4 +1,4 @@
-file = open("minigames/termo/portuguese.csv")
+file = open("minigames/termo/words_clear.txt")
 
 other_file = open("minigames/termo/words.txt", "w")
 count = 0
