@@ -45,24 +45,24 @@ const ENEMY_NAMES = {
 	EnemyType.TIGER: ["Shadow Stalker", "Night Hunter", "Suçuarana", "Pintada", "Jaguar"]
 }
 
-# Base stats for each enemy type
+# Base stats for each enemy type - BALANCED VERSION
 const BASE_STATS = {
-	EnemyType.WOLF: {"max_h": 18, "atk_dam": 5, "init_range": [2, 6]}, # Aggressive brute
-	EnemyType.BIRD: {"max_h": 10, "atk_dam": 3, "init_range": [3, 9]}, # Fast annoyance
-	EnemyType.HOG: {"max_h": 14, "atk_dam": 2, "init_range": [1, 4]}, # Tanky slow beast
-	EnemyType.SKELETON: {"max_h": 12, "atk_dam": 4, "init_range": [4, 9]}, # Agile and smart
-	EnemyType.SOLDIER: {"max_h": 16, "atk_dam": 4, "init_range": [5, 10]}, # Tactical, average all
-	EnemyType.PHANTASM: {"max_h": 13, "atk_dam": 4, "init_range": [5, 10]}, # Magic-like threat
-	EnemyType.ALIEN: {"max_h": 18, "atk_dam": 6, "init_range": [3, 7]}, # High damage threat
-	EnemyType.TIGER: {"max_h": 11, "atk_dam": 3, "init_range": [6, 12]}, # Ambusher
+	EnemyType.WOLF: {"max_h": 30, "atk_dam": 5, "init_range": [2, 6]}, # Aggressive brute - HP increased
+	EnemyType.BIRD: {"max_h": 18, "atk_dam": 4, "init_range": [3, 9]}, # Fast annoyance - HP & damage increased
+	EnemyType.HOG: {"max_h": 25, "atk_dam": 4, "init_range": [1, 4]}, # Tanky slow beast - HP & damage increased
+	EnemyType.SKELETON: {"max_h": 22, "atk_dam": 4, "init_range": [4, 9]}, # Agile and smart - HP increased
+	EnemyType.SOLDIER: {"max_h": 28, "atk_dam": 4, "init_range": [5, 10]}, # Tactical, average all - HP increased
+	EnemyType.PHANTASM: {"max_h": 24, "atk_dam": 4, "init_range": [5, 10]}, # Magic-like threat - HP increased
+	EnemyType.ALIEN: {"max_h": 32, "atk_dam": 6, "init_range": [3, 7]}, # High damage threat - HP increased
+	EnemyType.TIGER: {"max_h": 20, "atk_dam": 5, "init_range": [6, 12]}, # Ambusher - HP & damage increased
 }
 
-# Difficulty multipliers
+# Difficulty multipliers - BALANCED VERSION
 const DIFFICULTY_MULTIPLIERS = {
-	Difficulty.EASY: {"health": 0.7, "damage": 0.8, "init_bonus": 0},
-	Difficulty.NORMAL: {"health": 1.0, "damage": 1.0, "init_bonus": 0},
-	Difficulty.HARD: {"health": 1.4, "damage": 1.3, "init_bonus": 2},
-	Difficulty.NIGHTMARE: {"health": 2.0, "damage": 1.6, "init_bonus": 4}
+	Difficulty.EASY: {"health": 1.0, "damage": 0.8, "init_bonus": 0},
+	Difficulty.NORMAL: {"health": 1.5, "damage": 1.0, "init_bonus": 1},
+	Difficulty.HARD: {"health": 2.0, "damage": 1.3, "init_bonus": 2},
+	Difficulty.NIGHTMARE: {"health": 3.0, "damage": 1.6, "init_bonus": 4}
 }
 
 # Random variation ranges (as percentages)

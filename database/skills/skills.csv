@@ -1,32 +1,32 @@
 id,name,damage_multiplier,description,is_multi_target,mana_cost
-0,Attack,1.0,A basic physical attack,FALSE,0
+0,Attack,1.1,A basic physical attack,FALSE,0
 1,Fireball,1.5,A blazing ball of fire that scorches the target,FALSE,15
 2,Ice Spike,1.2,A sharp crystalline spike that pierces armor,FALSE,12
-3,Thunderstorm,1.8,Lightning strikes all enemies on the battlefield,TRUE,25
-4,Poison Cloud,0.9,A toxic mist that damages all enemies over time,TRUE,18
+3,Thunderstorm,1.3,Lightning strikes all enemies on the battlefield,TRUE,35
+4,Poison Cloud,0.9,A toxic mist that damages all enemies over time,TRUE,25
 5,Double Slash,1.4,Two swift consecutive strikes with increased precision,FALSE,10
-6,Earthquake,1.6,Ground tremors shake and damage all foes,TRUE,22
+6,Earthquake,1.4,Ground tremors shake and damage all foes,TRUE,30
 7,Shield Bash,0.8,A stunning blow that reduces enemy accuracy,FALSE,8
-8,Wind Blade,1.3,Razor-sharp wind cuts through multiple enemies,TRUE,16
+8,Wind Blade,1.2,Razor-sharp wind cuts through multiple enemies,TRUE,20
 9,Life Drain,1.1,Absorbs enemy life force to heal yourself,FALSE,14
-10,Meteor,2.2,A devastating celestial rock crashes down on all enemies,TRUE,35
+10,Meteor,1.6,A devastating celestial rock crashes down on all enemies,TRUE,45
 11,Water Cannon,1.3,High-pressure water blast with knockback,FALSE,13
 12,Shadow Strike,1.7,Strike from the darkness with increased critical chance,FALSE,20
-13,Holy Light,1.5,Divine energy that purifies and damages dark enemies,TRUE,18
+13,Holy Light,1.3,Divine energy that purifies and damages dark enemies,TRUE,22
 14,Venom Blade,1.2,Poisoned weapon that deals damage over time,FALSE,11
 15,Arcane Missile,1.4,Multiple homing magical projectiles,FALSE,16
-16,Thunder Clap,1.1,Stunning electrical burst affecting all nearby enemies,TRUE,14
+16,Thunder Clap,1.1,Stunning electrical burst affecting all nearby enemies,TRUE,18
 17,Quick Shot,0.9,Rapid projectile with high accuracy,FALSE,6
-18,Blizzard,1.9,Freezing storm that slows and damages all foes,TRUE,28
-19,Flame Burst,1.6,Explosive fire damage in a wide area,TRUE,20
-20,Gale Force,1.4,Powerful winds that push back and damage enemies,TRUE,17
+18,Blizzard,1.4,Freezing storm that slows and damages all foes,TRUE,35
+19,Flame Burst,1.4,Explosive fire damage in a wide area,TRUE,25
+20,Gale Force,1.3,Powerful winds that push back and damage enemies,TRUE,20
 21,Lava Whip,1.8,Molten whip that burns through enemy defenses,FALSE,19
-22,Crystal Barrage,1.3,Multiple crystal shards rain down on all targets,TRUE,21
+22,Crystal Barrage,1.2,Multiple crystal shards rain down on all targets,TRUE,28
 23,Crushing Blow,1.5,Devastating melee attack that ignores some armor,FALSE,12
-24,Solar Beam,2.0,Concentrated sunlight burns through a single target,FALSE,24
+24,Solar Beam,1.5,Concentrated sunlight burns through a single target,FALSE,24
 25,Toxic Spray,1.0,Venomous attack that weakens enemy defenses,FALSE,9
-26,Chain Lightning,1.4,Electricity jumps between all enemies,TRUE,23
-27,Frost Nova,1.2,Ice explosion that freezes all nearby enemies,TRUE,19
+26,Chain Lightning,1.3,Electricity jumps between all enemies,TRUE,30
+27,Frost Nova,1.1,Ice explosion that freezes all nearby enemies,TRUE,25
 28,Blood Strike,1.6,Vampiric attack that heals the user,FALSE,15
-29,Divine Wrath,2.5,Ultimate holy attack with massive damage,FALSE,40
-30,Dark Vortex,2.1,Void energy consumes all enemies on the field,TRUE,38
+29,Divine Wrath,1.8,Ultimate holy attack with massive damage,FALSE,40
+30,Dark Vortex,1.5,Void energy consumes all enemies on the field,TRUE,45
