@@ -9,10 +9,10 @@ const HURT_FLASH_COUNT = 3
 
 # Sprite mapping - maps character names to sprite file numbers
 const SPRITE_MAPPING = {
-	"Snake": "2",
-	"Coach": "4",
-	"Rick": "1",
-	"Joao": "3"
+	"Antonio": "1",
+	"Duda": "4",
+	"Cadu": "3",
+	"Vani": "2"
 }
 
 # Node references

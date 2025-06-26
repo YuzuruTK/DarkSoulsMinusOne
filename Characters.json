@@ -7,7 +7,7 @@
 		"actual_h": 10,
 		"atk_dam": 3,
 		"initiative": 1,
-		"sprite_id": "2",
+		"sprite_id": "1",
 		"skills_id": [
 			0,
 			1
@@ -29,7 +29,7 @@
 		"actual_mana": 120,
 		"atk_dam": 2,
 		"initiative": 3,
-		"sprite_id": "4",
+		"sprite_id": "2",
 		"skills_id": [
 			0,
 			2,
@@ -55,7 +55,7 @@
 		"actual_mana": 80,
 		"atk_dam": 4,
 		"initiative": 2,
-		"sprite_id": "1",
+		"sprite_id": "4",
 		"skills_id": [
 			0,
 			15
