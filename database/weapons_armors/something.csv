@@ -1,17 +1,17 @@
 id,name,type,attack,defense,description
-leather_armor,Armor de Couro,armor,0,3,Reduz 3 pontos de dano recebido
-iron_armor,Armadura de Ferro,armor,0,6,Reduz 6 pontos de dano recebido
-steel_armor,Armadura de Aço,armor,0,8,Reduz 8 pontos de dano recebido
-dragon_armor,Armadura de Dragão,armor,0,10,Reduz 10 pontos de dano recebido
-wooden_sword,Espada de Madeira,weapon,1,0,Adiciona 1 ponto de ataque
-iron_sword,Espada de Ferro,weapon,3,0,Adiciona 3 pontos de ataque
-steel_sword,Espada de Aço,weapon,4,0,Adiciona 4 pontos de ataque
-enchanted_blade,Lâmina Encantada,weapon,5,0,Adiciona 5 pontos de ataque
-demon_sword,Espada Demoníaca,weapon,6,0,Adiciona 6 pontos de ataque
-club,Porrete,weapon,1,0,Uma arma simples de madeira
-dagger,Punhal,weapon,2,0,Uma lâmina rápida e afiada
-battle_axe,Machado de Guerra,weapon,4,0,Um machado pesado e poderoso
-cloth_robe,Vestes de Pano,armor,0,2,Proteção básica contra ataques
-chain_mail,Cota de Malha,armor,0,5,Armadura flexível de anéis metálicos
-plate_armor,Armadura de Placas,armor,0,7,Proteção pesada de metal sólido
-mystic_robes,Vestes Místicas,armor,0,9,Vestes imbuídas com magia protetiva
+leather_armor,Colete de Couro,armor,0,3,Couro curtido que protege o peito dos golpes
+iron_armor,Peitoral de Ferro,armor,0,6,Chapa de ferro batido que aguenta pancada
+steel_armor,Couraça de Aço,armor,0,8,Proteção de aço resistente como as antigas
+chain_mail,Cota de Malha,armor,0,5,Malha de ferro entrelaçada que flexiona
+dragon_armor,Gibão Reforçado,armor,0,10,Colete de couro com rebites de metal
+wooden_sword,Porrete de Madeira,weapon,1,0,Pedaço de pau grosso pra dar pancada
+iron_sword,Facão de Ferro,weapon,3,0,Lâmina pesada que corta e machuca
+steel_sword,Faca Grande de Aço,weapon,4,0,Faca bem afiada e resistente
+enchanted_blade,Adaga Especial,weapon,5,0,Lâmina balanceada com cabo reforçado
+demon_sword,Punhal Cruel,weapon,6,0,Faca de ponta bem afiada e perigosa
+club,Cassetete,weapon,1,0,Pau curto e grosso pra quebrar osso
+dagger,Faca de Ponta,weapon,2,0,Facinha rápida e bem afiada
+battle_axe,Machado Pesado,weapon,4,0,Machado de cortar lenha adaptado pra briga
+cloth_robe,Camisa de Algodão,armor,0,2,Camisa grossa que protege um pouco
+plate_armor,Proteção Completa,armor,0,7,Proteção de metal que cobre o corpo todo
+mystic_robes,Poncho Reforçado,armor,0,9,Poncho de lã grossa com proteções costuradas
