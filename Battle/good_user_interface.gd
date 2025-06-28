@@ -13,6 +13,7 @@ enum GameState {
 
 # Constants
 const BUTTON_SPACING_RATIO = 2.0
+const BUTTON_FONT_SIZE = 24 # Add this constant for consistent font size
 
 # State management
 var current_state: GameState = GameState.MENU_MAIN
@@ -149,7 +150,7 @@ func _create_skill_buttons() -> Array[Button]:
 	var player_skills = player.get_skills()
 	
 	if player_skills.is_empty():
-		var no_skills_button = _create_button("Nenhuma habilidade disponível", func(): pass)
+		var no_skills_button = _create_button("Nenhuma habilidade disponível", func(): pass )
 		no_skills_button.disabled = true
 		buttons.append(no_skills_button)
 	else:
@@ -224,7 +225,7 @@ func _create_item_buttons() -> Array[Button]:
 	
 	if available_items.is_empty():
 		# No items available
-		var no_items_button = _create_button("Sem itens disponíveis", func(): pass)
+		var no_items_button = _create_button("Sem itens disponíveis", func(): pass )
 		no_items_button.disabled = true
 		buttons.append(no_items_button)
 	else:
@@ -265,6 +266,14 @@ func _create_button(text: String, callback: Callable) -> Button:
 	var button = Button.new()
 	button.text = text
 	button.pressed.connect(callback)
+	
+	# Create and apply larger font
+	var theme = Theme.new()
+	var font = ThemeDB.fallback_font
+	theme.set_font("font", "Button", font)
+	theme.set_font_size("font_size", "Button", BUTTON_FONT_SIZE)
+	button.theme = theme
+	
 	add_child(button)
 	return button
 #endregion
@@ -400,4 +409,4 @@ func _calculate_button_positions(sprite_size: Vector2, button_size: Vector2, but
 		positions.append(position)
 	
 	return positions
-#endregion	
+#endregion

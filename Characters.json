@@ -1,22 +1,22 @@
 [
 	{
 		"name": "Antonio",
-		"max_h": 10,
-		"max_mana": 50,
-		"actual_mana": 50,
-		"actual_h": 10,
+		"max_h": 14,
+		"max_mana": 40,
+		"actual_mana": 40,
+		"actual_h": 14,
 		"atk_dam": 3,
-		"initiative": 1,
+		"initiative": 2,
 		"sprite_id": "1",
 		"skills_id": [
 			0,
 			7,
-			23,
-			28
+			17,
+			23
 		],
 		"equipment": {
 			"armor": "leather_armor",
-			"weapon": "wooden_sword"
+			"weapon": "club"
 		},
 		"inventory": {
 			"chimarrao": 2,
@@ -25,52 +25,49 @@
 	},
 	{
 		"name": "Duda",
-		"max_h": 12,
-		"actual_h": 12,
-		"max_mana": 120,
-		"actual_mana": 120,
+		"max_h": 10,
+		"max_mana": 80,
+		"actual_h": 10,
+		"actual_mana": 80,
 		"atk_dam": 2,
-		"initiative": 3,
+		"initiative": 4,
 		"sprite_id": "2",
 		"skills_id": [
 			0,
 			1,
-			2,
-			3,
 			10,
-			13,
 			18,
+			26,
 			29
 		],
 		"equipment": {
-			"armor": "iron_armor",
-			"weapon": "iron_sword"
+			"armor": "cloth_robe",
+			"weapon": "dagger"
 		},
 		"inventory": {
 			"chimarrao": 4,
-			"churrasco": 3
+			"churrasco": 2
 		}
 	},
 	{
 		"name": "Vani",
-		"max_h": 8,
-		"actual_h": 8,
-		"max_mana": 80,
-		"actual_mana": 80,
+		"max_h": 12,
+		"actual_h": 12,
+		"max_mana": 60,
+		"actual_mana": 60,
 		"atk_dam": 4,
-		"initiative": 2,
+		"initiative": 3,
 		"sprite_id": "4",
 		"skills_id": [
 			0,
+			2,
 			5,
 			12,
-			15,
-			17,
 			21,
 			24
 		],
 		"equipment": {
-			"armor": "steel_armor",
+			"armor": "chain_mail",
 			"weapon": "steel_sword"
 		},
 		"inventory": {
@@ -80,29 +77,29 @@
 	},
 	{
 		"name": "Cadu",
-		"max_h": 9,
-		"actual_h": 9,
-		"max_mana": 80,
-		"actual_mana": 80,
-		"atk_dam": 3,
-		"initiative": 4,
+		"max_h": 8,
+		"actual_h": 8,
+		"max_mana": 100,
+		"actual_mana": 100,
+		"atk_dam": 2,
+		"initiative": 1,
 		"sprite_id": "3",
 		"skills_id": [
 			0,
 			4,
 			9,
-			14,
+			13,
 			25,
-			26,
+			27,
 			30
 		],
 		"equipment": {
-			"armor": "chain_mail",
-			"weapon": "enchanted_blade"
+			"armor": "mystic_robes",
+			"weapon": "wooden_sword"
 		},
 		"inventory": {
 			"chimarrao": 5,
-			"churrasco": 4
+			"churrasco": 3
 		}
 	}
 ]

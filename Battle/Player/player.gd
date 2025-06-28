@@ -16,10 +16,10 @@ const SPRITE_MAPPING = {
 }
 
 # Node references
-@onready var mana_bar = $ManaBar
-@onready var mana_label = Label.new()
-@onready var health_bar = $HealthBar
-@onready var health_label = Label.new()
+@onready var mana_bar: TextureProgressBar = $ManaBar
+@onready var mana_label: RichTextLabel = $ManaLabel
+@onready var health_bar: TextureProgressBar = $HealthBar
+@onready var health_label: RichTextLabel = $HealthLabel
 @onready var nametag = $Name
 @onready var sprite = $Sprite
 
@@ -124,6 +124,11 @@ func _load_sprite() -> void:
 		print("Sprite file not found: ", sprite_path)
 		# Fallback to placeholder if available
 		_load_placeholder_sprite()
+	
+	# Center the sprite horizontally
+	if sprite.texture:
+		sprite.position.y = 0  # Keep at center vertically
+		print("Sprite size: ", sprite.texture.get_size(), " Position: ", sprite.position)
 
 func _load_placeholder_sprite() -> void:
 	var placeholder_path = "res://Sprites/placeholder.png"
@@ -197,9 +202,7 @@ func export() -> Dictionary:
 
 #region Godot Lifecycle
 func _ready() -> void:
-	$".".add_child(health_label)
-	$".".add_child(mana_label)
-	_setup_hud()
+	pass
 
 func _process(_delta: float) -> void:
 	pass
@@ -217,35 +220,57 @@ func _update_hud() -> void:
 	health_bar.value = health_percentage
 	mana_bar.value = mana_percentage
 	
-	mana_label.text = "%d / %d" % [actual_mana, max_mana]
-	health_label.text = "%d / %d" % [actual_health, max_health]
-
+	var font_size = round(HUD_SIZE.y * 0.5)
+	mana_label.text = "[i][color=WHITE][font_size=%d] %d / %d [/font_size]" % [font_size, actual_mana, max_mana]
+	health_label.text = "[i][center][color=WHITE][font_size=%d] %d / %d [/font_size]" % [font_size, actual_health, max_health]
 func _adjust_hud_layout() -> void:
 	_setup_mana_bar()
 	_setup_health_bar()
 	_setup_nametag()
 
 func _setup_mana_bar() -> void:
-	mana_bar.position = Vector2(200, -200)
+	# Calculate mana bar position - centered above character
+	var sprite_top = -(sprite.texture.get_size().y * sprite.scale.y) / 2
+	var bar_width = mana_bar.texture_under.get_size().x * mana_bar.scale.x
+	
+	mana_bar.position.x = -bar_width / 2  # Center horizontally
+	
+	mana_bar.position.y = sprite_top - (mana_bar.texture_under.get_size().y * mana_bar.scale.y) - 10  # 10 pixels above sprite
 	mana_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
-	mana_bar.size = HUD_SIZE
-	mana_bar.scale = Vector2(-HUD_SCALE.x, HUD_SCALE.y)
-	mana_label.position = Vector2($".".position.x - (mana_label.get_combined_minimum_size().x / 2), mana_bar.position.y + 26)
+	
+	# Position mana label centered on the mana bar
+	mana_label.position.x = mana_bar.position.x
+	mana_label.position.y = mana_bar.position.y
+	mana_label.size = mana_bar.size * mana_bar.scale
+	mana_label.bbcode_enabled = true
+
 
 func _setup_health_bar() -> void:
-	health_bar.position = Vector2(-200, -250)
+	# Set size and scale first
+	var bar_width = health_bar.texture_under.get_size().x * health_bar.scale.x
 	health_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
-	health_bar.size = HUD_SIZE
-	health_bar.scale = HUD_SCALE
-	health_label.position = Vector2($".".position.x - (health_label.get_combined_minimum_size().x / 2), health_bar.position.y + 26)
+	
+	var mana_bar_height = mana_bar.texture_under.get_size().y * mana_bar.scale.y
+	
+	# Position health bar above mana bar, centered
+	health_bar.position.x = -bar_width / 2  # Center horizontally
+	health_bar.position.y = mana_bar.position.y - mana_bar_height * 1.1  # 5 pixels below mana bar
+	
+	# Position health label centered on the health bar
+	health_label.position.x = health_bar.position.x
+	health_label.position.y = health_bar.position.y
+	health_label.size = health_bar.size * health_bar.scale
+	health_label.bbcode_enabled = true
 
 func _setup_nametag() -> void:
-	nametag.position = Vector2(-200, -300)
+	# Position nametag above mana bar, centered
+	nametag.position.x = -HUD_SIZE.x / 2  # Center horizontally
+	nametag.position.y = health_bar.position.y - HUD_SIZE.y - 5  # 5 pixels above mana bar
 	nametag.size = HUD_SIZE
 	nametag.bbcode_enabled = true
 	
-	var font_size = round(HUD_SIZE.y / 1.5)
-	nametag.text = "[font_size=%d]%s[/font_size]" % [font_size, player_name]
+	var font_size = round(HUD_SIZE.y * 0.7)
+	nametag.text = "[center][font_size=%d]%s[/font_size][/center]" % [font_size, player_name]
 #endregion
 
 #region Mana Management
