@@ -3,33 +3,7 @@ extends Node
 class_name ItemManager
 
 # Item definitions - will be loaded from CSV
-var ITEMS: Dictionary = {}
-
-# Default inventory
-const DEFAULT_INVENTORY = {
-	"0": 3,  # Chimarrão
-	"1": 2   # Churrasco
-}
-
-# Current inventory
-var inventory: Dictionary = {}
-
-func _ready() -> void:
-	_load_items_data()
-	_initialize_inventory()
-
-func _load_items_data() -> void:
-	# Load items from the save/load system
-	var save_system = get_node_or_null("/root/SaveFunctions")
-	if save_system:
-		ITEMS = save_system.load_items()
-	else:
-		# Fallback to hardcoded data if save system not available
-		_load_fallback_items()
-
-func _load_fallback_items() -> void:
-	# Fallback items data matching CSV structure
-	ITEMS = {
+var ITEMS: Dictionary = {
 		"0": {
 			"name": "Chimarrão",
 			"type": "mana_heal",
@@ -44,6 +18,18 @@ func _load_fallback_items() -> void:
 		}
 	}
 
+# Default inventory
+const DEFAULT_INVENTORY = {
+	"0": 3,  # Chimarrão
+	"1": 2   # Churrasco
+}
+
+# Current inventory
+var inventory: Dictionary = {}
+
+func _ready() -> void:
+	_initialize_inventory()
+		
 func _initialize_inventory() -> void:
 	inventory = DEFAULT_INVENTORY.duplicate()
 

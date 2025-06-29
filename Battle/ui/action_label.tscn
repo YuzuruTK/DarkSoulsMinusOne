@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://birx5mfbbetwc"]
 
-[node name="ActionsShow" type="HFlowContainer"]
+[node name="ActionsShow" type="HBoxContainer"]
 layout_direction = 3
 offset_left = -750.0
 offset_bottom = 100.0
-size_flags_horizontal = 8
+size_flags_horizontal = 10
 alignment = 2

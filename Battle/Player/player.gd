@@ -80,14 +80,12 @@ func _initialize_skills(params: Dictionary, skill_table: Dictionary) -> void:
 func _initialize_managers() -> void:
 	if not item_manager:
 		item_manager = ItemManager.new()
-		item_manager._load_items_data()
 		item_manager._initialize_inventory()
 		add_child(item_manager)
 	
 	if not equipment_manager:
 		equipment_manager = EquipmentManager.new()
 		add_child(equipment_manager)
-		equipment_manager._load_equipment_data()
 		equipment_manager._initialize_equipment()
 
 func _load_equipment_from_params(params: Dictionary) -> void:
@@ -127,7 +125,7 @@ func _load_sprite() -> void:
 	
 	# Center the sprite horizontally
 	if sprite.texture:
-		sprite.position.y = 0  # Keep at center vertically
+		sprite.position.y = 0 # Keep at center vertically
 		print("Sprite size: ", sprite.texture.get_size(), " Position: ", sprite.position)
 
 func _load_placeholder_sprite() -> void:
@@ -165,6 +163,7 @@ func _recalculate_stats() -> void:
 	def = defense_bonus
 	# Calculate attack damage with equipment bonuses
 	var attack_bonus = equipment_manager.get_total_attack_bonus()
+	print(player_name, attack_damage, base_attack_damage, attack_bonus)
 	attack_damage = base_attack_damage + attack_bonus
 	
 	# Update HUD to reflect new stats
@@ -230,12 +229,12 @@ func _adjust_hud_layout() -> void:
 
 func _setup_mana_bar() -> void:
 	# Calculate mana bar position - centered above character
-	var sprite_top = -(sprite.texture.get_size().y * sprite.scale.y) / 2
+	var sprite_top = - (sprite.texture.get_size().y * sprite.scale.y) / 2
 	var bar_width = mana_bar.texture_under.get_size().x * mana_bar.scale.x
 	
-	mana_bar.position.x = -bar_width / 2  # Center horizontally
+	mana_bar.position.x = - bar_width / 2 # Center horizontally
 	
-	mana_bar.position.y = sprite_top - (mana_bar.texture_under.get_size().y * mana_bar.scale.y) - 10  # 10 pixels above sprite
+	mana_bar.position.y = sprite_top - (mana_bar.texture_under.get_size().y * mana_bar.scale.y) - 10 # 10 pixels above sprite
 	mana_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
 	
 	# Position mana label centered on the mana bar
@@ -253,8 +252,8 @@ func _setup_health_bar() -> void:
 	var mana_bar_height = mana_bar.texture_under.get_size().y * mana_bar.scale.y
 	
 	# Position health bar above mana bar, centered
-	health_bar.position.x = -bar_width / 2  # Center horizontally
-	health_bar.position.y = mana_bar.position.y - mana_bar_height * 1.1  # 5 pixels below mana bar
+	health_bar.position.x = - bar_width / 2 # Center horizontally
+	health_bar.position.y = mana_bar.position.y - mana_bar_height * 1.1 # 5 pixels below mana bar
 	
 	# Position health label centered on the health bar
 	health_label.position.x = health_bar.position.x
@@ -264,8 +263,8 @@ func _setup_health_bar() -> void:
 
 func _setup_nametag() -> void:
 	# Position nametag above mana bar, centered
-	nametag.position.x = -HUD_SIZE.x / 2  # Center horizontally
-	nametag.position.y = health_bar.position.y - HUD_SIZE.y - 5  # 5 pixels above mana bar
+	nametag.position.x = - HUD_SIZE.x / 2 # Center horizontally
+	nametag.position.y = health_bar.position.y - HUD_SIZE.y - 5 # 5 pixels above mana bar
 	nametag.size = HUD_SIZE
 	nametag.bbcode_enabled = true
 	
@@ -278,7 +277,10 @@ func has_enough_mana(skill_id: int) -> bool:
 	if not skills.has(skill_id):
 		return false
 	
-	var mana_cost = skills[skill_id].get("mana_cost", 0)
+	var mana_cost = skills[skill_id].get("mana_cost")
+	if not mana_cost:
+		push_error("Mana cost not found for skill.")
+	
 	return actual_mana >= mana_cost
 
 func consume_mana(skill_id: int) -> bool:
@@ -309,19 +311,16 @@ func can_use_skill(skill_id: int) -> bool:
 	return skills.has(skill_id) and has_enough_mana(skill_id)
 
 func get_attack_damage(skill_id: int) -> int:
-	if skill_id == 0:
-		return attack_damage
 	if not skills.has(skill_id):
-		push_warning("Skill ID %d not found for player %s" % [skill_id, player_name])
-		return 0
+		push_error("Skill ID %d not found for player %s" % [skill_id, player_name])
 	
-	# Basic attack (skill_id 0) doesn't consume mana
-	if skill_id != 0 and not has_enough_mana(skill_id):
+	if !has_enough_mana(skill_id):
 		push_warning("Not enough mana to use skill %d for player %s" % [skill_id, player_name])
 		return 0
 	
 	var damage_multiplier = skills[skill_id].get("damage_multiplier", 1.0)
 	var damage = attack_damage * damage_multiplier # Uses calculated attack_damage (includes equipment)
+	consume_mana(skill_id)
 	return round(damage)
 
 func use_skill(skill_id: int) -> bool:

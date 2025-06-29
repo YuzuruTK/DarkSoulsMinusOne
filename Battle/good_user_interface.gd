@@ -295,9 +295,9 @@ func _on_skill_selected(skill: Dictionary) -> void:
 	
 	if skill.is_multi_target:
 		# Multi-target skill affects all enemies
-		if _try_use_skill(skill.id):
-			var all_enemy_ids = enemies_available.map(func(enemy): return enemy.id)
-			_emit_action_chosen(all_enemy_ids)
+		#if _try_use_skill(skill.id):
+		var all_enemy_ids = enemies_available.map(func(enemy): return enemy.id)
+		_emit_action_chosen(all_enemy_ids)
 	else:
 		# Single-target skill requires enemy selection
 		_change_state(GameState.SELECT_ENEMY)
@@ -309,11 +309,11 @@ func _show_insufficient_mana_feedback(skill: Dictionary) -> void:
 
 func _on_enemy_selected(enemy: Dictionary) -> void:
 	# Try to use the skill (consume mana if successful)
-	if _try_use_skill(selected_attack_id):
-		_emit_action_chosen([enemy.id])
-	else:
+	#if _try_use_skill(selected_attack_id):
+	_emit_action_chosen([enemy.id])
+	#else:
 		# If skill usage failed, go back to main menu
-		_change_state(GameState.MENU_MAIN)
+		#_change_state(GameState.MENU_MAIN)
 
 func _try_use_skill(skill_id: int) -> bool:
 	return player.use_skill(skill_id)

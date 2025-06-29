@@ -21,7 +21,7 @@ const TURN_DELAY = 0.5
 @onready var player_group = $PlayerGroup
 @onready var enemy_group = $EnemyGroup
 @onready var camera = $Camera2D
-@onready var turn_label = $Camera2D/TurnLabel
+@onready var turn_label = $Camera2D/TurnSprite/TurnLabel
 @onready var actions_show = $Camera2D/ActionsShow
 
 # Preloaded scenes
@@ -86,11 +86,12 @@ func _create_enemies(enemy_data: Array) -> void:
 
 func _create_player(player_data: Dictionary, index: int) -> Player:
 	var player_instance: Player = player_scene.instantiate()
+	player_group.add_child(player_instance)
 	player_instance.initialize(player_data, skills_table)
 	player_instance.name = player_data.name
 	
-	player_group.add_child(player_instance)
 	player_instance._load_sprite()
+	player_instance._setup_hud()
 	_position_player(player_instance, index)
 	
 	return player_instance
@@ -101,6 +102,7 @@ func _create_enemy(enemy_data: Dictionary, index: int) -> Enemy:
 	enemy_instance.name = enemy_data.name
 	enemy_group.add_child(enemy_instance)
 	enemy_instance._load_sprite()
+	enemy_instance._setup_hud()
 
 	_position_enemy(enemy_instance, index)
 	
@@ -110,7 +112,7 @@ func _create_enemy(enemy_data: Dictionary, index: int) -> Enemy:
 #region Battle Loop
 func _start_battle_loop() -> void:
 	while _is_battle_active():
-		_update_turn_display()
+		#_update_turn_display()
 		await _execute_turn()
 		_advance_turn()
 	
@@ -119,9 +121,9 @@ func _start_battle_loop() -> void:
 func _is_battle_active() -> bool:
 	return enemies.size() > 0 and party.size() > 0
 
-func _update_turn_display() -> void:
-	var turn_text = "[font_size=72][wave amp=100.0 freq=5.0 connected=0]Turno: %s[/wave][/font_size]" % current_turn
-	turn_label.text = turn_text
+#func _update_turn_display() -> void:
+	#var turn_text = "[center][font_size=72]Turno: %s[/font_size]" % current_turn
+	#turn_label.text = turn_text
 
 func _execute_turn() -> void:
 	_calculate_action_order()
@@ -286,7 +288,10 @@ func _process_player_action(player: Player, action_data: Dictionary) -> void:
 			push_warning("Unknown action type: %s" % action_type)
 
 func _process_attack_action(player: Player, action_data: Dictionary) -> void:
-	var attack_id = action_data.get("attack_id", 0)
+	var attack_id = action_data.get("attack_id")
+	if not attack_id:
+		push_error("attack_id not found.")
+	
 	var damage = player.get_attack_damage(attack_id)
 	var target_enemy_ids = action_data.get("enemies", [])
 	

@@ -9,7 +9,7 @@ const HURT_FLASH_COUNT = 3
 
 # Node references
 @onready var health_bar = $HealthBar
-@onready var health_label = Label.new()
+@onready var health_label = $HealthLabel
 @onready var name_label = $Name
 @onready var sprite = $Sprite
 @onready var animation_player = $AnimationPlayer
@@ -32,6 +32,7 @@ var buttons: Array[Button] = []
 #region Initialization
 func initialize(enemy_params: Dictionary) -> void:
 	_set_stats(enemy_params)
+	_load_sprite()
 
 func _set_stats(params: Dictionary) -> void:
 	enemy_name = params.get("name", "Unknown Enemy")
@@ -62,7 +63,6 @@ func _load_sprite() -> void:
 
 #region Godot Lifecycle
 func _ready() -> void:
-	$".".add_child(health_label)
 	_setup_hud()
 
 func _process(_delta: float) -> void:
@@ -71,10 +71,10 @@ func _process(_delta: float) -> void:
 
 #region HUD Management
 func _setup_hud() -> void:
-	_update_health_display()
+	_update_hud()
 	_adjust_hud_layout()
 
-func _update_health_display() -> void:
+func _update_hud() -> void:
 	if health_bar == null:
 		push_warning("Health bar not found for enemy: %s" % enemy_name)
 		return
@@ -82,8 +82,9 @@ func _update_health_display() -> void:
 	var health_percentage = (actual_health / max_health) * 100
 	health_bar.value = health_percentage
 	
-	# Update health label
-	health_label.text = "%d / %d" % [actual_health, max_health]
+	# Update health label with proper formatting
+	var font_size = round(HUD_SIZE.y * 0.5)
+	health_label.text = "[center][color=WHITE][font_size=%d] %d / %d [/font_size]" % [font_size, actual_health, max_health]
 
 func _adjust_hud_layout() -> void:
 	_setup_health_bar()
@@ -92,32 +93,46 @@ func _adjust_hud_layout() -> void:
 func _setup_health_bar() -> void:
 	if health_bar == null:
 		return
-		
-	health_bar.position = Vector2(-200, -150)
-	health_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
-	health_bar.size = HUD_SIZE
-	health_bar.scale = HUD_SCALE
 	
-	# Position health label below the health bar
-	health_label.position = Vector2($".".position.x - (health_label.get_combined_minimum_size().x / 2), health_bar.position.y + 26)
+	# Set proper scaling and fill mode
+	health_bar.fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
+	
+	# Position health bar above the sprite, centered
+	if sprite and sprite.texture:
+		var sprite_top = -(sprite.texture.get_size().y * sprite.scale.y) / 2
+		var bar_width = health_bar.texture_under.get_size().x * health_bar.scale.x
+		
+		health_bar.position.x = -bar_width / 2  # Center horizontally
+		health_bar.position.y = sprite_top - (health_bar.texture_under.get_size().y * health_bar.scale.y) * 1.1  # 10 pixels above sprite
+	else:
+		# Fallback positioning if sprite isn't available yet
+		health_bar.position = Vector2(-200, -150)
+	
+	# Setup health label if it exists
+	if health_label:
+		health_label.position.x = health_bar.position.x
+		health_label.position.y = health_bar.position.y
+		health_label.size = health_bar.size * health_bar.scale
+		health_label.bbcode_enabled = true
 
 func _setup_nametag() -> void:
 	if name_label == null:
 		return
-		
-	name_label.position = Vector2(-200, -200)
+	
+	# Position nametag above health bar, centered
+	name_label.position.x = -HUD_SIZE.x / 2  # Center horizontally
+	name_label.position.y = health_bar.position.y - HUD_SIZE.y - 5  # 5 pixels above mana bar
 	name_label.size = HUD_SIZE
-	name_label.scale = HUD_SCALE
 	name_label.bbcode_enabled = true
 	
-	var font_size = round(HUD_SIZE.y / 1.5)
-	name_label.text = "[font_size=%d]%s[/font_size]" % [font_size, enemy_name]
+	var font_size = round(HUD_SIZE.y * 0.7)
+	name_label.text = "[center][font_size=%d]%s[/font_size][/center]" % [font_size, enemy_name]
 #endregion
 
 #region Combat Actions
 func got_hurt(damage_points: int) -> void:
 	actual_health = max(0, actual_health - damage_points)
-	_update_health_display()
+	_update_hud()
 	await _play_hurt_animation()
 
 func _play_hurt_animation() -> void:
@@ -161,6 +176,8 @@ func get_available_actions() -> Array[String]:
 func change_sprite(new_sprite_path: String) -> void:
 	sprite_path = new_sprite_path
 	_load_sprite()
+	# Recalculate HUD positions after sprite change
+	_adjust_hud_layout()
 
 func get_sprite_path() -> String:
 	return sprite_path

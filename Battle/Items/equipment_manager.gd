@@ -3,7 +3,50 @@ extends Node
 class_name EquipmentManager
 
 # Equipment definitions - will be loaded from CSV
-var EQUIPMENT: Dictionary = {}
+var EQUIPMENT: Dictionary = {
+		"armor_t1": {
+			"name": "Trapos velhos",
+			"type": "armor",
+			"attack_bonus": 0,
+			"defense_bonus": 0,
+			"description": "Trapos velhos que não servem nem pra limpar chao"
+		},
+		"armor_t2": {
+			"name": "Armadura Improvisada",
+			"type": "armor", 
+			"attack_bonus": 0,
+			"defense_bonus": 3,
+			"description": "Entrevero de trapos encontrados em batalha"
+		},
+		"armor_t3": {
+			"name": "Armadura Planejada",
+			"type": "armor",
+			"attack_bonus": 0,
+			"defense_bonus": 6,
+			"description": "Feito por um cara bagual"
+		},
+		"sword_t1": {
+			"name": "Tábua de charque",
+			"type": "weapon",
+			"attack_bonus": 0,
+			"defense_bonus": 0,
+			"description": "Se pega nas vista machuca"
+		},
+		"sword_t2": {
+			"name": "Faca de lida",
+			"type": "weapon",
+			"attack_bonus": 3,
+			"defense_bonus": 0,
+			"description": "No churrasco é estrela"
+		},
+		"sword_t3": {
+			"name": "Peleadora",
+			"type": "weapon",
+			"attack_bonus": 6,
+			"defense_bonus": 0,
+			"description": "Mais afiada lingua de sogra"
+		}
+	}
 
 # Default equipment for new characters
 const DEFAULT_EQUIPMENT = {
@@ -16,82 +59,7 @@ var equipped: Dictionary = {}
 
 func _ready() -> void:
 	pass
-func _load_equipment_data() -> void:
-	# Load equipment from the save/load system
-	var save_system = get_node_or_null("/root/SaveFunctions")
-	if save_system:
-		EQUIPMENT = save_system.load_equipment()
-	else:
-		# Fallback to hardcoded data if save system not available
-		_load_fallback_equipment()
-
-func _load_fallback_equipment() -> void:
-	# Fallback equipment data matching CSV structure
-	EQUIPMENT = {
-		"leather_armor": {
-			"name": "Armor de Couro",
-			"type": "armor",
-			"attack_bonus": 0,
-			"defense_bonus": 2,
-			"description": "Reduz 2 pontos de dano recebido"
-		},
-		"iron_armor": {
-			"name": "Armadura de Ferro",
-			"type": "armor", 
-			"attack_bonus": 0,
-			"defense_bonus": 4,
-			"description": "Reduz 4 pontos de dano recebido"
-		},
-		"steel_armor": {
-			"name": "Armadura de Aço",
-			"type": "armor",
-			"attack_bonus": 0,
-			"defense_bonus": 6,
-			"description": "Reduz 6 pontos de dano recebido"
-		},
-		"dragon_armor": {
-			"name": "Armadura de Dragão",
-			"type": "armor",
-			"attack_bonus": 0,
-			"defense_bonus": 8,
-			"description": "Reduz 8 pontos de dano recebido"
-		},
-		"wooden_sword": {
-			"name": "Espada de Madeira",
-			"type": "weapon",
-			"attack_bonus": 2,
-			"defense_bonus": 0,
-			"description": "Adiciona 2 pontos de ataque"
-		},
-		"iron_sword": {
-			"name": "Espada de Ferro",
-			"type": "weapon",
-			"attack_bonus": 4,
-			"defense_bonus": 0,
-			"description": "Adiciona 4 pontos de ataque"
-		},
-		"steel_sword": {
-			"name": "Espada de Aço",
-			"type": "weapon",
-			"attack_bonus": 6,
-			"defense_bonus": 0,
-			"description": "Adiciona 6 pontos de ataque"
-		},
-		"enchanted_blade": {
-			"name": "Lâmina Encantada",
-			"type": "weapon",
-			"attack_bonus": 8,
-			"defense_bonus": 0,
-			"description": "Adiciona 8 pontos de ataque"
-		},
-		"demon_sword": {
-			"name": "Espada Demoníaca",
-			"type": "weapon",
-			"attack_bonus": 10,
-			"defense_bonus": 0,
-			"description": "Adiciona 10 pontos de ataque"
-		}
-	}
+	
 
 func _initialize_equipment() -> void:
 	equipped = DEFAULT_EQUIPMENT.duplicate()
