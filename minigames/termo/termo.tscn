@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b3gessybvvkpe" path="res://minigames/termo/termo.gd" id="1"]
 
-[node name="WordleGame" type="Control"]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,53 +19,46 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -300.0
+offset_top = -200.0
 offset_right = 200.0
-offset_bottom = 300.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="WordDisplay" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "_ _ _ _ _"
+horizontal_alignment = 1
+
+[node name="InputContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer/TitleContainer"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/InputContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "WORDLE"
+placeholder_text = "Enter your guess..."
+
+[node name="SubmitButton" type="Button" parent="VBoxContainer/InputContainer"]
+layout_mode = 2
+text = "Submit"
+
+[node name="AttemptsList" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Previous guesses: "
+autowrap_mode = 2
+
+[node name="MessageLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Guess the word!"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+[node name="AttemptsCounter" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-columns = 5
-
-[node name="InputContainer" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="InputLabel" type="Label" parent="VBoxContainer/InputContainer"]
-layout_mode = 2
+text = "Attempts: 0/6"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="MessageContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-
-[node name="MessageLabel" type="Label" parent="VBoxContainer/MessageContainer"]
-layout_mode = 2
-text = "Guess the 5-letter word!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ButtonContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="SubmitButton" type="Button" parent="VBoxContainer/ButtonContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Submit Guess"
-
-[node name="NewGameButton" type="Button" parent="VBoxContainer/ButtonContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
 text = "New Game"
