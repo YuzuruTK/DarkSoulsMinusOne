@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dq1o5vqe15c8m"
-path="res://.godot/imported/tucano_0.png-3d2d34dac57ba8c5474f53f472b32831.ctex"
+uid="uid://b2w3ska2f6k8h"
+path="res://.godot/imported/background-battle.png-60d3c745bd1795c24ab9143e5e79c4e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/characters/tucano_0.png"
-dest_files=["res://.godot/imported/tucano_0.png-3d2d34dac57ba8c5474f53f472b32831.ctex"]
+source_file="res://Sprites/background-battle.png"
+dest_files=["res://.godot/imported/background-battle.png-60d3c745bd1795c24ab9143e5e79c4e3.ctex"]
 
 [params]
 
