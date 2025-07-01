@@ -25,6 +25,12 @@ offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TitleRichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
 [node name="WordDisplay" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
@@ -37,22 +43,24 @@ layout_mode = 2
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/InputContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Enter your guess..."
+placeholder_text = "escreva uma palavra Tchê"
+keep_editing_on_text_submit = true
+emoji_menu_enabled = false
 
 [node name="SubmitButton" type="Button" parent="VBoxContainer/InputContainer"]
 layout_mode = 2
-text = "Submit"
+text = "Enviar"
 
 [node name="AttemptsList" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Previous guesses: "
 autowrap_mode = 2
 
-[node name="MessageLabel" type="Label" parent="VBoxContainer"]
+[node name="MessageRichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Guess the word!"
-horizontal_alignment = 1
+bbcode_enabled = true
+fit_content = true
 
 [node name="AttemptsCounter" type="Label" parent="VBoxContainer"]
 layout_mode = 2

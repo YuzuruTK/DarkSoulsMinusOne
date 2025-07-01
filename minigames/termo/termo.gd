@@ -7,16 +7,22 @@ const WORDS_FILE_PATH = "res://minigames/termo/words_clear.txt"
 var target_word = ""
 var displayed_word = ""
 var attempts = []
-var max_attempts = 4
+var max_attempts = 3
 var current_attempts = 0
 var game_over = false
+var SHAKE_EFFECT = "[shake rate=20.0 level=5 connected=1]"
+var letters_revealed_by_attempt
+var available_keys = []
+var letters_used = {}
+var WORDS_TO_TRY = []
 
 # UI References
 @onready var word_display = $VBoxContainer/WordDisplay
 @onready var input_field = $VBoxContainer/InputContainer/LineEdit
 @onready var submit_button = $VBoxContainer/InputContainer/SubmitButton
 @onready var attempts_list = $VBoxContainer/AttemptsList
-@onready var message_label = $VBoxContainer/MessageLabel
+@onready var message_label = $VBoxContainer/MessageRichTextLabel
+@onready var title_label = $VBoxContainer/TitleRichTextLabel
 @onready var restart_button = $VBoxContainer/RestartButton
 @onready var attempts_counter = $VBoxContainer/AttemptsCounter
 
@@ -38,6 +44,13 @@ func setup_ui():
 	input_field.placeholder_text = "Enter your guess..."
 	restart_button.text = "New Game"
 	restart_button.visible = false
+	
+	# Setup RichTextLabel
+	message_label.bbcode_enabled = true
+	message_label.fit_content = true
+
+	title_label.bbcode_enabled = true
+	title_label.fit_content = true
 
 func load_words_from_file():
 	var file = FileAccess.open(WORDS_FILE_PATH, FileAccess.READ)
@@ -47,13 +60,16 @@ func load_words_from_file():
 		print("FileAccess error: ", FileAccess.get_open_error())
 		# Fallback to a few default words if file can't be loaded
 		return
-	
+		
 	WORDS.clear()
+	WORDS_TO_TRY.clear()
 	var words_count = 0
 	while not file.eof_reached():
 		var line = file.get_line().strip_edges().to_upper()
 		WORDS.append(line)
 		words_count += 1
+		if words_count < 1000:
+			WORDS_TO_TRY.append(line)
 	file.close()
 	
 	if WORDS.is_empty():
@@ -65,26 +81,48 @@ func load_words_from_file():
 
 func start_new_game():
 	# Reset game state
-	target_word = WORDS[randi() % WORDS.size()]
+	target_word = ""
+	while target_word == "":
+		target_word = WORDS_TO_TRY[randi() % WORDS_TO_TRY.size()]
+		if len(target_word) <= 4:
+			target_word = ""
 	displayed_word = ""
 	attempts.clear()
 	current_attempts = 0
 	game_over = false
-	
+
 	# Create displayed word with underscores
 	for i in range(target_word.length()):
 		displayed_word += "_"
 	
+	letters_used.clear()
+	for index in range(len(target_word)):
+		letters_used[index] = false
+	
+	available_keys.clear()
+	for key in letters_used.keys():
+		if not letters_used[key]:
+			available_keys.append(key)
+	var number_of_reveal
+	if len(target_word) < 6:
+		number_of_reveal = 1
+	else:
+		number_of_reveal = len(target_word) / (max_attempts)
+	letters_revealed_by_attempt = floor(number_of_reveal)
+	
+	show_hint(number_of_reveal)
+	
+		
 	# Reset UI
 	update_display()
 	input_field.editable = true
 	submit_button.disabled = false
 	restart_button.visible = false
-	message_label.text = "Guess the word!"
-	message_label.modulate = Color.WHITE
+
+	title_label.text = "[center]Descubra a palavra secreta em Inglês para obter sucesso na [color=aquamarine] " + SHAKE_EFFECT + "Habilidade![/shake][/color][/center]"
 	attempts_list.text = ""
 	
-	print("New game started! Target word: " + target_word)  # Debug - remove in final version
+	print("New game started! Target word: " + target_word) # Debug - remove in final version
 
 func _on_submit_pressed():
 	process_guess()
@@ -100,12 +138,12 @@ func process_guess():
 	input_field.text = ""
 	
 	if guess == "" or guess not in WORDS:
+		message_label.text = "[color=red]Erro: Palavra Indisponivel para uso do [/color] [color=yellow] "+ SHAKE_EFFECT +"JOGADOR [/shake][/color]"
 		return
 	
 	# Check if already guessed
 	if guess in attempts:
-		message_label.text = "You already tried '" + guess + "'!"
-		message_label.modulate = Color.YELLOW
+		message_label.text = "[center]" + guess + "[color=yellow] já foi usado ![/color][/center]"
 		return
 	
 	# Add to attempts
@@ -116,45 +154,48 @@ func process_guess():
 	if guess == target_word:
 		win_game()
 		return
-	
-	# Check if guess is a single letter
-	for letter in guess.split(""):
-		if target_word.contains(letter):
-			reveal_letter(letter)
-			message_label.text = "Good guess! '" + guess + "' is in the word!"
-			message_label.modulate = Color.GREEN
-			
-			# Check if word is complete
-			if not displayed_word.contains("_"):
-				win_game()
-				return
+		
 	wrong_guess()
 
-func reveal_letter(letter: String):
+func show_hint(quantity):
+	if len(target_word) % 2 != 0:
+		quantity = floor(quantity)
+	else:
+		quantity = floor(quantity)
+	for i in range(quantity):
+		var index = available_keys[randi() % available_keys.size()]
+		letters_used[index] = true
+		reveal_letter(index)
+
+func reveal_letter(index: int):
 	var new_displayed = ""
-	for i in range(target_word.length()):
-		if target_word[i] == letter:
-			new_displayed += letter
+	for i in range(len(target_word)):
+		if i == index:
+			new_displayed += target_word[index]
 		else:
-			new_displayed += displayed_word[i]
+			new_displayed += displayed_word.split("")[i]
 	displayed_word = new_displayed
 	update_display()
 
 func wrong_guess():
 	current_attempts += 1
-	message_label.text = "Wrong guess! " + str(max_attempts - current_attempts) + " attempts left."
-	message_label.modulate = Color.RED
+	message_label.text = "[center][color=red]Bah vivente, a palavra está errada! tu tens " + str(max_attempts - current_attempts) + " tentativas restantes.[/color][/center]"
 	
+	available_keys.clear()
+	for key in letters_used.keys():
+		if not letters_used[key]:
+			available_keys.append(key)
+			
 	if current_attempts >= max_attempts:
 		lose_game()
+	show_hint(letters_revealed_by_attempt)
 	
 	update_display()
 
 func win_game():
 	game_over = true
 	displayed_word = target_word
-	message_label.text = "Congratulations! You won!"
-	message_label.modulate = Color.GREEN
+	message_label.text = "[center][color=green][b]Boa Pia, Palavra correta[/b][/color][/center]"
 	input_field.editable = false
 	submit_button.disabled = true
 	restart_button.visible = true
@@ -163,8 +204,7 @@ func win_game():
 func lose_game():
 	game_over = true
 	displayed_word = target_word
-	message_label.text = "Game Over! The word was: " + target_word
-	message_label.modulate = Color.RED
+	message_label.text = "[center][color=red][b]CHINELADO![/b]"
 	input_field.editable = false
 	submit_button.disabled = true
 	restart_button.visible = true
@@ -179,10 +219,10 @@ func update_display():
 			spaced_word += " "
 	
 	word_display.text = spaced_word
-	attempts_counter.text = "Attempts: " + str(current_attempts) + "/" + str(max_attempts)
+	attempts_counter.text = "Tentativas: " + str(current_attempts) + "/" + str(max_attempts)
 
 func update_attempts_list():
-	var attempts_text = "Previous guesses: "
+	var attempts_text = "palavras tentadas: "
 	for i in range(attempts.size()):
 		attempts_text += attempts[i]
 		if i < attempts.size() - 1:
