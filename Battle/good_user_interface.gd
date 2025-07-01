@@ -13,7 +13,7 @@ enum GameState {
 
 # Constants
 const BUTTON_SPACING_RATIO = 2.0
-const BUTTON_FONT_SIZE = 24 # Add this constant for consistent font size
+const BUTTON_FONT_SIZE = 35 # Add this constant for consistent font size
 
 # State management
 var current_state: GameState = GameState.MENU_MAIN

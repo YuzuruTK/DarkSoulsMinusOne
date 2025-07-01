@@ -219,7 +219,7 @@ func _update_hud() -> void:
 	health_bar.value = health_percentage
 	mana_bar.value = mana_percentage
 	
-	var font_size = round(HUD_SIZE.y * 0.5)
+	var font_size = 35
 	mana_label.text = "[i][color=WHITE][font_size=%d] %d / %d [/font_size]" % [font_size, actual_mana, max_mana]
 	health_label.text = "[i][center][color=WHITE][font_size=%d] %d / %d [/font_size]" % [font_size, actual_health, max_health]
 func _adjust_hud_layout() -> void:

@@ -18,11 +18,11 @@ const MOVEMENT_DURATION = 1.0
 const TURN_DELAY = 0.5
 
 # Node references
-@onready var player_group = $PlayerGroup
-@onready var enemy_group = $EnemyGroup
-@onready var camera = $Camera2D
-@onready var turn_label = $Camera2D/TurnSprite/TurnLabel
-@onready var actions_show = $Camera2D/ActionsShow
+@onready var player_group = $Battle/PlayerGroup
+@onready var enemy_group = $Battle/EnemyGroup
+@onready var camera = $Battle/Camera2D
+@onready var actions_show = $Battle/Camera2D/ActionsShow
+@onready var termo = $Termo
 
 # Preloaded scenes
 var player_scene = preload("res://Battle/Player/Player.tscn")
@@ -50,6 +50,7 @@ func _initialize_battle() -> void:
 	_setup_dependencies()
 	await _setup_battle_scene()
 	await _start_battle_loop()
+	
 
 func _setup_dependencies() -> void:
 	save_functions = SaveFunctions.new()
@@ -61,6 +62,8 @@ func _setup_battle_scene() -> void:
 	_setup_camera()
 	_create_characters()
 	current_state = BattleState.BATTLE_ACTIVE
+	termo.process_mode = Node.PROCESS_MODE_DISABLED
+	termo.visible = false
 
 func _setup_camera() -> void:
 	camera.position = Vector2.ZERO
@@ -156,9 +159,9 @@ func _create_action_label(actor) -> RichTextLabel:
 	label.custom_minimum_size = Vector2(actions_show.size.x / 4, actions_show.size.y)
 	
 	if actor is Player:
-		label.text = "[font_size=30][color=BLUE]%s[/color]" % actor.player_name
+		label.text = "[font_size=40][color=BLUE]%s[/color]" % actor.player_name
 	elif actor is Enemy:
-		label.text = "[font_size=30][color=RED]%s[/color]" % actor.enemy_name
+		label.text = "[font_size=40][color=RED]%s[/color]" % actor.enemy_name
 	
 	return label
 
@@ -245,7 +248,8 @@ func _execute_player_action(player: Player) -> void:
 	await _move_player_back(player, original_position)
 
 func _calculate_action_position() -> Vector2:
-	return Vector2(enemy_group.position.x + player_group.position.x, 0)
+	#return Vector2(enemy_group.position.x + player_group.position.x, 0)
+	return Vector2(0, 0)
 
 func _move_player_to_action_position(player: Player, position: Vector2) -> void:
 	await _animate_node_movement(player, position, true)
@@ -291,6 +295,14 @@ func _process_attack_action(player: Player, action_data: Dictionary) -> void:
 	var attack_id = action_data.get("attack_id")
 	if not attack_id:
 		push_error("attack_id not found.")
+	if attack_id != 0:
+		start_termo()
+		var success = await termo.game_completed
+		await close_termo()
+		if not success:
+			_show_usage_feedback(player, "[color=red]Falhou em usar a Habilidade[/color]")
+			return
+	_show_usage_feedback(player,"[color=green]Obteve Sucesso na Habilidade[/color]")
 	
 	var damage = player.get_attack_damage(attack_id)
 	var target_enemy_ids = action_data.get("enemies", [])
@@ -299,22 +311,35 @@ func _process_attack_action(player: Player, action_data: Dictionary) -> void:
 		if enemy_id < enemies.size():
 			await _damage_enemy(enemies[enemy_id], damage)
 
+func start_termo():
+	termo.process_mode = Node.PROCESS_MODE_INHERIT
+	termo.visible = true
+	$Battle.process_mode = Node.PROCESS_MODE_DISABLED
+	await _animate_node_movement(camera, termo.global_position, true)
+	termo.start_new_game()
+	pass
+func close_termo():
+	termo.process_mode = Node.PROCESS_MODE_INHERIT
+	await _animate_node_movement(camera, $Battle.global_position, true)
+	termo.visible = false
+	$Battle.process_mode = Node.PROCESS_MODE_INHERIT
+	pass
 func _process_item_action(player: Player, action_data: Dictionary) -> void:
 	var item_name = action_data.get("item_name", "Unknown Item")
 	print("%s used item: %s" % [player.player_name, item_name])
 	
 	# Add visual feedback for item usage
-	await _show_item_usage_feedback(player, item_name)
+	await _show_usage_feedback(player, "Used" + item_name)
 	
 	# Item effects are already applied in the UI when the item is used
 	# No additional processing needed here since the Player class handles the effects
 
-func _show_item_usage_feedback(player: Player, item_name: String) -> void:
+func _show_usage_feedback(player: Player, message: String) -> void:
 	# Create a temporary label to show item usage
 	var feedback_label = RichTextLabel.new()
 	feedback_label.bbcode_enabled = true
-	feedback_label.text = "[font_size=24][color=GREEN]Used %s![/color][/font_size]" % item_name
-	feedback_label.size = Vector2(200, 50)
+	feedback_label.text = "[center][font_size=40]%s![/font_size][center]" % message
+	feedback_label.size = Vector2(600, 100)
 	feedback_label.position = Vector2(-100, -150)
 	feedback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
@@ -322,8 +347,8 @@ func _show_item_usage_feedback(player: Player, item_name: String) -> void:
 	
 	# Animate the feedback
 	var tween = create_tween()
-	tween.parallel().tween_property(feedback_label, "modulate:a", 0.0, 1.5)
-	tween.parallel().tween_property(feedback_label, "position:y", feedback_label.position.y - 50, 1.5)
+	tween.parallel().tween_property(feedback_label, "modulate:a", 0.0, 4)
+	tween.parallel().tween_property(feedback_label, "position:y", feedback_label.position.y - 150, 3.5)
 	
 	await tween.finished
 	
@@ -372,10 +397,10 @@ func _handle_player_death(player: Player) -> void:
 #region Positioning
 func _position_player(player: Player, index: int) -> void:
 	var positions = [
-		Vector2(-150, 0),
-		Vector2(150, 200),
-		Vector2(-150, 400),
-		Vector2(150, 600)
+		Vector2(-140, 0),
+		Vector2(140, 200),
+		Vector2(-140, 400),
+		Vector2(140, 600)
 	]
 	
 	if index < positions.size():
@@ -383,10 +408,10 @@ func _position_player(player: Player, index: int) -> void:
 
 func _position_enemy(enemy: Enemy, index: int) -> void:
 	var positions = [
-		Vector2(0, 0),
-		Vector2(-300, 200),
-		Vector2(0, 400),
-		Vector2(-300, 600)
+		Vector2(10, 0),
+		Vector2(-290, 200),
+		Vector2(10, 400),
+		Vector2(-290, 600)
 	]
 	
 	if index < positions.size():

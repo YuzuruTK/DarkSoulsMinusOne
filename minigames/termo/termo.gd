@@ -1,5 +1,6 @@
-# WordleGame.gd - Main game controller
 extends Control
+
+signal game_completed(success: bool)
 
 const WORDS_FILE_PATH = "res://minigames/termo/words_clear.txt"
 
@@ -29,11 +30,19 @@ var WORDS_TO_TRY = []
 # Word bank - you can modify this list
 var WORDS = ["GODOT", "GAME", "CODE", "PIXEL", "SCRIPT", "ENGINE", "PLAYER", "LEVEL"]
 
+var auto_close_timer: Timer
+
 func _ready():
 	setup_ui()
 	load_words_from_file()
 	start_new_game()
-	
+	#  Create auto-close timer
+	auto_close_timer = Timer.new()
+	auto_close_timer.wait_time = 3.0 # 3 seconds delay
+	auto_close_timer.one_shot = true
+	auto_close_timer.timeout.connect(_on_auto_close_timeout)
+	add_child(auto_close_timer)
+
 func setup_ui():
 	# Connect signals
 	submit_button.pressed.connect(_on_submit_pressed)
@@ -82,6 +91,7 @@ func load_words_from_file():
 func start_new_game():
 	# Reset game state
 	target_word = ""
+	message_label.text = ""
 	while target_word == "":
 		target_word = WORDS_TO_TRY[randi() % WORDS_TO_TRY.size()]
 		if len(target_word) <= 4:
@@ -138,7 +148,7 @@ func process_guess():
 	input_field.text = ""
 	
 	if guess == "" or guess not in WORDS:
-		message_label.text = "[color=red]Erro: Palavra Indisponivel para uso do [/color] [color=yellow] "+ SHAKE_EFFECT +"JOGADOR [/shake][/color]"
+		message_label.text = "[color=red]Erro: Palavra Indisponivel para uso do [/color] [color=yellow] " + SHAKE_EFFECT + "JOGADOR [/shake][/color]"
 		return
 	
 	# Check if already guessed
@@ -200,6 +210,10 @@ func win_game():
 	submit_button.disabled = true
 	restart_button.visible = true
 	update_display()
+	
+	# Emit success signal and start auto-close timer
+	game_completed.emit(true)
+	auto_close_timer.start()
 
 func lose_game():
 	game_over = true
@@ -209,6 +223,22 @@ func lose_game():
 	submit_button.disabled = true
 	restart_button.visible = true
 	update_display()
+
+	# Emit failure signal and start auto-close timer
+	game_completed.emit(false)
+	auto_close_timer.start()
+
+# Auto-close timeout handler
+func _on_auto_close_timeout():
+	# This will be handled by the battle scene
+	pass
+
+# Add a method to get the current game state (useful for polling method)
+func is_game_won() -> bool:
+	return game_over and displayed_word == target_word
+
+func is_game_lost() -> bool:
+	return game_over and displayed_word == target_word and current_attempts >= max_attempts
 
 func update_display():
 	# Update word display with spacing

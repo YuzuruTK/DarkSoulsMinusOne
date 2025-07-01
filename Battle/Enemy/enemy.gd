@@ -83,7 +83,7 @@ func _update_hud() -> void:
 	health_bar.value = health_percentage
 	
 	# Update health label with proper formatting
-	var font_size = round(HUD_SIZE.y * 0.5)
+	var font_size = 35
 	health_label.text = "[center][color=WHITE][font_size=%d] %d / %d [/font_size]" % [font_size, actual_health, max_health]
 
 func _adjust_hud_layout() -> void:
