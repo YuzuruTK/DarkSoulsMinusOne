@@ -14,6 +14,8 @@ scale = Vector2(0.55, 0.55)
 [node name="Camera2D" type="Camera2D" parent="Battle"]
 
 [node name="ActionsShow" parent="Battle/Camera2D" instance=ExtResource("4_yn3g4")]
+offset_left = 0.0
+offset_bottom = 0.0
 script = ExtResource("5_j3bqf")
 metadata/_edit_use_anchors_ = true
 

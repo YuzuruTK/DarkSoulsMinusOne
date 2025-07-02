@@ -34,7 +34,6 @@ func load_characters() -> Array:
 	if file:
 		var content = file.get_as_text()
 		var result = JSON.parse_string(content)
-		print("Loaded characters: ", result)
 		file.close()
 		if result is Array:
 			return result

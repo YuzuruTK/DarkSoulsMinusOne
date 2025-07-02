@@ -11,6 +11,8 @@ enum BattleState {
 	BATTLE_LOST
 }
 
+signal battle_status(success: bool)
+
 #	 Constants
 const CAMERA_ZOOM_LEVEL = 0.8
 const CAMERA_ZOOM_DURATION = 1.0
@@ -146,7 +148,7 @@ func _display_action_order() -> void:
 		var actor = action_order[i]
 		var label = _create_action_label(actor)
 		actions_show.add_element(i, label)
-	
+		
 	_position_action_display()
 
 func _clear_action_display() -> void:
@@ -229,9 +231,11 @@ func _save_battle_results() -> void:
 func _determine_battle_outcome() -> void:
 	if enemies.size() == 0:
 		current_state = BattleState.BATTLE_WON
+		battle_status.emit(true)
 		# Add victory logic here
 	else:
 		current_state = BattleState.BATTLE_LOST
+		battle_status.emit(false)
 		# Add defeat logic here
 #endregion
 
@@ -319,7 +323,7 @@ func start_termo():
 	termo.start_new_game()
 	pass
 func close_termo():
-	termo.process_mode = Node.PROCESS_MODE_INHERIT
+	termo.process_mode = Node.PROCESS_MODE_DISABLED
 	await _animate_node_movement(camera, $Battle.global_position, true)
 	termo.visible = false
 	$Battle.process_mode = Node.PROCESS_MODE_INHERIT
@@ -329,7 +333,7 @@ func _process_item_action(player: Player, action_data: Dictionary) -> void:
 	print("%s used item: %s" % [player.player_name, item_name])
 	
 	# Add visual feedback for item usage
-	await _show_usage_feedback(player, "Used" + item_name)
+	await _show_usage_feedback(player, "[color=green]Used " + item_name + " ![/color]")
 	
 	# Item effects are already applied in the UI when the item is used
 	# No additional processing needed here since the Player class handles the effects

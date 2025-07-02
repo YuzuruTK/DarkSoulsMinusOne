@@ -19,8 +19,8 @@
 			"weapon": "sword_t1"
 		},
 		"inventory": {
-			"chimarrao": 2,
-			"churrasco": 1
+			"0": 2,
+			"1": 1
 		}
 	},
 	{

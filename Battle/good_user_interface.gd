@@ -13,7 +13,7 @@ enum GameState {
 
 # Constants
 const BUTTON_SPACING_RATIO = 2.0
-const BUTTON_FONT_SIZE = 35 # Add this constant for consistent font size
+const BUTTON_FONT_SIZE = 20 # Add this constant for consistent font size
 
 # State management
 var current_state: GameState = GameState.MENU_MAIN
@@ -222,6 +222,7 @@ func _create_item_buttons() -> Array[Button]:
 	
 	# Item buttons - only show items with quantity > 0
 	var available_items = player.get_available_items()
+	
 	
 	if available_items.is_empty():
 		# No items available

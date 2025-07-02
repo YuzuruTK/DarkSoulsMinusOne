@@ -4,13 +4,13 @@ class_name ItemManager
 
 # Item definitions - will be loaded from CSV
 var ITEMS: Dictionary = {
-		"0": {
+		"chimarrao": {
 			"name": "Chimarrão",
 			"type": "mana_heal",
 			"value": 10,
 			"description": "Restaura 10 pontos de mana"
 		},
-		"1": {
+		"churrasco": {
 			"name": "Churrasco",
 			"type": "health_heal", 
 			"value": 6,
@@ -20,8 +20,8 @@ var ITEMS: Dictionary = {
 
 # Default inventory
 const DEFAULT_INVENTORY = {
-	"0": 3,  # Chimarrão
-	"1": 2   # Churrasco
+	"chimarrao": 3,  # Chimarrão
+	"churrasco": 2   # Churrasco
 }
 
 # Current inventory

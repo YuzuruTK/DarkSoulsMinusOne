@@ -163,7 +163,6 @@ func _recalculate_stats() -> void:
 	def = defense_bonus
 	# Calculate attack damage with equipment bonuses
 	var attack_bonus = equipment_manager.get_total_attack_bonus()
-	print(player_name, attack_damage, base_attack_damage, attack_bonus)
 	attack_damage = base_attack_damage + attack_bonus
 	
 	# Update HUD to reflect new stats
