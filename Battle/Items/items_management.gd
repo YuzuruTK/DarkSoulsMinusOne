@@ -7,8 +7,8 @@ var ITEMS: Dictionary = {
 		"chimarrao": {
 			"name": "Chimarrão",
 			"type": "mana_heal",
-			"value": 10,
-			"description": "Restaura 10 pontos de mana"
+			"value": 40,
+			"description": "Restaura 40 pontos de mana"
 		},
 		"churrasco": {
 			"name": "Churrasco",

@@ -24,19 +24,20 @@ enum Difficulty {
 # Enemy sprite paths for each type
 const ENEMY_SPRITES = {
 	EnemyType.WOLF: "res://Sprites/enemies/wolf_0.png",
-	EnemyType.BIRD: ["res://Sprites/enemies/arara_0.png", "res://Sprites/enemies/tucano_0.png", "res://Sprites/enemies/want_want_0.png", "res://Sprites/enemies/bat_0.png"],
+	EnemyType.BIRD: ["res://Sprites/enemies/bird_0.png", "res://Sprites/enemies/bird_1.png", "res://Sprites/enemies/bird_2.png", "res://Sprites/enemies/bird_3.png"],
 	EnemyType.HOG: "res://Sprites/enemies/hog_0.png",
 	EnemyType.SKELETON: "res://Sprites/enemies/skeleton_0.png",
-	EnemyType.SOLDIER: "res://Sprites/enemies/soldier_0.png",
+	EnemyType.SOLDIER: ["res://Sprites/enemies/soldier_0.png", "res://Sprites/enemies/soldier_0.png"],
 	EnemyType.PHANTASM: "res://Sprites/enemies/phantasm_0.png",
-	EnemyType.ALIEN: "res://Sprites/enemies/bat_0.png", # Using bat as alien placeholder
+	EnemyType.ALIEN: ["res://Sprites/enemies/alien_0.png", "res://Sprites/enemies/alien_1.png"],
 	EnemyType.TIGER: "res://Sprites/enemies/tiger_0.png"
+	
 }
 
 # Enemy name pools for each type
 const ENEMY_NAMES = {
 	EnemyType.WOLF: ["Nightfang", "Alpha", "Uivador", "Shadowpelt"],
-	EnemyType.BIRD: ["Stormcaller", "Harbinger", "Arara", "Tucano", "Want-Want"],
+	EnemyType.BIRD: ["Stormcaller", "Harbinger", "Stormbeak", "Penumbraçu", "Chirupluma"],
 	EnemyType.HOG: ["Tusker", "Razorback", "Grunter", "Caititu", "Queixada"],
 	EnemyType.SKELETON: ["Gravewalker", "Hollow", "Reaper", "Caveira", "Puro-Osso"],
 	EnemyType.SOLDIER: ["Ironheart", "Sentinel", "Vanguard", "Brigadeiro", "Sargento", "Jagunço", "Milico", "Jorge"],
@@ -47,14 +48,14 @@ const ENEMY_NAMES = {
 
 # Base stats for each enemy type - BALANCED VERSION
 const BASE_STATS = {
-	EnemyType.WOLF: {"max_h": 30, "atk_dam": 5, "init_range": [2, 6]}, # Aggressive brute - HP increased
-	EnemyType.BIRD: {"max_h": 18, "atk_dam": 4, "init_range": [3, 9]}, # Fast annoyance - HP & damage increased
-	EnemyType.HOG: {"max_h": 25, "atk_dam": 4, "init_range": [1, 4]}, # Tanky slow beast - HP & damage increased
-	EnemyType.SKELETON: {"max_h": 22, "atk_dam": 4, "init_range": [4, 9]}, # Agile and smart - HP increased
-	EnemyType.SOLDIER: {"max_h": 28, "atk_dam": 4, "init_range": [5, 10]}, # Tactical, average all - HP increased
-	EnemyType.PHANTASM: {"max_h": 24, "atk_dam": 4, "init_range": [5, 10]}, # Magic-like threat - HP increased
-	EnemyType.ALIEN: {"max_h": 32, "atk_dam": 6, "init_range": [3, 7]}, # High damage threat - HP increased
-	EnemyType.TIGER: {"max_h": 20, "atk_dam": 5, "init_range": [6, 12]}, # Ambusher - HP & damage increased
+	EnemyType.WOLF: {"max_h": 20, "atk_dam": 3, "init_range": [2, 4]}, # Aggressive brute - HP increased
+	EnemyType.BIRD: {"max_h": 18, "atk_dam": 2, "init_range": [3, 9]}, # Fast annoyance - HP & damage increased
+	EnemyType.HOG: {"max_h": 25, "atk_dam": 2, "init_range": [1, 4]}, # Tanky slow beast - HP & damage increased
+	EnemyType.SKELETON: {"max_h": 22, "atk_dam": 2, "init_range": [3, 9]}, # Agile and smart - HP increased
+	EnemyType.SOLDIER: {"max_h": 28, "atk_dam": 2, "init_range": [1, 5]}, # Tactical, average all - HP increased
+	EnemyType.PHANTASM: {"max_h": 24, "atk_dam": 2, "init_range": [1, 5]}, # Magic-like threat - HP increased
+	EnemyType.ALIEN: {"max_h": 19, "atk_dam": 3, "init_range": [1, 3]}, # High damage threat - HP increased
+	EnemyType.TIGER: {"max_h": 20, "atk_dam": 4, "init_range": [6, 12]}, # Ambusher - HP & damage increased
 }
 
 # Difficulty multipliers - BALANCED VERSION
@@ -105,35 +106,33 @@ func generate_enemy_of_type(enemy_type: EnemyType, difficulty: Difficulty = Diff
 	return enemy_data
 
 ## Generates a group of random enemies
-func generate_enemy_group(group_size: int, difficulty: Difficulty = Difficulty.NORMAL, balance_types: bool = true) -> Array[Dictionary]:
+func generate_enemy_group(group_size: int,random: bool, enemy_types: Array[EnemyType] = [EnemyType.BIRD], difficulty: Difficulty = Difficulty.NORMAL) -> Array[Dictionary]:
 	var enemies: Array[Dictionary] = []
 	
-	if balance_types and group_size > 1:
-		# Ensure variety in enemy types
-		var types_to_use = _select_balanced_types(group_size)
-		var enemy_names = {}
-		for i in range(group_size):
-			var enemy_type = types_to_use[i % types_to_use.size()]
-			var enemy = generate_enemy_of_type(enemy_type, difficulty)
+	var types_to_use
+	if random:
+		types_to_use = _select_balanced_types(group_size)
+	else:
+		types_to_use = enemy_types
+	var enemy_names = {}
+	for i in range(group_size):
+			var type = types_to_use[i % types_to_use.size()]
+			var enemy = generate_enemy_of_type(type, difficulty)
 			if enemy.name in enemy_names:
 				enemy_names[enemy.name] += 1
 				enemy.name += " " + str(enemy_names[enemy.name])
 			else:
 				enemy_names[enemy.name] = 1
 			enemies.append(enemy)
-	else:
-		# Completely random
-		for i in range(group_size):
-			enemies.append(generate_random_enemy(difficulty))
 	
 	return enemies
 
 ## Generates enemies based on player level/power
 func generate_scaled_enemies(player_count: int, average_player_level: int) -> Array[Dictionary]:
-	var difficulty = _determine_difficulty_from_level(average_player_level)
+	#var difficulty = _determine_difficulty_from_level(average_player_level)
 	var enemy_count = _calculate_enemy_count(player_count, average_player_level)
 	
-	return generate_enemy_group(enemy_count, difficulty, true)
+	return generate_enemy_group(enemy_count, true)
 
 ## Generates a boss enemy
 func generate_boss_enemy(difficulty: Difficulty = Difficulty.HARD) -> Dictionary:
