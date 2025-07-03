@@ -1,0 +1,123 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Oh... excuse me! Sorry... Do you speak English? I’m completely lost... I was trying to find the train station...",
+	  "choices": [
+		{ "text": "No speak English. Bye.", "next": 1, "result_var": "ignorou" },
+		{ "text": "Little... You need... train?", "next": 2, "result_var": "tentando" },
+		{ "text": "Yes! I speak English. What's the problem?", "next": 3, "result_var": "ajuda" },
+		{ "text": "Sorry. I'm busy. Good luck!", "next": 4, "result_var": "ocupado" },
+		{ "text": "Point randomly to somewhere.", "next": 5, "result_var": "trolou" },
+		{ "text": "Pretend you don’t hear and walk away.", "next": 6, "result_var": "ignorou_fugiu" },
+		{ "text": "Say 'Yes' but actually don't understand anything.", "next": 7, "result_var": "confuso" },
+		{ "text": "Say 'Follow me!' and actually help.", "next": 8, "result_var": "ajudando" },
+		{ "text": "Explain how to go but don’t go with him.", "next": 9, "result_var": "explicando" },
+		{ "text": "Laugh, apologize and say you can’t help.", "next": 10, "result_var": "educado_sai" }
+	  ]
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Oh... uhm... okay... bye... (He walks away, still lost...)",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Yes! Train! I need train station... where... where it is?",
+	  "choices": [
+		{ "text": "Point left. (Correct direction)", "next": 9, "result_var": "explicou_certo" },
+		{ "text": "Point right. (Wrong direction)", "next": 5, "result_var": "explicou_errado" },
+		{ "text": "Say 'Follow me!' and help.", "next": 8, "result_var": "ajudando" }
+	  ]
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Oh! Thank goodness! Finally someone! Yes... I'm trying to get to the train station before 5pm. Could you help me?",
+	  "choices": [
+		{ "text": "Sure, follow me.", "next": 8, "result_var": "ajudando" },
+		{ "text": "Hmm... I'm not sure... good luck!", "next": 4, "result_var": "ocupado" },
+		{ "text": "I'll explain the way.", "next": 9, "result_var": "explicando" }
+	  ]
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Oh... Okay. Thanks... anyway... (walks away disappointed).",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Uhm... oh... okay...? Thank you...? (walks in the wrong direction... completely confused...)",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "... Oh... okay. I guess... never mind... (watches you walk away).",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Oh... yes? Oh no... I... I don’t understand... You... understand me? Hello? Hello?!",
+	  "choices": [
+		{ "text": "Nod head. (Still not understanding)", "next": 5, "result_var": "fingiu" },
+		{ "text": "Say 'Follow me!' and help anyway.", "next": 8, "result_var": "ajudando" }
+	  ]
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Thank you! You’re a lifesaver! (Follows you until you reach the train station.)",
+	  "choices": [
+		{ "text": "Here we are. Goodbye!", "next": 11, "result_var": "levou" }
+	  ]
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Oh... Okay. Go straight, then left? Hmm... I’ll try! Thank you! Thank you so much!",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Haha... Oh... okay. No worries. I’ll try someone else. Bye!",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Gringo",
+	  "npc_folder": "res://textures/npc/gringo",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Thank you! Thank you so much! You’re the best! Have a great day, my friend!",
+	  "choices": []
+	}
+  ]
+}

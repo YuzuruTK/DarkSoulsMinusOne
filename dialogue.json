@@ -1,0 +1,64 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "NPC",
+	  "npc_folder": "res://textures/npc/green-alien",
+	  "player_folder": "res://textures/npc/npc1",
+	  "text": "Olá, viajante! O que você deseja fazer?",
+	  "choices": [
+		{
+		  "text": "Perguntar sobre a cidade",
+		  "next": 1
+		},
+		{
+		  "text": "Ignorar e seguir em frente",
+		  "next": 2,
+		  "result_var": "ignorou"
+		}
+	  ]
+	},
+	{
+	  "speaker": "NPC",
+	  "npc_folder": "res://textures/npc/green-alien",
+	  "player_folder": "res://textures/npc/npc1",
+	  "text": "A cidade ao norte é pacífica, mas há rumores de monstros na floresta.",
+	  "choices": [
+		{
+		  "text": "Agradecer e seguir viagem",
+		  "next": 2,
+		  "result_var": "informado"
+		},
+		{
+		  "text": "aaaaaaaaaa e seguir viagem",
+		  "next": 3,
+		  "result_var": "cachorromaltdito"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Jogador",
+	  "npc_folder": "res://textures/npc/green-alien",
+	  "player_folder": "res://textures/npc/npc1",
+	  "text": "Hora de continuar a jornada!",
+	  "choices": []
+	},
+	{
+	  "speaker": "NPC",
+	  "npc_folder": "res://textures/npc/green-alien",
+	  "player_folder": "res://textures/npc/npc1",
+	  "text": "eita bixo",
+	  "choices": [
+		{
+		  "text": "Agradecer e aaaaaaaaaaaaa viagem",
+		  "next": 2,
+		  "result_var": "aiiinnnn"
+		},
+		{
+		  "text": "aaaaaaaaaa e seguir viagem",
+		  "next": 2,
+		  "result_var": "iguana"
+		}
+	  ]
+	}
+  ]
+}

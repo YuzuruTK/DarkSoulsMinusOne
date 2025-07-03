@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwnkfc5qg0u23"]
+
+[ext_resource type="Script" uid="uid://b5qr2r47ure0d" path="res://Battle/battle_scene.gd" id="1_vut7b"]
+[ext_resource type="PackedScene" uid="uid://bptjudi0ka33e" path="res://minigames/termo/termo.tscn" id="4_j3bqf"]
+[ext_resource type="PackedScene" uid="uid://birx5mfbbetwc" path="res://Battle/ui/action_label.tscn" id="4_yn3g4"]
+[ext_resource type="Script" uid="uid://chjaa00hlqmjt" path="res://Battle/ui/action_label.gd" id="5_j3bqf"]
+
+[node name="Battle Scene" type="Node2D"]
+script = ExtResource("1_vut7b")
+
+[node name="Battle" type="Node2D" parent="."]
+scale = Vector2(0.55, 0.55)
+
+[node name="Camera2D" type="Camera2D" parent="Battle"]
+
+[node name="ActionsShow" parent="Battle/Camera2D" instance=ExtResource("4_yn3g4")]
+offset_left = 0.0
+offset_bottom = 0.0
+script = ExtResource("5_j3bqf")
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerGroup" type="Node2D" parent="Battle"]
+position = Vector2(650, -200)
+
+[node name="EnemyGroup" type="Node2D" parent="Battle"]
+position = Vector2(-550, -200)
+
+[node name="Termo" parent="." instance=ExtResource("4_j3bqf")]
+offset_top = -1200.0
+offset_bottom = -1200.0

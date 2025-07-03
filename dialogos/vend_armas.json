@@ -1,0 +1,113 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Vendedora de Armas",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ora, ora... olha só quem apareceu. Procurando algo que... faça barulho? 👀",
+	  "choices": [
+		{
+		  "text": "Quero algo discreto... e mortal.",
+		  "next": 1,
+		  "result_var": "discreto"
+		},
+		{
+		  "text": "Me mostra a arma mais absurda que você tem.",
+		  "next": 2,
+		  "result_var": "explosivo"
+		},
+		{
+		  "text": "Só estou olhando, não sei se quero comprar.",
+		  "next": 3,
+		  "result_var": "curioso"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Armas",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Hmm... discreto, é? Tenho uma belezinha aqui... Silenciador de fábrica, cano curto, leve e... mortal. Perfeito pra quem não quer deixar rastros.",
+	  "choices": [
+		{
+		  "text": "Perfeito. Quanto custa?",
+		  "next": 4,
+		  "result_var": "comprar"
+		},
+		{
+		  "text": "Tem algo ainda mais... silencioso?",
+		  "next": 5,
+		  "result_var": "mais_discreto"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Armas",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahhh... você é do tipo que gosta de fazer estrago! Segura essa belezura... um lança-granadas portátil. Aperta aqui... e tchau, quarteirão inteiro.",
+	  "choices": [
+		{
+		  "text": "Meu Deus... acho que exagerei...",
+		  "next": 6,
+		  "result_var": "assustado"
+		},
+		{
+		  "text": "Perfeito. Me vê dois.",
+		  "next": 4,
+		  "result_var": "compulsivo"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Armas",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Hahaha... só olhando, é? Curioso... mas cuidado, olhar demais dá vontade de comprar... e às vezes... de usar.",
+	  "choices": [
+		{
+		  "text": "Tá... só olhando, prometo.",
+		  "next": 6,
+		  "result_var": "medroso"
+		},
+		{
+		  "text": "Na real... me mostra aquele rifle ali.",
+		  "next": 1,
+		  "result_var": "voltou"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Armas",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Custa menos do que sua consciência... e mais do que seu aluguel. Negócio fechado?",
+	  "choices": [
+		{
+		  "text": "Fechado. Me entrega logo.",
+		  "next": 7,
+		  "result_var": "comprou"
+		},
+		{
+		  "text": "Hmm... deixa pra lá.",
+		  "next": 6,
+		  "result_var": "desistiu"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Player",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "É... melhor eu ir antes que eu gaste mais do que devia... ou faça algo que vou me arrepender.",
+	  "choices": []
+	},
+	{
+	  "speaker": "Vendedora de Armas",
+	  "npc_folder": "res://textures/npc/arms-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Prazer fazer negócios... Ou quase. Se mudar de ideia, sabe onde me encontrar. E lembra: armas não matam... quem mata é quem não sabe usar. 😉",
+	  "choices": []
+	}
+  ]
+}

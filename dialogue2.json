@@ -1,0 +1,135 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ora, ora... veja só quem veio buscar respostas que nem sabe que precisa... Sente-se, meu benzinho... sente-se. O Destino não gosta de quem fica em pé.",
+	  "choices": [
+		{
+		  "text": "Sentar e ouvir",
+		  "next": 1
+		},
+		{
+		  "text": "(Fugir discretamente...)",
+		  "next": 6,
+		  "result_var": "fugiu"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Player",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Meu Deus... essa mulher parece ter saído diretamente de uma aula de História. Se tossir, desmonta... Mas vamos lá, é só brincadeira de festa, né?",
+	  "choices": [
+		{
+		  "text": "Suspirar e esperar...",
+		  "next": 2
+		}
+	  ]
+	},
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Eu ouvi, viu? Seus pensamentos gritam mais que sanfoneiro em noite de fogueira... Hehehe... Vamos ver...",
+	  "choices": [
+		{
+		  "text": "(Olhar desconfiado)",
+		  "next": 3
+		}
+	  ]
+	},
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Embaralha lentamente as cartas, olhos semicerrados... Ahhh... Olha só... Que curioso...",
+	  "choices": [
+		{
+		  "text": "Curioso como?",
+		  "next": 4
+		}
+	  ]
+	},
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Aqui diz... que você... vira uma carta lentamente ...vai perder tudo que ama. E então... vai encontrar algo... que nunca quis... mas que mudará sua vida para sempre...",
+	  "choices": [
+		{
+		  "text": "Ah, tá... Claro... Super normal... Isso aí serve pra todo mundo, né? Tem até no biscoito da sorte. Dá pra sair daqui e buscar um cachorro-quente?",
+		  "next": 5,
+		  "result_var": "sarcasmo"
+		},
+		{
+		  "text": "Ah... ok... eu vou dançar, mas a conversa foi ótima.",
+		  "next": 5,
+		  "result_var": "desconversa"
+		},
+		{
+		  "text": "(Vira e sai correndo)",
+		  "next": 6,
+		  "result_var": "fugiu"
+		},
+		{
+		  "text": "Pera... Como assim?! Explica melhor isso aí!",
+		  "next": 7,
+		  "result_var": "curioso"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Player",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Melhor eu ir... Isso foi... estranho. Bora pro cachorro-quente.",
+	  "choices": []
+	},
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Correeeee, meu filho... mas do destino ninguém foge! Ele tá te seguindo... hehehehe...",
+	  "choices": []
+	},
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Explicar? Ah... se eu explicasse, não seria destino... seria spoiler da vida, meu docinho. Agora vá... ou fique... afinal, quem escolhe é você... ou será que não?",
+	  "choices": [
+		{
+		  "text": "(Suspira) Tá... eu vou embora.",
+		  "next": 5,
+		  "result_var": "confuso"
+		},
+		{
+		  "text": "Ok... Agora eu fiquei curioso... o que mais você vê aí?",
+		  "next": 9,
+		  "result_var": "ficou"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Vejo... Vejo que... alguém muito próximo... vai te oferecer algo... e você vai se arrepender se aceitar. Ou talvez... se recusar. É... complicado... A vida é uma festa cheia de escolhas, benzinho...",
+	  "choices": [
+		{
+		  "text": "(Ficar em silêncio, processando tudo...)",
+		  "next": 5,
+		  "result_var": "filosofico"
+		},
+		{
+		  "text": "Chega, moça! Isso tá me dando é gastura!",
+		  "next": 5,
+		  "result_var": "gastura"
+		}
+	  ]
+	}
+  ]
+}

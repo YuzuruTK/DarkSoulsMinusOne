@@ -1,0 +1,128 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ooooraaaaaaa... Entra, criatura inquieta! Sente-se! O Destino me cochichou coisas... Ou foi um siri... Não sei, ando confundindo ultimamente...",
+	  "choices": [
+		{ "text": "Fugir na hora ao ver o show brega de fumaça e luz.", "next": 1, "result_var": "true" },
+		{ "text": "Zombar: 'Isso é cartomancia ou teatro mambembe?'", "next": 2, "result_var": "true" },
+		{ "text": "Sentar e fingir respeito, só pra não causar.", "next": 3, "result_var": "true" },
+		{ "text": "Congelar de puro medo e não conseguir sair.", "next": 4, "result_var": "true" },
+		{ "text": "Fugir no meio da sessão, sem nem olhar pra trás.", "next": 5, "result_var": "true" },
+		{ "text": "Provocar: 'Dona... isso não engana nem uma galinha manca.'", "next": 6, "result_var": "true" },
+		{ "text": "Tossir pra imitar ela... e ela espirra tão forte que MORRE.", "next": 7, "result_var": "true" },
+		{ "text": "Fazer cara de sabichão: 'Prevejo que você vai tropeçar!'", "next": 8, "result_var": "true" },
+		{ "text": "Gritar: 'Isso tudo é falso!' bem alto.", "next": 9, "result_var": "true" },
+		{ "text": "Bater na mesa e dizer: 'Duvido que você me mande pra outro mundo!'", "next": 10, "result_var": "true" }
+	  ]
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Foge não, cabra frouxo! As forças místicas te alcançam até na fila do quentão! (Ela joga purpurina pro alto e ri como uma chaleira fervendo.)",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "TEATRO, É?! (Ela bate na mesa, sai fumaça, uma lâmpada pisca, um galo canta do nada e uma sanfona toca sozinha no fundo.) Isso aqui é MÁGICA... ou quase.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Muito bem... Você tem respeito... ou só medo de velho... tanto faz! Vamos desvendar seu destino... ou confundir mais ele, tanto faz também.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Vejo... vejo... uma pamonha... NÃO, um bode... NÃO, uma sombra... AH! ESQUECE! Tá tudo embaralhado! (Ela se joga no chão rodando igual pião de festa.)",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "NÃÃÃO! Você NÃO pode fugir! O RITUAL JÁ COMEÇOU!!! (Ela bate na mesa, a lona da barraca voa, e um pato sai correndo com um chapéu na cabeça.)",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "COMO É QUE É?! Aaaaah... então segura essa! — (Ela faz um gesto dramático, solta um raio de mentira... que acidentalmente abre um portal giratório...)",
+	  "choices": [
+		{ "text": "AAAAAAAAAAAH!!!", "next": 11, "result_var": "true" }
+	  ]
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "ATCHIIIIIIIIIMMMMMMMMM!!! (Ela voa três metros pra trás, bate na lona da barraca, cai dura e MORRE. Uma carta fica grudada na testa dela com a palavra 'GAME OVER'.)",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "VOCÊ NÃO PODE ME DESAFIAR, SEU ENERGÚMENO MÍSTICO! — (Ela tenta abrir um portal, mas erra... e cai junto dentro.)",
+	  "choices": [
+		{ "text": "Aaaah... não era isso que eu queria!", "next": 11, "result_var": "true" }
+	  ]
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "FALSO?! ENTÃO SEGURA ESSA, ALMA SEM LUZ! — (Ela gira, rodopia, bate com o cajado no chão e abre um portal... que puxa vocês dois.)",
+	  "choices": [
+		{ "text": "MAS O QUÊÉÉÉÉ?!", "next": 11, "result_var": "true" }
+	  ]
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "AHHHH DUVIDA É?! ENTÃO VEM COMIGO!!! — (Ela estala os dedos, o chão abre, e vocês caem num túnel de arco-íris psicodélico cheio de milho voador.)",
+	  "choices": [
+		{ "text": "AAAAAAAAAAAAAAAH!", "next": 11, "result_var": "true" }
+	  ]
+	},
+
+	{
+	  "speaker": "Cartomante",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "SEU DESTINO AGORA É... OPS... — (Ela erra o feitiço, tropeça no tapete e cai de cara no portal junto contigo.)",
+	  "choices": [
+		{ "text": "NÃO, NÃO, NÃO... AAAAAAAH!", "next": 11, "result_var": "true" }
+	  ]
+	},
+
+	{
+	  "speaker": "Narrador",
+	  "npc_folder": "res://textures/npc/cartomante-junina",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Parabéns! Você agora está preso em um universo alternativo onde pamonhas dominam o mundo, bois usam terno e bandeirinhas flutuam sozinhas... e pior: a cartomante tá junto! — 'Eita... acho que errei o feitiço de novo, benzinho...'",
+	  "choices": []
+	}
+  ]
+}

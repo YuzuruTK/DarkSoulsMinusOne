@@ -1,0 +1,108 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Vendedora de Remédios",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ssssshh... Bem-vindo... Está doente... ou quer ficar? Hehehe... Aqui tenho cura... e também... consequências.",
+	  "choices": [
+		{
+		  "text": "Só quero algo pra me curar, sem efeitos colaterais... por favor.",
+		  "next": 1,
+		  "result_var": "prudente"
+		},
+		{
+		  "text": "O que você tem... mais... forte? Algo... experimental.",
+		  "next": 2,
+		  "result_var": "ousado"
+		},
+		{
+		  "text": "Na verdade... só estou olhando... não sei se devo confiar.",
+		  "next": 3,
+		  "result_var": "desconfiado"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Remédios",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Hmmmm... Fraco, mas sensato. Aqui... um frasquinho azul. Cura suas feridas... mas... talvez te dê sonhos... de onde ninguém volta sorrindo.",
+	  "choices": [
+		{
+		  "text": "Tá... eu... eu levo.",
+		  "next": 4,
+		  "result_var": "comprou"
+		},
+		{
+		  "text": "É... pensando bem, deixa pra lá.",
+		  "next": 6,
+		  "result_var": "desistiu"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Remédios",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahhh... corajoso... ou tolo? Veja este... frasco negro... feito com ingredientes que nem eu ouso pronunciar. Cura quase tudo... ou te transforma em algo... diferente...",
+	  "choices": [
+		{
+		  "text": "Me vê dois.",
+		  "next": 4,
+		  "result_var": "comprou_dois"
+		},
+		{
+		  "text": "Ah... quer saber... deixa pra lá.",
+		  "next": 6,
+		  "result_var": "fugiu"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Remédios",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Hahaha... só olhando? Olhar demais pode... adoecer. Sabia disso? 👁️",
+	  "choices": [
+		{
+		  "text": "Tá... olhando de menos então. Tchau.",
+		  "next": 6,
+		  "result_var": "saiu"
+		},
+		{
+		  "text": "Na real... me fala desse frasco preto aí.",
+		  "next": 2,
+		  "result_var": "voltou"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Remédios",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Negócio fechado. Só... não me procure se começar a ver... coisas que não estão aqui. Ou... talvez estejam...",
+	  "choices": [
+		{
+		  "text": "Perfeito... eu acho...",
+		  "next": 5,
+		  "result_var": "aceitou"
+		}
+	  ]
+	},
+	{
+	  "speaker": "Vendedora de Remédios",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Que sua saúde... ou insanidade... te acompanhem. Até logo... ou não.",
+	  "choices": []
+	},
+	{
+	  "speaker": "Player",
+	  "npc_folder": "res://textures/npc/medicine-dealer",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Melhor eu ir... Isso aqui me dá arrepios...",
+	  "choices": []
+	}
+  ]
+}

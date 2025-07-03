@@ -1,0 +1,120 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Bem-vindo ao Museu de Santa Maria! Temos história, arte, cultura e curiosidades desta bela cidade. Sobre o que você gostaria de saber primeiro?",
+	  "choices": [
+		{ "text": "Locomotiva a Vapor", "next": 1, "result_var": "locomotiva" },
+		{ "text": "Acervo da Revolução Farroupilha", "next": 2, "result_var": "farroupilha" },
+		{ "text": "Sala da Paleontologia", "next": 3, "result_var": "fossil" },
+		{ "text": "Réplica da Estação Ferroviária", "next": 4, "result_var": "estacao" },
+		{ "text": "Instrumentos Musicais Antigos", "next": 5, "result_var": "musica" },
+		{ "text": "Armas Antigas", "next": 6, "result_var": "armas" },
+		{ "text": "Sala de Arte Sacra", "next": 7, "result_var": "sacra" },
+		{ "text": "Exposição de Minerais e Pedras", "next": 8, "result_var": "minerais" },
+		{ "text": "Boneca de Pano Centenária", "next": 9, "result_var": "boneca" },
+		{ "text": "Fotografias Antigas da Cidade", "next": 10, "result_var": "fotos" },
+		{ "text": "Objetos da Imigração Europeia", "next": 11, "result_var": "imigracao" },
+		{ "text": "Curiosidades e Mistérios do Museu", "next": 12, "result_var": "misterio" }
+	  ]
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Esta locomotiva a vapor foi peça fundamental no desenvolvimento da cidade. Transportou pessoas, cargas e sonhos entre 1900 e 1970. Você sente até o cheiro da fuligem só de olhar.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Aqui temos relíquias da Revolução Farroupilha. Espadas, trajes de soldados, cartas originais e até pedaços de bandeiras usadas na batalha. Imagine quantas histórias estão presas nessas fibras.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "A Sala da Paleontologia exibe fósseis de animais que habitaram a região há milhões de anos. Crânios de dinossauros, dentes fossilizados e pegadas petrificadas... Todos encontrados aqui, na região de Santa Maria.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Essa réplica da antiga estação ferroviária traz de volta o charme dos anos dourados. Bilhetes antigos, bancos de madeira e o som distante de um apito imaginário fazem você viajar no tempo.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Estes instrumentos musicais vieram de diversas partes do mundo. A sanfona que você vê foi usada em bailes da década de 1920 aqui na cidade. Se prestar atenção... parece até ouvir um acorde perdido no tempo.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Espadas, punhais, rifles e até uma velha besta. Armas usadas tanto para proteção quanto para conflitos que marcaram a história da cidade e da região. Pesadas, rústicas e cheias de marcas do passado.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "A Sala de Arte Sacra abriga esculturas, crucifixos, vestes litúrgicas e peças de mais de 200 anos. Cada objeto aqui carrega fé, devoção e também os traços da arte barroca e colonial.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Aqui você vê pedras, cristais, ametistas, ágatas e minerais encontrados na região. Muitas dessas pedras foram fundamentais para o desenvolvimento econômico local. Belas e... cheias de energia, dizem alguns.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Essa boneca de pano é do final do século XIX. Feita à mão, costurada com carinho e sobrevivente de gerações. Olhar pra ela é imaginar as mãos que a criaram... e as crianças que a abraçaram.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Estas fotografias mostram Santa Maria nos primórdios. Ruas de terra, carros de boi, senhoras com sombrinhas e homens de terno pesado no calor. Olhar essas imagens é uma viagem sem volta no tempo.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Aqui temos objetos trazidos por imigrantes europeus no final do século XIX e começo do XX. Malas, roupas, livros, utensílios de cozinha... Pequenos pedaços de um lar que cruzou oceanos pra começar de novo aqui.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Guia do Museu",
+	  "npc_folder": "res://textures/npc/museum-guide",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahhh... agora você quer saber dos mistérios, né? Dizem que à noite se ouve passos na Sala da Estação... E que a boneca centenária às vezes... muda de posição. Claro, são só histórias... ou não.",
+	  "choices": []
+	}
+  ]
+}

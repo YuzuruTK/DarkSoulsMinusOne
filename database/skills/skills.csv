@@ -1,0 +1,8 @@
+id,name,damage_multiplier,description,is_multi_target,mana_cost
+0,Soco,1,Uma tapeada básica na cara do inimigo,FALSE,0
+1,Tunda,3,Se estapeia o inimigo multiplas vezes,FALSE, 20
+2,Bateção de osso,2,Peleia com Deus e o mundo,TRUE, 40
+3,Camassada de pau,4,Some com o inimigo de não sobrar nem vento!,FALSE, 40
+4,Pedrada,3,Taca uma preda no vivente,FALSE, 20
+5,Estouro da boiada,2,Atiça a boiada pra atropelar o inimigo,TRUE, 40
+6,Rojão,4,Estora um rojão na fuça do candango,FALSE,40

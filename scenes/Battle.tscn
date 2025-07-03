@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn45jigv3aqkx"]
+
+[ext_resource type="Texture2D" uid="uid://c2uube8mjiehb" path="res://textures/tilemaps/kenney_rpgUrbanKit/Sample.png" id="1_bdmed"]
+
+[node name="Node" type="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(424, 214)
+texture = ExtResource("1_bdmed")

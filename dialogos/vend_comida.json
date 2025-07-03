@@ -1,0 +1,93 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Bem-vindo, querido! Tá com fome de quê? De comida... ou de poder? Tenho pratos que curam, fortalecem e... alguns até fazem você... ver coisas. Hehe.",
+	  "choices": [
+		{ "text": "Me vê algo pra curar meus ferimentos.", "next": 1, "result_var": "cura" },
+		{ "text": "Preciso de algo pra aumentar minha estamina.", "next": 2, "result_var": "estamina" },
+		{ "text": "Quero regeneração contínua, tem?", "next": 3, "result_var": "regeneracao" },
+		{ "text": "Preciso de mais força física, algo bruto.", "next": 4, "result_var": "forca" },
+		{ "text": "Tem algo que aumente minha defesa?", "next": 5, "result_var": "defesa" },
+		{ "text": "Quero sorte... muita sorte. Você vende?", "next": 6, "result_var": "sorte" },
+		{ "text": "Me dá um prato que acelere minha velocidade.", "next": 7, "result_var": "velocidade" },
+		{ "text": "Quero algo... estranho. Me surpreenda.", "next": 8, "result_var": "bizarro" },
+		{ "text": "Na real... só tô olhando, obrigado.", "next": 9, "result_var": "olhando" }
+	  ]
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ah, clássico! Um bom caldo de osso, ervas e um toque secreto... Cura que é uma beleza, sai até bicho ruim do corpo.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Energia? Aqui, meu querido... Suco de gengibre, pimenta e raízes... Toma isso e corre até cansar... ou infarta. Hehe.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Regeneração? Ótima escolha... Esse ensopado leva cogumelos especiais. Não pergunte quais... só coma.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Força? Toma essa costela defumada com molho secreto... Se não levantar pedra, levanta prédio.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Defesa? Caldo grosso de tartaruga, algas e rocha moída... Te deixa mais duro que parede de concreto.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahh... Sorte! Aqui, biscoito da fortuna... recheado com folhas de trevo e... uns ingredientes misteriosos. Vai que dá sorte...",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Velocidade? Smoothie de frutas azuis, cafeína e um toque de guaraná... Toma isso e nem sua sombra te alcança.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahhhh... gosta de emoções, né? Aqui... um prato que eu chamo de 'Banquete do Desconhecido'. Efeito? Você só descobre depois de comer.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Vendedora de Comida",
+	  "npc_folder": "res://textures/npc/food-seller",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Só olhando, é? Cuidado... quem olha muito, uma hora sente fome. E a fome... ah, ela cobra caro.",
+	  "choices": []
+	}
+  ]
+}

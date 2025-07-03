@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxaoyqjh2fxo1"]
+
+[ext_resource type="Texture2D" uid="uid://e8prijn31ry" path="res://icon.svg" id="1_dbljg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d21ai"]
+
+[node name="BattleTrigger1" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_d21ai")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_dbljg")
+metadata/_edit_lock_ = true

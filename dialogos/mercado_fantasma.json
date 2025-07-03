@@ -1,0 +1,66 @@
+{
+  "dialogue": [
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Bem-vindo ao Mercado Fantasma... Aqui vendemos coisas que você não sabia que precisava... nem sabia que existiam. Então... o que procura, mortal?",
+	  "choices": [
+		{ "text": "Relógio que anda... pra trás.", "next": 1, "result_var": "relogio" },
+		{ "text": "Espelho que não reflete você.", "next": 2, "result_var": "espelho" },
+		{ "text": "Mala que nunca esvazia.", "next": 3, "result_var": "mala" },
+		{ "text": "Lanterna que ilumina... o passado.", "next": 4, "result_var": "lanterna" },
+		{ "text": "Chave que abre qualquer coisa... menos portas.", "next": 5, "result_var": "chave" },
+		{ "text": "Boneco de pano que muda de lugar sozinho.", "next": 6, "result_var": "boneco" }
+	  ]
+	},
+
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahhh... o Relógio Reverso. Marca as horas que já foram... nunca as que virão. Quem o carrega... às vezes anda pra trás... literalmente.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Espelho Negro. Você olha... e não vê você. Só vê... o que te observa quando acha que está sozinho. Curioso... ou aterrorizante?",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "A Mala Infinita. Você põe, põe, põe... e nunca enche. Só cuidado... um cliente uma vez colocou a própria consciência dentro. Nunca mais foi o mesmo.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Lanterna Temporal! Aponte pra qualquer lugar... e veja como era no passado. Só... não se assuste se algo olhar de volta.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Chave das Possibilidades. Abre qualquer coisa... menos portas. Cofres, corações, memórias, segredos... Só não tente numa fechadura. Vai se decepcionar.",
+	  "choices": []
+	},
+
+	{
+	  "speaker": "Dono do Mercado Fantasma",
+	  "npc_folder": "res://textures/npc/ghost-merchant",
+	  "player_folder": "res://textures/npc/player",
+	  "text": "Ahhh... O Boneco Errante. Feito de pano, linha... e algo que não conseguimos identificar. Você deixa num canto... ele nunca está no mesmo lugar depois. Nunca.",
+	  "choices": []
+	}
+  ]
+}

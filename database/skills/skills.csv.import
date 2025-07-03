@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d2kgr7h6h4x47"
+
+[deps]
+
+files=["res://database/skills/skills.name.translation", "res://database/skills/skills.damage.translation", "res://database/skills/skills.description.translation", "res://database/skills/skills.is.translation", "res://database/skills/skills.mana.translation"]
+
+source_file="res://database/skills/skills.csv"
+dest_files=["res://database/skills/skills.name.translation", "res://database/skills/skills.damage.translation", "res://database/skills/skills.description.translation", "res://database/skills/skills.is.translation", "res://database/skills/skills.mana.translation"]
+
+[params]
+
+compress=true
+delimiter=0
