@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://djcy0kogswm37"]
+
+[ext_resource type="Script" uid="uid://dg4h5h6attoup" path="res://scripts/stopwatch.gd" id="1_nu78o"]
+[ext_resource type="Texture2D" uid="uid://2v065fia0jka" path="res://assets/stopwatch_1.png" id="1_uny1b"]
+[ext_resource type="Texture2D" uid="uid://ci4h4xmi3lomy" path="res://assets/stopwatch_0.png" id="2_nu78o"]
+[ext_resource type="Script" uid="uid://dydp82lo40hi2" path="res://scripts/progress.gd" id="4_njw2k"]
+[ext_resource type="AudioStream" uid="uid://b55w3jq07h6pm" path="res://assets/timeout.wav" id="5_njw2k"]
+
+[node name="Stopwatch" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nu78o")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 2
+position = Vector2(-3, -13)
+scale = Vector2(0.323077, 0.323077)
+texture = ExtResource("1_uny1b")
+
+[node name="Progress" type="Node2D" parent="Background"]
+modulate = Color(1, 1, 1, 0.52549)
+position = Vector2(9.28571, 40.2381)
+script = ExtResource("4_njw2k")
+
+[node name="Pointer" type="Sprite2D" parent="Background"]
+texture_filter = 2
+position = Vector2(9.28571, 40.2381)
+rotation = 0.785398
+texture = ExtResource("2_nu78o")
+offset = Vector2(-8, -8)
+
+[node name="Timetick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_njw2k")
+volume_db = -10.06
+
+[node name="Timeout" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_njw2k")
+volume_db = -10.306
+pitch_scale = 1.65

@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=4 uid="uid://cxl17mg0xgne2"]
+[gd_scene load_steps=118 format=4 uid="uid://cxl17mg0xgne2"]
 
 [ext_resource type="Script" uid="uid://bu0rc7cmsphoy" path="res://character_body_2d.gd" id="1_0e48y"]
 [ext_resource type="Texture2D" uid="uid://dqw4cgsc8wshj" path="res://textures/WhatsApp Image 2025-05-14 at 21.44.05 (1).jpeg" id="1_epypp"]
@@ -16,7 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://br32a0tpvq4fk" path="res://textures/tilemaps/galletcity/galletcity.png" id="12_x0ka3"]
 [ext_resource type="Texture2D" uid="uid://ceokvp2rfxww6" path="res://textures/tilemaps/Little Dreamyland - Free Pack/Tileset/House Tileset.png" id="13_e8dv2"]
 [ext_resource type="Texture2D" uid="uid://chy152nnywhym" path="res://textures/tilemaps/box_dialog.png" id="13_ornx7"]
+[ext_resource type="PackedScene" uid="uid://cbkd2rgmce7rv" path="res://Things/godot-erico-boss-battle/scenes/root.tscn" id="13_q5dlx"]
 [ext_resource type="Texture2D" uid="uid://cg5l75v0h30ti" path="res://textures/tilemaps/Little Dreamyland - Free Pack/Tileset/Nature Tileset.png" id="14_2nhjh"]
+[ext_resource type="PackedScene" uid="uid://iyob77afkkuw" path="res://Things/godot-sepe-boss-battle/scenes/root.tscn" id="14_c4wnb"]
 [ext_resource type="Texture2D" uid="uid://hom8o6xnj2k6" path="res://textures/tilemaps/Little Dreamyland - Free Pack/Tileset/Tileset floor detail.png" id="15_bjha6"]
 [ext_resource type="Texture2D" uid="uid://bavupracg7l5l" path="res://textures/tilemaps/Pixel Art Top Down - Basic v1.2.0/Texture/TX Props.png" id="16_gt76g"]
 [ext_resource type="Texture2D" uid="uid://c2krc166dkdps" path="res://textures/tilemaps/PixelNatureDemo/DemoObjects16x16.png" id="17_1fr6y"]
@@ -13571,6 +13573,40 @@ type_battle = "alien bird"
 shape = SubResource("RectangleShape2D_d21ai")
 
 [node name="Sprite2D" type="Sprite2D" parent="BattleTrigger"]
+z_index = 19
+texture_filter = 1
+position = Vector2(2, -10)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_ornx7")
+script = ExtResource("11_cnnru")
+
+[node name="UFSMTrigger" type="Area2D" parent="."]
+z_index = 19
+position = Vector2(685, 338)
+script = ExtResource("9_bjha6")
+battle_scene = ExtResource("13_q5dlx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UFSMTrigger"]
+shape = SubResource("RectangleShape2D_d21ai")
+
+[node name="Sprite2D" type="Sprite2D" parent="UFSMTrigger"]
+z_index = 19
+texture_filter = 1
+position = Vector2(2, -10)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_ornx7")
+script = ExtResource("11_cnnru")
+
+[node name="UFSMTrigger2" type="Area2D" parent="."]
+z_index = 19
+position = Vector2(525, -413)
+script = ExtResource("9_bjha6")
+battle_scene = ExtResource("14_c4wnb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UFSMTrigger2"]
+shape = SubResource("RectangleShape2D_d21ai")
+
+[node name="Sprite2D" type="Sprite2D" parent="UFSMTrigger2"]
 z_index = 19
 texture_filter = 1
 position = Vector2(2, -10)

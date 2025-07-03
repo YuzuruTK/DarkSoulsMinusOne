@@ -1,0 +1,283 @@
+[gd_scene load_steps=22 format=3 uid="uid://iyob77afkkuw"]
+
+[ext_resource type="Texture2D" uid="uid://cyh6ls1jfwjif" path="res://Things/godot-sepe-boss-battle/assets/forest.jpg" id="1_j5px3"]
+[ext_resource type="Script" uid="uid://b4n0ul0ri25m0" path="res://Things/godot-sepe-boss-battle/scripts/root.gd" id="1_vgks2"]
+[ext_resource type="Texture2D" uid="uid://bo5n1jq0cjuxp" path="res://Things/godot-sepe-boss-battle/assets/tree_0.png" id="2_j287u"]
+[ext_resource type="Texture2D" uid="uid://bd48lj0jgfjqg" path="res://Things/godot-sepe-boss-battle/assets/tree_1.png" id="3_5sfjl"]
+[ext_resource type="Texture2D" uid="uid://40lbgcr784o2" path="res://Things/godot-sepe-boss-battle/assets/tree_2.png" id="4_3hfy5"]
+[ext_resource type="Texture2D" uid="uid://b3nvnki6a21jn" path="res://Things/godot-sepe-boss-battle/assets/tree_3.png" id="5_7pvxh"]
+[ext_resource type="Texture2D" uid="uid://dijfui8ppmm7b" path="res://Things/godot-sepe-boss-battle/assets/indio_0.png" id="6_y3xxt"]
+[ext_resource type="Script" uid="uid://d0pf0jpc6cpp4" path="res://Things/godot-sepe-boss-battle/scripts/idle_human_anim.gd" id="7_xsp7o"]
+[ext_resource type="Texture2D" uid="uid://6vkihsit0epf" path="res://Things/godot-sepe-boss-battle/assets/indio_1.png" id="8_5sfjl"]
+[ext_resource type="Texture2D" uid="uid://cq4mt6osg7d7e" path="res://Things/godot-sepe-boss-battle/assets/player_0.png" id="9_3hfy5"]
+[ext_resource type="Texture2D" uid="uid://btqkeulmjb44l" path="res://Things/godot-sepe-boss-battle/assets/angry_bubble.png" id="9_jrhyn"]
+[ext_resource type="Script" uid="uid://v0hgavcrkpeu" path="res://Things/godot-sepe-boss-battle/scripts/test.gd" id="10_7pvxh"]
+[ext_resource type="Texture2D" uid="uid://4wi3qht1sf5i" path="res://Things/godot-sepe-boss-battle/assets/happy_bubble.png" id="10_log26"]
+[ext_resource type="PackedScene" uid="uid://dicsd6afy56sa" path="res://Things/godot-sepe-boss-battle/scenes/phone.tscn" id="11_y3xxt"]
+[ext_resource type="Texture2D" uid="uid://y4bfo2ti1lmm" path="res://Things/godot-sepe-boss-battle/assets/bubble.png" id="12_xsp7o"]
+[ext_resource type="FontFile" uid="uid://b5dp3xf24yfwm" path="res://Things/godot-sepe-boss-battle/assets/alagard.ttf" id="13_l5cgh"]
+[ext_resource type="AudioStream" uid="uid://btojpkcmv4coa" path="res://Things/godot-sepe-boss-battle/assets/song.wav" id="17_log26"]
+[ext_resource type="Shader" uid="uid://dvstx8aunip8n" path="res://Things/godot-sepe-boss-battle/scripts/blur_shader.gdshader" id="17_ya6yc"]
+[ext_resource type="Script" uid="uid://bb7x1cbfpdo76" path="res://Things/godot-sepe-boss-battle/scripts/color_rect.gd" id="18_mflgo"]
+[ext_resource type="FontFile" uid="uid://b8fp8db4dn5xg" path="res://Things/godot-sepe-boss-battle/assets/romulus.ttf" id="19_mflgo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34frw"]
+shader = ExtResource("17_ya6yc")
+shader_parameter/blur_amount = 2.0
+
+[node name="Root" type="Node2D"]
+scale = Vector2(0.73, 0.65)
+script = ExtResource("1_vgks2")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(576, 325)
+scale = Vector2(0.919998, 0.919998)
+texture = ExtResource("1_j5px3")
+metadata/_edit_lock_ = true
+
+[node name="Tree_0" type="Sprite2D" parent="Background"]
+z_index = 1
+position = Vector2(478.262, -71.7393)
+texture = ExtResource("2_j287u")
+metadata/_edit_lock_ = true
+
+[node name="Tree_1" type="Sprite2D" parent="Background"]
+z_index = 1
+position = Vector2(103.261, -70.6523)
+texture = ExtResource("3_5sfjl")
+metadata/_edit_lock_ = true
+
+[node name="Tree_2" type="Sprite2D" parent="Background"]
+z_index = 1
+position = Vector2(-61.9566, -75.0002)
+texture = ExtResource("4_3hfy5")
+metadata/_edit_lock_ = true
+
+[node name="Tree_3" type="Sprite2D" parent="Background"]
+z_index = 1
+position = Vector2(-483.697, -115.218)
+texture = ExtResource("5_7pvxh")
+metadata/_edit_lock_ = true
+
+[node name="Boss" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Boss"]
+position = Vector2(290, 547)
+rotation = 0.0872665
+scale = Vector2(0.528762, 0.528762)
+texture = ExtResource("6_y3xxt")
+offset = Vector2(0, -250)
+script = ExtResource("7_xsp7o")
+
+[node name="BadBubble" type="Sprite2D" parent="Boss"]
+z_index = 2
+texture_filter = 1
+position = Vector2(400, 279)
+scale = Vector2(0.225926, 0.225926)
+texture = ExtResource("9_jrhyn")
+
+[node name="GoodBubble" type="Sprite2D" parent="Boss"]
+position = Vector2(400, 279)
+scale = Vector2(0.226, 0.226)
+texture = ExtResource("10_log26")
+
+[node name="Army" type="Node2D" parent="."]
+
+[node name="Indio_0" type="Sprite2D" parent="Army"]
+position = Vector2(948, 382)
+rotation = 2.90248
+scale = Vector2(0.371768, -0.371768)
+texture = ExtResource("8_5sfjl")
+offset = Vector2(0, -250)
+region_rect = Rect2(3.195, 0, 0, 0)
+script = ExtResource("7_xsp7o")
+
+[node name="Indio_1" type="Sprite2D" parent="Army"]
+position = Vector2(702, 409)
+rotation = 0.120428
+scale = Vector2(0.27356, 0.27356)
+texture = ExtResource("8_5sfjl")
+offset = Vector2(0, -250)
+script = ExtResource("7_xsp7o")
+
+[node name="Indio_2" type="Sprite2D" parent="Army"]
+position = Vector2(152, 185)
+rotation = 0.958186
+scale = Vector2(0.242947, 0.242947)
+texture = ExtResource("8_5sfjl")
+offset = Vector2(0, -250)
+script = ExtResource("7_xsp7o")
+
+[node name="Indio_3" type="Sprite2D" parent="Army"]
+position = Vector2(102, 324)
+rotation = -3.14159
+scale = Vector2(0.274, -0.274)
+texture = ExtResource("8_5sfjl")
+offset = Vector2(0, -250)
+script = ExtResource("7_xsp7o")
+
+[node name="Player" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+z_index = 4
+texture_filter = 1
+position = Vector2(600, 553)
+rotation = 0.122173
+scale = Vector2(3.01948, 3.01948)
+texture = ExtResource("9_3hfy5")
+flip_h = true
+
+[node name="Test" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 329.0
+offset_top = 19.0
+offset_right = 369.0
+offset_bottom = 59.0
+script = ExtResource("10_7pvxh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Test"]
+layout_mode = 0
+offset_right = 312.0
+offset_bottom = 151.0
+
+[node name="SepeSprite" type="TextureRect" parent="Test/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuestionLabel" type="Label" parent="Test/VBoxContainer"]
+layout_mode = 2
+
+[node name="AnswerInput" type="LineEdit" parent="Test/VBoxContainer"]
+layout_mode = 2
+
+[node name="SubmitButton" type="Button" parent="Test/VBoxContainer"]
+layout_mode = 2
+text = "Submit"
+
+[node name="FeedbackLabel" type="Label" parent="Test/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="Test/VBoxContainer"]
+layout_mode = 2
+
+[node name="Phone" parent="." instance=ExtResource("11_y3xxt")]
+z_index = 2
+offset_left = 698.0
+offset_top = 356.0
+offset_right = 698.0
+offset_bottom = 356.0
+scale = Vector2(1.28, 1.28)
+
+[node name="Bubble" type="TextureRect" parent="."]
+visible = false
+z_index = 2
+texture_filter = 1
+offset_left = 848.0
+offset_top = 24.0
+offset_right = 1028.0
+offset_bottom = 105.0
+scale = Vector2(1.60001, 1.60001)
+texture = ExtResource("12_xsp7o")
+
+[node name="Control" type="Control" parent="Bubble"]
+texture_filter = 2
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuestIcon" type="Label" parent="Bubble/Control"]
+layout_mode = 0
+offset_left = -4.83868
+offset_top = -14.5161
+offset_right = 35.1613
+offset_bottom = 20.4839
+theme_override_colors/font_color = Color(0.952941, 0.65098, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 25
+text = "!!!"
+
+[node name="Label" type="Label" parent="Bubble/Control"]
+layout_mode = 0
+offset_left = 15.2777
+offset_top = 3.47221
+offset_right = 168.278
+offset_bottom = 71.4722
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
+text = "Converse com Sepé Tiaraju e convença o seu exército a te deixar passar"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 2
+texture_filter = 1
+offset_left = 384.0
+offset_top = 36.0
+offset_right = 813.0
+offset_bottom = 170.0
+theme_override_colors/default_color = Color(0.296431, 0.635281, 0.678603, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/normal_font = ExtResource("13_l5cgh")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=5.0 connected=1]Sepe Tiaraju[/wave]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 4
+material = SubResource("ShaderMaterial_34frw")
+offset_top = -649.0
+offset_right = 1153.0
+offset_bottom = -4.0
+script = ExtResource("18_mflgo")
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -55.5
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.286275)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -283.5
+offset_top = -51.5
+offset_right = 283.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 0.6, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("19_mflgo")
+theme_override_font_sizes/normal_font_size = 90
+text = "VITÓRIA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_log26")
+volume_db = -12.0
+autoplay = true
+max_polyphony = 4
+
+[connection signal="bad_answer" from="Phone" to="." method="_on_phone_bad_answer"]
+[connection signal="good_answer" from="Phone" to="." method="_on_phone_good_answer"]

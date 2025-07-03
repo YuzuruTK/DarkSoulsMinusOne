@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://iarradwka28o"]
+
+[node name="AnaTerra" type="Node2D"]
+
+[node name="Character" type="Sprite2D" parent="."]
+
+[node name="Bubble" type="Sprite2D" parent="."]

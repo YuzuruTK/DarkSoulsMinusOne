@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cusykm4i2yxap"]
+
+[ext_resource type="Script" uid="uid://kw6xlt1e2wwp" path="res://scripts/projectile_text_edit.gd" id="1_f8jnq"]
+[ext_resource type="PackedScene" uid="uid://57j30utnvqhm" path="res://scenes/projectile_text.tscn" id="1_rrsxg"]
+[ext_resource type="FontFile" uid="uid://boovdsl6jfijw" path="res://assets/romulus.ttf" id="3_lievu"]
+
+[node name="ProjectileTextEdit" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 68.5625
+offset_bottom = 31.0
+script = ExtResource("1_f8jnq")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_right = 68.5625
+offset_bottom = 31.0
+mouse_default_cursor_shape = 0
+keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+flat = true
+
+[node name="ProjectileText" parent="." instance=ExtResource("1_rrsxg")]
+layout_mode = 0
+font = ExtResource("3_lievu")
+font_size = 60
+
+[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="LineEdit" to="." method="_on_line_edit_text_submitted"]

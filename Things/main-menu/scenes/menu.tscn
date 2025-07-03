@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=3 uid="uid://bue4cffstoapv"]
+
+[ext_resource type="Script" uid="uid://bykjyuj66ye1o" path="res://Things/main-menu/scripts/menu.gd" id="1_yqeox"]
+[ext_resource type="FontFile" uid="uid://28yso8anpnk" path="res://Things/main-menu/assets/romulus.ttf" id="2_con2f"]
+[ext_resource type="Texture2D" uid="uid://b7hu88aob0318" path="res://Things/main-menu/assets/435928.webp" id="2_mhnvy"]
+[ext_resource type="FontFile" uid="uid://638lte76ge60" path="res://Things/main-menu/assets/alagard.ttf" id="2_vjb58"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yqeox")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_mhnvy")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 1152.0
+offset_bottom = 178.0
+color = Color(0, 0, 0, 0.623529)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_top = 341.0
+offset_right = 1152.0
+offset_bottom = 449.0
+scale = Vector2(1, 0.479999)
+color = Color(0, 0, 0, 0.623529)
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -333.0
+offset_top = 111.0
+offset_right = 333.0
+offset_bottom = 193.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "[pulse freq=1.5 color=ffffff33 ease=-1.0]Pressione qualquer botão para continuar[/pulse]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -186.0
+offset_right = 260.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.47559, 2.85897e-05, 0.383756, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_offset_x = 7
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/normal_font = ExtResource("2_vjb58")
+theme_override_font_sizes/normal_font_size = 90
+bbcode_enabled = true
+text = "Dark Sul"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title2" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -527.0
+offset_top = -146.0
+offset_right = 527.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_vjb58")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lendas de Santa Maria"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1

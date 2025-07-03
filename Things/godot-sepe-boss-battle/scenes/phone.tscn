@@ -1,0 +1,121 @@
+[gd_scene load_steps=4 format=3 uid="uid://dicsd6afy56sa"]
+
+[ext_resource type="Script" uid="uid://d2eel64q4eq5q" path="res://scripts/phone.gd" id="1_eud1m"]
+[ext_resource type="Texture2D" uid="uid://pkkpovu10hut" path="res://assets/smartphone2.png" id="1_ewalk"]
+[ext_resource type="FontFile" uid="uid://b8fp8db4dn5xg" path="res://assets/romulus.ttf" id="2_eud1m"]
+
+[node name="Phone" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eud1m")
+
+[node name="Frame" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 700.0
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_ewalk")
+
+[node name="Screen" type="Control" parent="Frame"]
+texture_filter = 2
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 122.0
+offset_right = 147.0
+offset_bottom = 122.0
+
+[node name="Title" type="Label" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = -27.0
+offset_top = 23.7143
+offset_right = 647.999
+offset_bottom = 88.7143
+theme_override_colors/font_shadow_color = Color(0.482353, 0, 0.882353, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("2_eud1m")
+theme_override_font_sizes/font_size = 60
+text = "INGLÊS <===> GUARANI"
+horizontal_alignment = 1
+
+[node name="SepePrefix" type="Label" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = 27.2857
+offset_top = 78.0
+offset_right = 177.285
+offset_bottom = 143.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("2_eud1m")
+theme_override_font_sizes/font_size = 60
+text = "Sepé:"
+
+[node name="QuestionLabel" type="Label" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = 170.143
+offset_top = 83.7143
+offset_right = 596.143
+offset_bottom = 138.714
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "What is you name?"
+
+[node name="YouPrefix" type="Label" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = 27.2857
+offset_top = 140.857
+offset_right = 182.285
+offset_bottom = 205.857
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("2_eud1m")
+theme_override_font_sizes/font_size = 60
+text = "Você:"
+
+[node name="AnswerInput" type="LineEdit" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 144.0
+offset_right = 590.0
+offset_bottom = 201.0
+theme_override_font_sizes/font_size = 30
+placeholder_text = "Responda em inglês..."
+max_length = 60
+
+[node name="FeedbackTitle" type="Label" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = 181.571
+offset_top = 206.571
+offset_right = 441.571
+offset_bottom = 260.571
+theme_override_colors/font_shadow_color = Color(0.445969, 0.00258886, 0.851548, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("2_eud1m")
+theme_override_font_sizes/font_size = 60
+text = "FEEDBACK"
+horizontal_alignment = 1
+
+[node name="FeedbackLabel" type="Label" parent="Frame/Screen"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 258.0
+offset_right = 596.0
+offset_bottom = 392.0
+theme_override_font_sizes/font_size = 30
+text = "Try to convince Sepé Tiaraju and his army that you are not hostile!"
+horizontal_alignment = 1
+autowrap_mode = 2
+text_overrun_behavior = 3
+
+[node name="ColorRect" type="ColorRect" parent="Frame/Screen"]
+layout_mode = 0
+offset_right = 624.0
+offset_bottom = 412.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)

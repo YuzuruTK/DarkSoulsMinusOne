@@ -15,6 +15,7 @@ func _ready():
 func olhasinal():
 	var result = await battle_scene.onresult
 	battle_scene.visible = false
+	battle_scene.queue_free()
 	battle_scene = null
 	
 	# SEMPRE reseta o follow_viewport_enabled para false quando a batalha termina

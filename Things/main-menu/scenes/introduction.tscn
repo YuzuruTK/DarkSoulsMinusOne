@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://cb7g46lmcbick"]
+
+[ext_resource type="Texture2D" uid="uid://dw8y727tpcga5" path="res://Things/main-menu/assets/ee0616eff54663a9c3fd350166f2e6da.jpg" id="1_fiwxd"]
+[ext_resource type="Script" uid="uid://dkn4lxfrxppeb" path="res://Things/main-menu/scripts/introduction.gd" id="1_nvvsg"]
+[ext_resource type="Texture2D" uid="uid://83x1fans7jea" path="res://Things/main-menu/assets/TRABALHO PIXELS feminino 1 lado 1.png" id="2_tgans"]
+[ext_resource type="FontFile" uid="uid://28yso8anpnk" path="res://Things/main-menu/assets/romulus.ttf" id="3_e3kje"]
+
+[node name="Introduction" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.73, 0.65)
+script = ExtResource("1_nvvsg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 525.0
+offset_bottom = 666.0
+color = Color(0.22351, 0.325067, 0.449605, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 495.0
+offset_right = 1153.0
+offset_bottom = 574.0
+scale = Vector2(1.16, 1.16)
+texture = ExtResource("1_fiwxd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(891, 487)
+scale = Vector2(5.48001, 5.48001)
+texture = ExtResource("2_tgans")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 22.0
+offset_right = 463.0
+offset_bottom = 602.0
+theme_override_fonts/normal_font = ExtResource("3_e3kje")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "Nossa, que dia cansativo... mal vejo a hora de tirar esses sapatos e afundar no sofá. 
+
+Mas e aquela... [shake]festa junina[/shake]... será que ainda tá rolando? 
+
+Tinha prometido que passava lá, nem que fosse só pra dar uma olhada. Talvez um quentão resolva essa exaustão toda. 
+
+Vai ver é disso que eu tô precisando - um pouco de música, cheiro de milho assado no ar, aquele clima bobo e gostoso de festa. 
+
+É, acho que vou. Melhor do que ficar aqui remoendo o dia."
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 589.0
+offset_right = 460.0
+offset_bottom = 635.0
+theme_override_fonts/normal_font = ExtResource("3_e3kje")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pulse freq=1.5 color=ffffff33 ease=-1.0]Pressione qualquer botão para continuar[/pulse]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://57j30utnvqhm"]
+
+[ext_resource type="Script" uid="uid://cmovr3efq13cw" path="res://scripts/projectile_text.gd" id="1_db3op"]
+
+[node name="ProjectileText" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_db3op")
+
+[node name="CharacterContainer" type="Control" parent="."]
+anchors_preset = 0
